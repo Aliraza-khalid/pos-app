@@ -4,26 +4,26 @@ import { List } from "antd";
 
 const data = [
   {
-    id: '1',
-    title: 'product 1',
-    description: 'decription', 
+    id: "1",
+    title: "product 1",
+    description: "decription",
     price: 100,
   },
   {
-    id: '2',
-    title: 'product 2',
-    description: 'decription', 
+    id: "2",
+    title: "product 2",
+    description: "decription",
     price: 200,
   },
   {
-    id: '3',
-    title: 'product 3',
-    description: 'decription', 
+    id: "3",
+    title: "product 3",
+    description: "decription",
     price: 300,
-  }
-]
+  },
+];
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className={styles.main}>
       <article className={styles.title}>
@@ -31,10 +31,14 @@ export default function Home() {
       </article>
 
       <ProductCard item={data[0]}/>
+
       {/* <List
         itemLayout="horizontal"
         dataSource={data}
-        renderItem={(item) => <ProductCard key={item.id} item={item}/>}
+        renderItem={async (item) => {
+          // "use server";
+          return <ProductCard key={item.id} item={item} />;
+        }}
       /> */}
     </main>
   );
