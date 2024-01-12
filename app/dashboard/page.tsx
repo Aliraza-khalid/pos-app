@@ -1,6 +1,10 @@
+"use client";
+
 import styles from "./page.module.css";
 import ProductCard from "../../components/ProductCard";
-import { List } from "antd";
+import { Col, Flex, List, Row } from "antd";
+import Search from "antd/es/input/Search";
+import Categories from "@/components/Categories";
 
 const data = [
   {
@@ -23,23 +27,37 @@ const data = [
   },
 ];
 
-export default async function Home() {
+export default function Home() {
+  const onSearch = (value: string, _e: any, info: any) => {
+    console.log(value, _e, info);
+  };
+
   return (
     <main className={styles.main}>
-      <article className={styles.title}>
+      <article className={styles.titleRow}>
         <h1>Products</h1>
+        <Search
+          placeholder="Search products"
+          style={{ width: 300 }}
+          onSearch={onSearch}
+          enterButton
+        />
       </article>
 
-      <ProductCard item={data[0]}/>
-
-      {/* <List
-        itemLayout="horizontal"
-        dataSource={data}
-        renderItem={async (item) => {
-          // "use server";
-          return <ProductCard key={item.id} item={item} />;
-        }}
-      /> */}
+      <Row wrap={false}>
+        <Col flex="250px">
+          <Categories />
+        </Col>
+        <Col flex="auto" className={styles.listContainer}>
+          <List
+            dataSource={data}
+            itemLayout="vertical"
+            renderItem={async (item) => (
+              <ProductCard key={item.id} item={item} />
+            )}
+          />
+        </Col>
+      </Row>
     </main>
   );
 }

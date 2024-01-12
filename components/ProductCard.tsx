@@ -1,3 +1,5 @@
+'use client';
+
 import { Product } from "@/types/Product";
 import { Button, Card, Flex } from "antd";
 import React from "react";
@@ -8,7 +10,7 @@ type PropTypes = {
 
 export default function ProductCard({item}: PropTypes) {
   return (
-    <Card title={item.title} size="small" style={{ width: 300 }}>
+    <Card title={item.title} size="small" style={{minWidth: 300, marginBottom: 12 }}>
       <p>{item.description}</p>
 
       <article style={styles.priceRow}>
