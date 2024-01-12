@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 4000",
+    "dev:https": "local-ssl-proxy --key ssl/local.decrypted.key --cert ssl/local.crt --source 3000 --target 4000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -22,6 +23,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "^9.1.0",
+    "local-ssl-proxy": "^2.0.5",
     "typescript": "^5"
   }
 }
