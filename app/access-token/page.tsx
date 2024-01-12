@@ -30,7 +30,7 @@ export default function AccessToken() {
       localStorage.setItem('accessToken', JSON.stringify(result.token));
       localStorage.setItem('merchant', JSON.stringify(result.merchant));
       localStorage.setItem('locations', JSON.stringify(result.locations));
-      router.replace('/');
+      router.replace('/dashboard');
     }
     else setLoading(false);
   }
