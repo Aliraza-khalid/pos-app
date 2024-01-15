@@ -1,13 +1,9 @@
 'use client';
 
+import { isAuthenticated } from '@/utils/isAuthenticated';
 import { Flex, Spin } from 'antd'
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
-
-const isAuthenticated = () => {
-  const value = localStorage.getItem('accessToken');
-  return !!value;
-}
 
 export default function Page() {
   const router = useRouter();

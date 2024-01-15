@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@tanstack/react-query": "^5.17.12",
     "antd": "^5.12.8",
     "antd-style": "^3.6.1",
     "next": "14.0.4",
@@ -18,6 +19,7 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.17.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

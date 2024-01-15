@@ -5,33 +5,48 @@ import { Col, Flex, List, Row } from "antd";
 import Search from "antd/es/input/Search";
 import Categories from "@/components/Categories";
 import { createStyles } from "antd-style";
+import GetProductsByCategory from "@/utils/apis/getProductsByCategory";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
-const data = [
-  {
-    id: "1",
-    title: "product 1",
-    description: "decription",
-    price: 100,
-  },
-  {
-    id: "2",
-    title: "product 2",
-    description: "decription",
-    price: 200,
-  },
-  {
-    id: "3",
-    title: "product 3",
-    description: "decription",
-    price: 300,
-  },
-];
+// const data = [
+//   {
+//     id: "1",
+//     title: "product 1",
+//     description: "decription",
+//     price: 100,
+//   },
+//   {
+//     id: "2",
+//     title: "product 2",
+//     description: "decription",
+//     price: 200,
+//   },
+//   {
+//     id: "3",
+//     title: "product 3",
+//     description: "decription",
+//     price: 300,
+//   },
+// ];
 
 export default function Home() {
+  const [category, setCategory] = useState("");
+
   const { styles, cx, theme } = useStyles();
+  // const { data, isLoading, isError, refetch } = useQuery({
+  //   queryKey: ["categoryProducts", category],
+  //   queryFn: () => GetProductsByCategory(category),
+  //   enabled: false,
+  // });
 
   const onSearch = (value: string, _e: any, info: any) => {
     console.log(value, _e, info);
+  };
+
+  const onClickCategory = (id: string) => {
+    setCategory(id);
+    // refetch();
   };
 
   return (
@@ -48,16 +63,20 @@ export default function Home() {
 
       <Row wrap={false}>
         <Col flex="250px" className={styles.categories}>
-          <Categories />
+          <Categories onClickCategory={onClickCategory} />
         </Col>
         <Col flex="auto" className={styles.listContainer}>
-          <List
-            dataSource={data}
-            itemLayout="vertical"
-            renderItem={async (item) => (
-              <ProductCard key={item.id} item={item} />
-            )}
-          />
+          {/* {isLoading && <p>Loading...</p>}
+          {isError && <p>No Data Found</p>} */}
+          {/* {data && (
+            <List
+              dataSource={data}
+              itemLayout="vertical"
+              renderItem={async (item) => (
+                <ProductCard key={item.id} item={item} />
+              )}
+            />
+          )} */}
         </Col>
       </Row>
     </main>
@@ -66,7 +85,7 @@ export default function Home() {
 
 const useStyles = createStyles(({ token, css }) => ({
   main: css`
-    width: 100%; 
+    width: 100%;
     @media screen and (min-width: 1920px) {
       width: 1280px;
     }

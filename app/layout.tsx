@@ -3,7 +3,7 @@ import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider, theme } from "antd";
 import { Token } from "./antdToken";
-import './globals.css';
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "POS app",
@@ -16,10 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ConfigProvider theme={{
-      token: Token,
-      // algorithm: theme.darkAlgorithm,
-    }}>
+    <ConfigProvider
+      theme={{
+        token: Token,
+        // algorithm: theme.darkAlgorithm,
+      }}
+    >
       <html lang="en">
         <body>
           <AntdRegistry>{children}</AntdRegistry>

@@ -1,9 +1,14 @@
-'use client';
+"use client";
 
 import { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import { Menu, MenuProps } from "antd";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { isAuthenticated } from "@/utils/isAuthenticated";
+
+const queryClient = new QueryClient();
 
 export default function DashboardLayout({
   children,
@@ -14,38 +19,41 @@ export default function DashboardLayout({
   const router = useRouter();
   const path = usePathname();
 
-  console.log(path)
+  useEffect(() => {
+    !isAuthenticated() && router.replace('/login');
+  }, []);
+
   const onClickHome = () => {
-    router.push('/dashboard');
-  }
+    router.push("/dashboard");
+  };
 
   const onClickCart = () => {
-    router.push('/dashboard/cart');
-  }
+    router.push("/dashboard/cart");
+  };
 
-  const items: MenuProps['items'] = [
+  const items: MenuProps["items"] = [
     {
-      label: 'Home',
-      key: '/dashboard',
+      label: "Home",
+      key: "/dashboard",
       onClick: onClickHome,
     },
     {
-      label: 'Cart',
-      key: '/dashboard/cart',
+      label: "Cart",
+      key: "/dashboard/cart",
       onClick: onClickCart,
     },
   ];
 
   return (
-    <main>
-      <Header className={styles.header}>
-        <h1>POS app</h1>
-        <Menu mode="horizontal" items={items} selectedKeys={[path]}/>
-      </Header>
-      <Content className={styles.content}>
-        {children}
-      </Content>
-    </main>
+    <QueryClientProvider client={queryClient}>
+      <main>
+        <Header className={styles.header}>
+          <h1>POS app</h1>
+          <Menu mode="horizontal" items={items} selectedKeys={[path]} />
+        </Header>
+        <Content className={styles.content}>{children}</Content>
+      </main>
+    </QueryClientProvider>
   );
 }
 
@@ -58,7 +66,7 @@ const useStyles = createStyles(({ token, css }) => ({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: ${token.colorBgBase}
+    background-color: ${token.colorBgBase};
   `,
   content: css`
     display: flex;
@@ -67,30 +75,30 @@ const useStyles = createStyles(({ token, css }) => ({
     align-self: center;
     padding: 5%;
     min-height: 100vh;
-  
+
     @media screen and (min-width: 768px) {
       padding-left: 6%;
       padding-right: 6%;
     }
-  
+
     @media screen and (min-width: 1024px) {
       padding-left: 10%;
       padding-right: 10%;
     }
-  
+
     @media screen and (min-width: 1320px) {
       padding-left: 12%;
       padding-right: 12%;
     }
-  
+
     @media screen and (min-width: 1600px) {
       padding-left: 14%;
       padding-right: 14%;
     }
-  
+
     @media screen and (min-width: 1920px) {
       padding-left: 18%;
       padding-right: 18%;
     }
-  `
+  `,
 }));
