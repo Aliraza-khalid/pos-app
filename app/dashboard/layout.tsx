@@ -1,7 +1,8 @@
 'use client';
 
-import { Header } from "antd/es/layout/layout";
+import { Content, Header } from "antd/es/layout/layout";
 import styles from './page.module.css';
+import '../globals.css';
 
 export default function DashboardLayout({
   children,
@@ -9,10 +10,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <main className={'main'}>
       <Header className={styles.header}>
       </Header>
-      {children}
-    </div>
+      <Content className={'container'}>
+        {children}
+      </Content>
+    </main>
   );
 }

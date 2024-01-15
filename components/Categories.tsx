@@ -1,6 +1,6 @@
 'use client';
 
-import { Card } from 'antd';
+import { Button, Card } from 'antd';
 import React from 'react'
 
 const data = [
@@ -17,8 +17,8 @@ const data = [
 
 export default function Categories() {
   return (
-    <Card title='Categories' size="small" style={{width: 230 }}>
-      {data.map((v, i) => <p key={i}>{v}</p>)}
+    <Card title='Categories' size="small" headStyle={{textAlign: 'center'}} style={{width: 230 }}>
+      {data.map((v, i) => <Button key={i} type='text' block>{v}</Button>)}
     </Card>
   )
 }

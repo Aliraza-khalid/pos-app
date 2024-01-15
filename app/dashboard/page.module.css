@@ -1,9 +1,9 @@
 .main {
-  display: flex;
-  flex-direction: column;
-  /* align-items: center; */
-  padding: 2rem;
-  min-height: 100vh;
+  width: 100%;
+
+  @media screen and (min-width: 1920px) {
+    width: 1280px;
+  }
 }
 
 .titleRow {
@@ -21,8 +21,15 @@
   align-items: center;
 }
 
+.categories {
+  display: none;
+
+  @media screen and (min-width: 600px) {
+    display: block;
+  }
+}
+
 .listContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }

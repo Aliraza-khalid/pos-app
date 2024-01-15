@@ -45,7 +45,7 @@ export default function Home() {
       </article>
 
       <Row wrap={false}>
-        <Col flex="250px">
+        <Col flex="250px" className={styles.categories}>
           <Categories />
         </Col>
         <Col flex="auto" className={styles.listContainer}>
