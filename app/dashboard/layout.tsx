@@ -2,6 +2,8 @@
 
 import { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
+import { Menu, MenuProps } from "antd";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function DashboardLayout({
   children,
@@ -9,10 +11,36 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { styles, cx, theme } = useStyles();
+  const router = useRouter();
+  const path = usePathname();
+
+  console.log(path)
+  const onClickHome = () => {
+    router.push('/dashboard');
+  }
+
+  const onClickCart = () => {
+    router.push('/dashboard/cart');
+  }
+
+  const items: MenuProps['items'] = [
+    {
+      label: 'Home',
+      key: '/dashboard',
+      onClick: onClickHome,
+    },
+    {
+      label: 'Cart',
+      key: '/dashboard/cart',
+      onClick: onClickCart,
+    },
+  ];
 
   return (
     <main>
       <Header className={styles.header}>
+        <h1>POS app</h1>
+        <Menu mode="horizontal" items={items} selectedKeys={[path]}/>
       </Header>
       <Content className={styles.content}>
         {children}
@@ -29,6 +57,8 @@ const useStyles = createStyles(({ token, css }) => ({
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    background-color: ${token.colorBgBase}
   `,
   content: css`
     display: flex;
