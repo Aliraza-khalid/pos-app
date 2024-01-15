@@ -1,10 +1,10 @@
 "use client";
 
-import styles from "./page.module.css";
 import ProductCard from "../../components/ProductCard";
 import { Col, Flex, List, Row } from "antd";
 import Search from "antd/es/input/Search";
 import Categories from "@/components/Categories";
+import { createStyles } from "antd-style";
 
 const data = [
   {
@@ -28,6 +28,8 @@ const data = [
 ];
 
 export default function Home() {
+  const { styles, cx, theme } = useStyles();
+
   const onSearch = (value: string, _e: any, info: any) => {
     console.log(value, _e, info);
   };
@@ -61,3 +63,27 @@ export default function Home() {
     </main>
   );
 }
+
+const useStyles = createStyles(({ token, css }) => ({
+  main: css`
+    width: 100%; 
+    @media screen and (min-width: 1920px) {
+      width: 1280px;
+    }
+  `,
+  titleRow: {
+    paddingBottom: "30px",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  categories: css`
+    display: none;
+    @media screen and (min-width: 600px) {
+      display: block;
+    }
+  `,
+  listContainer: {
+    display: "flex",
+    flexDirection: "column",
+  },
+}));
