@@ -1,10 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
+import { Menu, MenuProps, Typography } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
-import { Menu, MenuProps, Typography } from "antd";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { isAuthenticated } from "@/utils/isAuthenticated";
 

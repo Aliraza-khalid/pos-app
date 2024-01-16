@@ -1,14 +1,13 @@
 "use client";
 
-import ProductCard from "@/components/ProductCard";
-import { Col, Flex, List, Row, Typography } from "antd";
+import { useEffect, useState } from "react";
+import { Col, Flex, Row, Typography } from "antd";
 import Search from "antd/es/input/Search";
-import Categories from "@/components/Categories";
 import { createStyles } from "antd-style";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import Categories from "@/components/Categories";
+import ProductsList from "@/components/ProductsList";
 import SearchProducts from "@/utils/apis/searchProducts";
-import { CatalogProduct } from "@/types/Product";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -63,25 +62,7 @@ export default function Home() {
           />
         </Col>
         <Col flex="auto" className={styles.listContainer}>
-          {isLoading && (
-            <Typography.Text className={styles.centerText}>
-              Loading...
-            </Typography.Text>
-          )}
-          {isError && (
-            <Typography.Text className={styles.centerText}>
-              No Data Found
-            </Typography.Text>
-          )}
-          {data && (
-            <List
-              dataSource={data}
-              itemLayout="vertical"
-              renderItem={(item: CatalogProduct) => (
-                <ProductCard key={item.catalogObjectId} item={item} />
-              )}
-            />
-          )}
+          <ProductsList isLoading={isLoading} isError={isError} data={data} />
         </Col>
       </Row>
     </main>
@@ -110,8 +91,5 @@ const useStyles = createStyles(({ token, css }) => ({
   listContainer: {
     display: "flex",
     flexDirection: "column",
-  },
-  centerText: {
-    textAlign: "center",
   },
 }));

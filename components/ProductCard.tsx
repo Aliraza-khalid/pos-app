@@ -72,7 +72,6 @@ export default function ProductCard({ item }: PropTypes) {
   return (
     <Card
       title={item.name}
-      size="small"
       className={styles.card}
     >
       <Flex justify="space-between" align="center" className={styles.priceRow}>
@@ -105,7 +104,6 @@ const useStyles = createStyles(({ token, css }) => ({
     margin-bottom: ${token.marginMD}px;
   `,
   priceRow: css`
-    margin-top: ${token.marginSM}px;
-    margin-bottom: ${token.margin}px;
+    margin-bottom: ${token.marginMD}px;
   `,
 }));
