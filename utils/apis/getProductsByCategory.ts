@@ -5,7 +5,7 @@ export default async function GetProductsByCategory(categoryId: string) {
   const accessToken = JSON.parse(localStorage.getItem("accessToken") ?? '');
 
   const res = await fetch(
-    `${Environment.server_url}/api/search?locationId=${merchant.mainLocationId}categoryId=${categoryId}`,
+    `${Environment.server_url}/api/search-catalog-items?locationId=${merchant.mainLocationId}&categoryId=${categoryId}`,
     {
       headers: {
         Authorization: accessToken,
@@ -13,5 +13,5 @@ export default async function GetProductsByCategory(categoryId: string) {
     }
   );
   const { result } = await res.json();
-  return result;
+  return result.items;
 }

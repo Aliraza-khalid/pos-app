@@ -1,7 +1,10 @@
+import { Variation } from "./Product";
+
 export type CartProduct = {
-  id: String,
-  title: String,
-  description: String,
-  price: number,
-  quantity: number,
-}
+  catalogObjectId: string;
+  name: string;
+  variation: Variation;
+  imageUrl: string;
+  quantity: number;
+  taxIds: string[];
+};

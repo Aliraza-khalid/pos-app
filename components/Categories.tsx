@@ -1,19 +1,25 @@
 "use client";
 
+import { Category } from "@/types/Category";
 import GetCategories from "@/utils/apis/getCategories";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Card } from "antd";
 import React from "react";
 
 type PropTypes = {
+  selectedCategoryId: string;
   onClickCategory: (id: string) => void;
 }
 
-export default function Categories({onClickCategory}: PropTypes) {
+export default function Categories({onClickCategory, selectedCategoryId}: PropTypes) {
   const {data, isLoading, isError} = useQuery({
     queryKey: ["categories"],
     queryFn: GetCategories,
   });
+
+  const buttonType = (id: string) => {
+    return selectedCategoryId === id ? undefined : 'text';
+  }
 
   return (
     <Card
@@ -24,8 +30,8 @@ export default function Categories({onClickCategory}: PropTypes) {
     >
       {isLoading && <p>Loading...</p>}
       {isError && <p>No Data Found</p>}
-      {data?.map((item: any, i: number) => (
-        <Button key={i} type="text" block onClick={() => onClickCategory(item.id)}>
+      {data?.map((item: Category, i: number) => (
+        <Button key={i} type={buttonType(item.id)} block onClick={() => onClickCategory(item.id)} >
           {item.name}
         </Button>
       ))}
