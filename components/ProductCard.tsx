@@ -3,7 +3,8 @@
 import { CartProduct } from "@/types/Cart";
 import { CatalogProduct } from "@/types/Product";
 import FormatPrice from "@/utils/formatPrice";
-import { Button, Card, Flex } from "antd";
+import { Button, Card, Flex, Typography } from "antd";
+import { createStyles } from "antd-style";
 import React, { useEffect, useState } from "react";
 
 type PropTypes = {
@@ -12,6 +13,7 @@ type PropTypes = {
 
 export default function ProductCard({ item }: PropTypes) {
   const [quantity, setQuantity] = useState(0);
+  const { styles, cx, theme } = useStyles();
 
   useEffect(() => {
     const cart = localStorage.getItem("cart");
@@ -71,24 +73,22 @@ export default function ProductCard({ item }: PropTypes) {
     <Card
       title={item.name}
       size="small"
-      style={{ width: "100%", marginBottom: 12 }}
+      className={styles.card}
     >
-      {/* <p>{item.description}</p> */}
-
-      <article style={styles.priceRow}>
-        <p>$ {FormatPrice(item.variations[0].price.amount)}</p>
+      <Flex justify="space-between" align="center" className={styles.priceRow}>
+        <Typography.Text>$ {FormatPrice(item.variations[0].price.amount)}</Typography.Text>
         {quantity > 0 && (
           <Flex justify="center" align="center" gap={10}>
             <Button shape="circle" onClick={onClickSubstract} size="small">
               -
             </Button>
-            <p>{quantity}</p>
+            <Typography.Text>{quantity}</Typography.Text>
             <Button shape="circle" onClick={onClickAdd} size="small">
               +
             </Button>
           </Flex>
         )}
-      </article>
+      </Flex>
 
       <Flex justify="flex-end">
         <Button color="primary" onClick={onClickAdd}>
@@ -99,12 +99,13 @@ export default function ProductCard({ item }: PropTypes) {
   );
 }
 
-const styles = {
-  priceRow: {
-    marginTop: 10,
-    marginBottom: 14,
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-};
+const useStyles = createStyles(({ token, css }) => ({
+  card: css`
+    width: 100%;
+    margin-bottom: ${token.marginMD}px;
+  `,
+  priceRow: css`
+    margin-top: ${token.marginSM}px;
+    margin-bottom: ${token.margin}px;
+  `,
+}));

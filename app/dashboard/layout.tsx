@@ -2,7 +2,7 @@
 
 import { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
-import { Menu, MenuProps } from "antd";
+import { Menu, MenuProps, Typography } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -20,7 +20,7 @@ export default function DashboardLayout({
   const path = usePathname();
 
   useEffect(() => {
-    !isAuthenticated() && router.replace('/login');
+    !isAuthenticated() && router.replace("/login");
   }, []);
 
   const onClickHome = () => {
@@ -28,7 +28,7 @@ export default function DashboardLayout({
   };
 
   const onClickCart = () => {
-    router.push("/dashboard/cart");
+    // router.push("/dashboard/cart");
   };
 
   const items: MenuProps["items"] = [
@@ -48,7 +48,7 @@ export default function DashboardLayout({
     <QueryClientProvider client={queryClient}>
       <main>
         <Header className={styles.header}>
-          <h1>POS app</h1>
+          <Typography.Title className={styles.headerTitle}>POS app</Typography.Title>
           <Menu mode="horizontal" items={items} selectedKeys={[path]} />
         </Header>
         <Content className={styles.content}>{children}</Content>
@@ -67,6 +67,13 @@ const useStyles = createStyles(({ token, css }) => ({
     align-items: center;
     justify-content: space-between;
     background-color: ${token.colorBgBase};
+  `,
+  headerTitle: css`
+    margin-bottom: 0;
+    
+    @media screen and (max-width: 425px) {
+      font-size: ${token.fontSizeHeading2}px;
+    }
   `,
   content: css`
     display: flex;

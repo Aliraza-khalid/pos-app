@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider, theme } from "antd";
-import { Token } from "./antdToken";
+import { Token } from "../constants/antdToken";
 import "./globals.css";
+import { Components } from "@/constants/componentToken";
 
 export const metadata: Metadata = {
   title: "POS app",
@@ -19,6 +20,7 @@ export default function RootLayout({
     <ConfigProvider
       theme={{
         token: Token,
+        components: Components,
         // algorithm: theme.darkAlgorithm,
       }}
     >

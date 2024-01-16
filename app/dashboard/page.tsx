@@ -1,7 +1,7 @@
 "use client";
 
-import ProductCard from "../../components/ProductCard";
-import { Col, Flex, List, Row } from "antd";
+import ProductCard from "@/components/ProductCard";
+import { Col, Flex, List, Row, Typography } from "antd";
 import Search from "antd/es/input/Search";
 import Categories from "@/components/Categories";
 import { createStyles } from "antd-style";
@@ -43,17 +43,17 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <article className={styles.titleRow}>
-        <h1>Products</h1>
+      <Flex justify="space-between" gap={12} className={styles.topRow}>
+        <Typography.Title level={2}>Products</Typography.Title>
         <Search
           value={searchQuery}
           placeholder="Search products"
-          style={{ width: 300 }}
+          className={styles.searchBar}
           onChange={(v) => setSearchQuery(v.target.value)}
           onSearch={onClickSearch}
           enterButton
         />
-      </article>
+      </Flex>
 
       <Row wrap={false}>
         <Col flex="250px" className={styles.categories}>
@@ -63,8 +63,16 @@ export default function Home() {
           />
         </Col>
         <Col flex="auto" className={styles.listContainer}>
-          {isLoading && <p className={styles.centerText}>Loading...</p>}
-          {isError && <p className={styles.centerText}>No Data Found</p>}
+          {isLoading && (
+            <Typography.Text className={styles.centerText}>
+              Loading...
+            </Typography.Text>
+          )}
+          {isError && (
+            <Typography.Text className={styles.centerText}>
+              No Data Found
+            </Typography.Text>
+          )}
           {data && (
             <List
               dataSource={data}
@@ -87,11 +95,12 @@ const useStyles = createStyles(({ token, css }) => ({
       width: 1280px;
     }
   `,
-  titleRow: {
-    paddingBottom: "30px",
-    display: "flex",
-    justifyContent: "space-between",
-  },
+  topRow: css`
+    margin-bottom: ${token.marginXL}px;
+  `,
+  searchBar: css`
+    width: min(60%, 425px);
+  `,
   categories: css`
     display: none;
     @media screen and (min-width: 600px) {
