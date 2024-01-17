@@ -28,7 +28,12 @@ export default function DashboardLayout({
   };
 
   const onClickCart = () => {
-    router.push("/dashboard/cart");
+    // router.push("/dashboard/cart");
+  };
+
+  const onClickLogout = () => {
+    localStorage.clear();
+    router.push("/login");
   };
 
   const items: MenuProps["items"] = [
@@ -41,6 +46,11 @@ export default function DashboardLayout({
       label: "Cart",
       key: "/dashboard/cart",
       onClick: onClickCart,
+    },
+    {
+      label: "Log out",
+      key: "logout",
+      onClick: onClickLogout,
     },
   ];
 
