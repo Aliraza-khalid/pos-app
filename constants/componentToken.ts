@@ -1,4 +1,4 @@
-export const Components = {
+const componentToken = {
   Button: {
     fontWeight: 500
   },
@@ -6,3 +6,5 @@ export const Components = {
     titleMarginBottom: 0,
   }
 }
+
+export default componentToken;

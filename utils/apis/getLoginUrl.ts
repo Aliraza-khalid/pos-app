@@ -1,4 +1,4 @@
-export default async function GetLoginUrl() {
+export default async function getLoginUrl() {
   const res = await fetch("http://localhost:5000/api/login", {
     cache: "no-store",
   });

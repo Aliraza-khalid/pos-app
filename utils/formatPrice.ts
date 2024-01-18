@@ -1,3 +1,3 @@
-export default function FormatPrice (price: number) {
+export default function formatPrice (price: number) {
   return (price/100).toFixed(2)
 }

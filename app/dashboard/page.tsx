@@ -7,7 +7,7 @@ import { createStyles } from "antd-style";
 import { useQuery } from "@tanstack/react-query";
 import Categories from "@/components/Categories";
 import ProductsList from "@/components/ProductsList";
-import SearchProducts from "@/utils/apis/searchProducts";
+import searchProducts from "@/utils/apis/searchProducts";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,26 +18,26 @@ export default function Home() {
     data,
     isLoading,
     isError,
-    refetch: searchProducts,
+    refetch: search,
   } = useQuery({
     queryKey: ["searchProducts", searchQuery, categoryId],
-    queryFn: () => SearchProducts(searchQuery, categoryId),
+    queryFn: () => searchProducts(searchQuery, categoryId),
     enabled: false,
   });
 
   const onClickSearch = () => {
-    searchProducts();
+    search();
   };
 
   const onClickCategory = (id: string) => {
     setCategoryId((v) => (v === id ? "" : id));
     setTimeout(() => {
-      searchProducts();
+      search();
     }, 0);
   };
 
   useEffect(() => {
-    searchProducts();
+    search();
   }, []);
 
   return (

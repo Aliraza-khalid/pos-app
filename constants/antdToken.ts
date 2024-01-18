@@ -1,4 +1,4 @@
-export const Token = {
+const antdToken = {
   colorBgBase: "#615545",
   colorPrimary: "#9B773D",
   colorInfo: "#444243",
@@ -10,3 +10,5 @@ export const Token = {
   padding: 12,
   margin: 12,
 }
+
+export default antdToken;

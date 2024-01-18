@@ -6,7 +6,7 @@ import { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import { usePathname, useRouter } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { isAuthenticated } from "@/utils/isAuthenticated";
+import isAuthenticated from "@/utils/isAuthenticated";
 
 const queryClient = new QueryClient();
 

@@ -1,11 +1,11 @@
-import { Environment } from "@/constants/Environment";
+import environment from "@/constants/environment";
 
-export default async function GetProductsByCategory(categoryId: string) {
+export default async function getProductsByCategory(categoryId: string) {
   const merchant = JSON.parse(localStorage.getItem('merchant') ?? '');
   const accessToken = JSON.parse(localStorage.getItem("accessToken") ?? '');
 
   const res = await fetch(
-    `${Environment.server_url}/api/search-catalog-items?locationId=${merchant.mainLocationId}&categoryId=${categoryId}`,
+    `${environment.server_url}/api/search-catalog-items?locationId=${merchant.mainLocationId}&categoryId=${categoryId}`,
     {
       headers: {
         Authorization: accessToken,

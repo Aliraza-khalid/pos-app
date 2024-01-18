@@ -1,4 +1,4 @@
-export default async function GetAccessToken(code: string) {
+export default async function getAccessToken(code: string) {
   const res = await fetch(
     `http://localhost:5000/api/access-token?code=${code}`,
     { cache: "no-store" }

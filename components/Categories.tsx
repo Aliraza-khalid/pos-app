@@ -1,7 +1,7 @@
 "use client";
 
 import { Category } from "@/types/Category";
-import GetCategories from "@/utils/apis/getCategories";
+import getCategories from "@/utils/apis/getCategories";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Card, Flex, Typography } from "antd";
 import React from "react";
@@ -17,7 +17,7 @@ export default function Categories({
 }: PropTypes) {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["categories"],
-    queryFn: GetCategories,
+    queryFn: getCategories,
   });
 
   const buttonType = (id: string) => {
