@@ -5,7 +5,10 @@ const nextConfig = {
     source: '/',
     destination: '/dashboard',
     permanent: true,
-  }]
+  }],
+  experimental: {
+    typedRoutes: true,
+  }
 }
 
 module.exports = nextConfig
