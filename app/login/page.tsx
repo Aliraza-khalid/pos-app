@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import LoginCard from "@/components/LoginCard";
-import { Flex } from "antd";
 import { useRouter } from "next/navigation";
-import GetLoginUrl from "@/utils/apis/getLoginUrl";
+import { Flex } from "antd";
+import LoginCard from "@/components/LoginCard";
+import getLoginUrl from "@/utils/apis/getLoginUrl";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
@@ -12,10 +12,10 @@ export default function Login() {
 
   const onClickLogin = async () => {
     setLoading(true);
-    const url = await GetLoginUrl();
+    const url = await getLoginUrl();
 
     if (url) {
-      router.push(url);
+      router.push(url as any);
     }
   };
 

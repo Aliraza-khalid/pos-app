@@ -1,7 +1,9 @@
+import { CatalogProduct } from "@/types/Product";
+
 export default async function searchProducts(
   query: string,
   categoryId: string
-) {
+): Promise<CatalogProduct[] | undefined> {
   const merchant = JSON.parse(localStorage.getItem("merchant") ?? "");
   const accessToken = JSON.parse(localStorage.getItem("accessToken") ?? "");
 

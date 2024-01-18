@@ -9,7 +9,7 @@ import Categories from "@/components/Categories";
 import ProductsList from "@/components/ProductsList";
 import searchProducts from "@/utils/apis/searchProducts";
 
-export default function Home() {
+export default function Products() {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryId, setCategoryId] = useState("");
 
@@ -25,6 +25,10 @@ export default function Home() {
     enabled: false,
   });
 
+  useEffect(() => {
+    search();
+  }, []);
+
   const onClickSearch = () => {
     search();
   };
@@ -35,10 +39,6 @@ export default function Home() {
       search();
     }, 0);
   };
-
-  useEffect(() => {
-    search();
-  }, []);
 
   return (
     <main className={styles.main}>

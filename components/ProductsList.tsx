@@ -6,7 +6,7 @@ import ProductCard from './ProductCard'
 type PropTypes = {
   isLoading: boolean,
   isError: boolean,
-  data: CatalogProduct[],
+  data: CatalogProduct[] | undefined,
 }
 
 export default function ProductsList({isLoading, isError, data}: PropTypes) {

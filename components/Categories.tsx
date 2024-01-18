@@ -1,10 +1,9 @@
 "use client";
 
-import { Category } from "@/types/Category";
-import getCategories from "@/utils/apis/getCategories";
-import { useQuery } from "@tanstack/react-query";
-import { Button, Card, Flex, Typography } from "antd";
 import React from "react";
+import { Button, Card, Flex, Typography } from "antd";
+import { useQuery } from "@tanstack/react-query";
+import getCategories from "@/utils/apis/getCategories";
 
 type PropTypes = {
   selectedCategoryId: string;
@@ -34,7 +33,7 @@ export default function Categories({
       <Flex vertical align="center">
         {isLoading && <Typography.Text>Loading...</Typography.Text>}
         {isError && <Typography.Text>No Data Found</Typography.Text>}
-        {data?.map((item: Category, i: number) => (
+        {data?.map((item, i) => (
           <Button
             key={i}
             type={buttonType(item.id)}

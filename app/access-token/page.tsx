@@ -1,7 +1,7 @@
 "use client";
 
 import LoginFailedCard from "@/components/LoginFailedCard";
-import GetAccessToken from "@/utils/apis/getAccessToken";
+import getAccessToken from "@/utils/apis/getAccessToken";
 import { Flex, Spin } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -22,7 +22,7 @@ export default function AccessToken() {
 
   const verifyToken = async (code: string) => {
     setLoading(true);
-    const result = await GetAccessToken(code as string);
+    const result = await getAccessToken(code as string);
     if (result) {
       localStorage.setItem("accessToken", JSON.stringify(result.token));
       localStorage.setItem("merchant", JSON.stringify(result.merchant));
