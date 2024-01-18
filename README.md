@@ -9,8 +9,7 @@ npm run dev
 npm run dev:https
 ```
 
-Open [http://localhost:4000](http://localhost:4000) with your browser to see the result.
-Open [https://localhost:3000](https://localhost:3000) with your browser to see the result.
+Open [http://localhost:4000](http://localhost:4000) or [https://pos-app:3000](https://pos-app:3000) with your browser to see the result.
 
 ## Learn More
 
