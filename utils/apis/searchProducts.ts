@@ -1,5 +1,3 @@
-import environment from "@/constants/environment";
-
 export default async function searchProducts(
   query: string,
   categoryId: string
@@ -8,7 +6,7 @@ export default async function searchProducts(
   const accessToken = JSON.parse(localStorage.getItem("accessToken") ?? "");
 
   const res = await fetch(
-    `${environment.server_url}/api/search-catalog-items?locationId=${merchant.mainLocationId}&categoryId=${categoryId}&textFilter=${query}`,
+    `${process.env.SERVER_URL}/api/search-catalog-items?locationId=${merchant.mainLocationId}&categoryId=${categoryId}&textFilter=${query}`,
     {
       headers: {
         Authorization: accessToken,

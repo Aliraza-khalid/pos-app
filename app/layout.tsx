@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider, theme } from "antd";
-import antdToken  from "@/constants/antdToken";
-import componentToken from "@/constants/componentToken";
+import AntdToken  from "@/constants/AntdToken";
+import ComponentToken from "@/constants/ComponentToken";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,8 +19,8 @@ export default function RootLayout({
   return (
     <ConfigProvider
       theme={{
-        token: antdToken,
-        components: componentToken,
+        token: AntdToken,
+        components: ComponentToken,
         // algorithm: theme.darkAlgorithm,
       }}
     >
