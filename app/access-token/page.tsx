@@ -2,7 +2,7 @@
 
 import { Button, Card, Flex, Spin } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const GetAccessToken = async (code: string) => {
   const res = await fetch(
@@ -18,13 +18,18 @@ export default function AccessToken() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const queryParams = useSearchParams();
-  const code = queryParams.get('code');
-  
+  const code = queryParams.get("code");
+  const apiCalled = useRef(false);
+
   useEffect(() => {
-    code ? verifyToken(code) : setLoading(false);
-  }, [code])
+    if(code && !apiCalled.current) {
+      verifyToken(code);
+      apiCalled.current = true;
+    }
+  }, [code]);
 
   const verifyToken = async (code: string) => {
+    setLoading(true);
     const result = await GetAccessToken(code as string);
     if(result) {
       localStorage.setItem('accessToken', JSON.stringify(result.token));
