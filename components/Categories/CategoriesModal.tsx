@@ -39,7 +39,7 @@ const useStyles = createStyles(({ token, css }) => ({
     // margin: auto ${token.margin}px;
   `,
   button: css`
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: ${token.screenSM}px) {
       display: none;
     }
   `,

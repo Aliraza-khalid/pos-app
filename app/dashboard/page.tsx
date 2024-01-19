@@ -94,7 +94,7 @@ const useStyles = createStyles(({ token, css }) => ({
   `,
   categories: css`
     display: none;
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: ${token.screenSM}px) {
       display: block;
     }
   `,
