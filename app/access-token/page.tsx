@@ -1,21 +1,21 @@
 "use client";
 
 import LoginFailedCard from "@/components/LoginFailedCard";
+import { PageProps } from "@/types/PageProps";
 import getAccessToken from "@/utils/apis/getAccessToken";
 import { Flex, Spin } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
-export default function AccessToken() {
+export default function AccessToken({searchParams}: PageProps) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const queryParams = useSearchParams();
-  const code = queryParams.get("code");
+  const code = searchParams?.code;
   const apiCalled = useRef(false);
 
   useEffect(() => {
     if(code && !apiCalled.current) {
-      verifyToken(code);
+      verifyToken(code as string);
       apiCalled.current = true;
     }
   }, [code]);
