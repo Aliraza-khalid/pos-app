@@ -1,42 +1,44 @@
-import { CartProduct } from '@/types/Cart';
-import { CatalogProduct } from '@/types/Product';
-import React, { useEffect, useState } from 'react'
+import { CartProduct } from "@/types/Cart";
+import { CatalogProduct, Variation } from "@/types/Product";
+import React, { useEffect, useRef, useState } from "react";
 
 type PropTypes = {
   item: CatalogProduct;
-}
+  variation: Variation;
+};
 
-export default function useProductCart({item}: PropTypes) {
+export default function useProductCart({ item, variation }: PropTypes) {
   const [quantity, setQuantity] = useState(0);
+  const cartItem = useRef<CartProduct>();
 
   useEffect(() => {
     const cart = localStorage.getItem("cart");
     if (!cart) return;
 
     const product = JSON.parse(cart).find(
-      (p: CartProduct) => p.catalogObjectId === item.catalogObjectId
+      (p: CartProduct) => p.variation.variationId === variation.variationId
     );
-    if (!product) return;
-
-    setQuantity(product.quantity);
-  }, [item.catalogObjectId]);
+    
+    setQuantity(product?.quantity ?? 0);
+    cartItem.current = product;
+  }, [variation.variationId]);
 
   const onClickAdd = () => {
-    setQuantity((q) => q + 1);
+    setQuantity(q => q + 1);
     updateCart({
       ...item,
-      variation: item.variations[0],
+      variation,
       quantity: quantity + 1,
     });
   };
 
   const onClickSubstract = () => {
-    setQuantity((q) => q - 1);
+    setQuantity(q => q - 1);
     quantity === 1
-      ? removeFromCart(item.catalogObjectId)
+      ? removeFromCart()
       : updateCart({
           ...item,
-          variation: item.variations[0],
+          variation,
           quantity: quantity - 1,
         });
   };
@@ -48,24 +50,29 @@ export default function useProductCart({item}: PropTypes) {
     localStorage.setItem(
       "cart",
       JSON.stringify([
-        ...JSON.parse(cart).filter((p: CartProduct) => p.catalogObjectId !== product.catalogObjectId),
+        ...JSON.parse(cart).filter(
+          (p: CartProduct) => p.variation.variationId !== variation.variationId
+        ),
         product,
       ])
     );
   };
 
-  const removeFromCart = (id: string) => {
+  const removeFromCart = () => {
     const cart = localStorage.getItem("cart");
-    if (cart)
-      return localStorage.setItem(
-        "cart",
-        JSON.stringify(JSON.parse(cart).filter((p: CartProduct) => p.catalogObjectId !== id))
-      );
+    if (!cart) return;
+
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(
+        JSON.parse(cart).filter((p: CartProduct) => p.variation.variationId !== variation.variationId)
+      )
+    );
   };
 
   return {
-    quantity, 
-    onClickAdd, 
-    onClickSubstract
-  }
+    quantity,
+    onClickAdd,
+    onClickSubstract,
+  };
 }
