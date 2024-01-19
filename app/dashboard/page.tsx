@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Col, Flex, Row, Typography } from "antd";
-import Search from "antd/es/input/Search";
+import { Col, Row } from "antd";
 import { createStyles } from "antd-style";
 import { useQuery } from "@tanstack/react-query";
-import Categories from "@/components/Categories";
 import ProductsList from "@/components/ProductsList";
 import searchProducts from "@/utils/apis/searchProducts";
+import PageHeader from "@/components/PageHeader";
+import Categories from "@/components/Categories";
+import Search from "antd/es/input/Search";
 
 export default function Products() {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryId, setCategoryId] = useState("");
 
-  const { styles, cx, theme } = useStyles();
+  const { styles } = useStyles();
   const {
     data,
     isLoading,
@@ -42,24 +43,36 @@ export default function Products() {
 
   return (
     <main className={styles.main}>
-      <Flex justify="space-between" gap={12} className={styles.topRow}>
-        <Typography.Title level={2}>Products</Typography.Title>
-        <Search
-          value={searchQuery}
-          placeholder="Search products"
-          className={styles.searchBar}
-          onChange={(v) => setSearchQuery(v.target.value)}
-          onSearch={onClickSearch}
-          enterButton
-        />
-      </Flex>
+      <PageHeader
+        title="Products"
+        right1={
+          <Search
+            value={searchQuery}
+            placeholder="Search products"
+            className={styles.searchBar}
+            onChange={(v) => setSearchQuery(v.target.value)}
+            onSearch={onClickSearch}
+            enterButton
+          />
+        }
+        right2={
+          <Categories.Modal>
+            <Categories.List
+              onClickCategory={onClickCategory}
+              selectedCategoryId={categoryId}
+            />
+          </Categories.Modal>
+        }
+      />
 
       <Row wrap={false}>
         <Col flex="250px" className={styles.categories}>
-          <Categories
-            onClickCategory={onClickCategory}
-            selectedCategoryId={categoryId}
-          />
+          <Categories.Card>
+            <Categories.List
+              onClickCategory={onClickCategory}
+              selectedCategoryId={categoryId}
+            />
+          </Categories.Card>
         </Col>
         <Col flex="auto" className={styles.listContainer}>
           <ProductsList isLoading={isLoading} isError={isError} data={data} />
@@ -76,11 +89,8 @@ const useStyles = createStyles(({ token, css }) => ({
       width: 1280px;
     }
   `,
-  topRow: css`
-    margin-bottom: ${token.marginXL}px;
-  `,
   searchBar: css`
-    width: min(60%, 425px);
+    width: min(70%, 400px);
   `,
   categories: css`
     display: none;

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { Menu, MenuProps, Typography } from "antd";
+import { useEffect, useState } from "react";
+import { Drawer, Menu, MenuProps, Typography } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import { usePathname, useRouter } from "next/navigation";
@@ -15,6 +15,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { styles, cx, theme } = useStyles();
   const router = useRouter();
   const path = usePathname();
@@ -28,7 +29,7 @@ export default function DashboardLayout({
   };
 
   const onClickCart = () => {
-    // router.push("/dashboard/cart");
+    setDrawerOpen(true);
   };
 
   const onClickLogout = () => {
@@ -58,10 +59,19 @@ export default function DashboardLayout({
     <QueryClientProvider client={queryClient}>
       <main>
         <Header className={styles.header}>
-          <Typography.Title className={styles.headerTitle}>POS app</Typography.Title>
+          <Typography.Title ellipsis className={styles.headerTitle}>
+            POS app
+          </Typography.Title>
           <Menu mode="horizontal" items={items} selectedKeys={[path]} />
         </Header>
+
         <Content className={styles.content}>{children}</Content>
+
+        <Drawer title="Cart" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Drawer>
       </main>
     </QueryClientProvider>
   );
@@ -80,10 +90,6 @@ const useStyles = createStyles(({ token, css }) => ({
   `,
   headerTitle: css`
     margin-bottom: 0;
-    
-    @media screen and (max-width: 425px) {
-      font-size: ${token.fontSizeHeading2}px;
-    }
   `,
   content: css`
     display: flex;
