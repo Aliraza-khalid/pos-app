@@ -7,6 +7,7 @@ import { createStyles } from "antd-style";
 import { usePathname, useRouter } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import isAuthenticated from "@/utils/isAuthenticated";
+import Products from "@/components/Products/Products";
 
 const queryClient = new QueryClient();
 
@@ -65,9 +66,15 @@ export default function DashboardLayout({
           <Menu mode="horizontal" items={items} selectedKeys={[path]} />
         </Header>
 
-        <Content className={styles.content}>{children}</Content>
+        <Content className={styles.content}>
+          <Products>{children}</Products>
+        </Content>
 
-        <Drawer title="Cart" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <Drawer
+          title="Cart"
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+        >
           <p>Some contents...</p>
           <p>Some contents...</p>
           <p>Some contents...</p>

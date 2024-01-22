@@ -1,11 +1,28 @@
-import searchProducts from '@/utils/apis/searchProducts';
-import { useQuery } from '@tanstack/react-query';
-import React, { createContext, useEffect, useState } from 'react'
-import ProductsList from './ProductsList';
+import searchProducts from "@/utils/apis/searchProducts";
+import { useQuery } from "@tanstack/react-query";
+import React, {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
+import ProductsList from "./ProductsList";
+import { CatalogProduct } from "@/types/Product";
 
-export const ProductsContext = createContext<any>({});
+type ContextTypes = {
+  categoryId: string;
+  setCategoryId: React.Dispatch<React.SetStateAction<string>>;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  search: () => void;
+  data: CatalogProduct[] | undefined;
+  isLoading: boolean;
+  isError: boolean;
+};
 
-function Products(props: any) {
+export const ProductsContext = createContext<ContextTypes | null>(null);
+
+function Products({ children }: PropsWithChildren) {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryId, setCategoryId] = useState("");
 
@@ -23,21 +40,23 @@ function Products(props: any) {
   useEffect(() => {
     search();
   }, []);
-  
+
   return (
-    <ProductsContext.Provider value={{
-      categoryId, 
-      setCategoryId,
-      searchQuery,
-      setSearchQuery,
-      search,
-      data,
-      isLoading, 
-      isError
-    }}>
-      {props.children}
+    <ProductsContext.Provider
+      value={{
+        categoryId,
+        setCategoryId,
+        searchQuery,
+        setSearchQuery,
+        search,
+        data,
+        isLoading,
+        isError
+      }}
+    >
+      {children}
     </ProductsContext.Provider>
-  )
+  );
 }
 
 Products.List = ProductsList;

@@ -4,12 +4,6 @@ import React from "react";
 import ProductCard from "./ProductCard";
 import useProductsContext from "@/context/useProductsContext";
 
-// type PropTypes = {
-//   isLoading: boolean;
-//   isError: boolean;
-//   data: CatalogProduct[] | undefined;
-// };
-
 export default function ProductsList() {
   const { data, isLoading, isError } = useProductsContext();
 
