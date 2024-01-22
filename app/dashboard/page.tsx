@@ -1,41 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Col, Row } from "antd";
 import { createStyles } from "antd-style";
-import { useQuery } from "@tanstack/react-query";
-import ProductsList from "@/components/ProductsList";
-import searchProducts from "@/utils/apis/searchProducts";
 import PageHeader from "@/components/PageHeader";
 import Categories from "@/components/Categories";
 import Search from "antd/es/input/Search";
+import Products from "@/components/Products/Products";
+import useProductsContext from "@/context/useProductsContext";
 
-export default function Products() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [categoryId, setCategoryId] = useState("");
-
+export default function ProductsPage() {
   const { styles } = useStyles();
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch: search,
-  } = useQuery({
-    queryKey: ["searchProducts", searchQuery, categoryId],
-    queryFn: () => searchProducts(searchQuery, categoryId),
-    enabled: false,
-  });
-
-  useEffect(() => {
-    search();
-  }, []);
-
-  const onClickSearch = () => {
-    search();
-  };
+  const { categoryId, setCategoryId, searchQuery, setSearchQuery, search } =
+    useProductsContext();
 
   const onClickCategory = (id: string) => {
-    setCategoryId((v) => (v === id ? "" : id));
+    setCategoryId((v: any) => (v === id ? "" : id));
     setTimeout(() => {
       search();
     }, 0);
@@ -51,7 +30,7 @@ export default function Products() {
             placeholder="Search products"
             className={styles.searchBar}
             onChange={(v) => setSearchQuery(v.target.value)}
-            onSearch={onClickSearch}
+            onSearch={() => search()}
             enterButton
           />
         }
@@ -75,7 +54,9 @@ export default function Products() {
           </Categories.Card>
         </Col>
         <Col flex="auto" className={styles.listContainer}>
-          <ProductsList isLoading={isLoading} isError={isError} data={data} />
+          <Products>
+            <Products.List />
+          </Products>
         </Col>
       </Row>
     </main>

@@ -31,7 +31,7 @@ export default function ProductCard({ item }: PropTypes) {
   return (
     <Card title={item.name} className={styles.card}>
       <Flex justify="space-between" align="center" className={styles.priceRow}>
-        <Typography.Text>
+        <Typography.Text className={styles.price}>
           $ {FormatPrice(variation.price.amount)}
         </Typography.Text>
         {quantity > 0 && (
@@ -54,9 +54,9 @@ export default function ProductCard({ item }: PropTypes) {
           style={{ minWidth: 100 }}
           onChange={onChangeVariation}
         />
-        <Button color="primary" onClick={onClickAdd}>
+        {quantity === 0 && <Button color="primary" onClick={onClickAdd}>
           Add to cart
-        </Button>
+        </Button>}
       </Flex>
     </Card>
   );
@@ -68,8 +68,11 @@ const useStyles = createStyles(({ token, css }) => ({
     margin-bottom: ${token.marginMD}px;
   `,
   title: {
-    fontSize: `${token.fontSizeSM}px`,
+    fontSize: `${token.fontSizeSM}px;`,
   },
+  price: css`
+    font-size: ${token.fontSizeLG}px;
+  `,
   priceRow: css`
     margin-bottom: ${token.marginMD}px;
   `,
