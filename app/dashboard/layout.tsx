@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import isAuthenticated from "@/utils/isAuthenticated";
 import Products from "@/components/Products/Products";
+import CartDrawer from "@/components/CartDrawer";
 
 const queryClient = new QueryClient();
 
@@ -63,22 +64,19 @@ export default function DashboardLayout({
           <Typography.Title ellipsis className={styles.headerTitle}>
             POS app
           </Typography.Title>
-          <Menu mode="horizontal" items={items} selectedKeys={[path]} />
+          <Menu
+            mode="horizontal"
+            items={items}
+            selectedKeys={[path]}
+            className={styles.menu}
+          />
         </Header>
 
         <Content className={styles.content}>
           <Products>{children}</Products>
         </Content>
 
-        <Drawer
-          title="Cart"
-          open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-        >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Drawer>
+        <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}/>
       </main>
     </QueryClientProvider>
   );
@@ -93,7 +91,10 @@ const useStyles = createStyles(({ token, css }) => ({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: ${token.colorBgBase};
+    background-color: ${token.colorBgLayout};
+  `,
+  menu: css`
+    background-color: ${token.colorBgLayout};
   `,
   headerTitle: css`
     margin-bottom: 0;
