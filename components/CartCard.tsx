@@ -4,36 +4,58 @@ import { createStyles } from "antd-style";
 import React, { useState } from "react";
 import formatPrice from "@/utils/formatPrice";
 import { EditOutlined } from "@ant-design/icons";
+import useProductQuantity from "@/hooks/useProductQuantity";
+import { calculateTaxAmount } from "@/utils/calculateTaxAmount";
 
 type PropTypes = {
   item: CartProduct;
 };
 
-export default function CartCard() {
+export default function CartCard({ item }: PropTypes) {
   const { styles } = useStyles();
   const [openModal, setOpenModal] = useState(false);
+  const { increaseItemInCart, decreaseItemInCart } = useProductQuantity(
+    item.variationId
+  );
+
+  const subTotal = item.price.amount * item.quantity;
+  const taxAmount = Object.values(item.taxes).reduce(
+    (acc, curr) =>
+      curr.isApplied ? acc + calculateTaxAmount(curr, subTotal) : acc,
+    0
+  );
 
   const onClickTax = () => {
     setOpenModal(true);
-  }
+  };
 
   const closeModal = () => {
     setOpenModal(false);
-  }
+  };
 
   return (
-    <Card title={"Product Name"} className={styles.card} size="small">
+    <Card title={item.name} className={styles.card} size="small">
       <Flex justify="space-between" align="center" className={styles.priceRow}>
         <Typography.Text className={styles.price}>
-          $ {formatPrice(1000)}
+          $ {formatPrice(item.price.amount)}
         </Typography.Text>
 
         <Flex justify="center" align="center" gap={10}>
-          <Button shape="circle" size="small" className={styles.quantityButton}>
+          <Button
+            shape="circle"
+            size="small"
+            className={styles.quantityButton}
+            onClick={() => decreaseItemInCart(item.variationId)}
+          >
             -
           </Button>
-          <Typography.Text>{2}</Typography.Text>
-          <Button shape="circle" size="small" className={styles.quantityButton}>
+          <Typography.Text>{item.quantity}</Typography.Text>
+          <Button
+            shape="circle"
+            size="small"
+            className={styles.quantityButton}
+            onClick={() => increaseItemInCart(item.variationId)}
+          >
             +
           </Button>
         </Flex>
@@ -41,7 +63,9 @@ export default function CartCard() {
 
       <Flex justify="space-between">
         <Typography.Text className={styles.price}>Sub total</Typography.Text>
-        <Typography.Text className={styles.price}>$ 20</Typography.Text>
+        <Typography.Text className={styles.price}>
+          $ {formatPrice(subTotal)}
+        </Typography.Text>
       </Flex>
 
       {/* <Flex justify="space-between">
@@ -49,19 +73,24 @@ export default function CartCard() {
         <Typography.Text className={styles.price}>- $ 2</Typography.Text>
       </Flex> */}
 
-      <Button type='link' block className={styles.editButton} onClick={onClickTax}>
+      <Button
+        type="link"
+        block
+        className={styles.editButton}
+        onClick={onClickTax}
+      >
         <Flex justify="space-between">
           <Space>
             <Typography.Text className={styles.price}>Tax</Typography.Text>
             <EditOutlined className={styles.editIcon} />
           </Space>
-          <Typography.Text className={styles.price}>$ 1.5</Typography.Text>
+          <Typography.Text className={styles.price}>$ {formatPrice(taxAmount)}</Typography.Text>
         </Flex>
       </Button>
 
       <Flex justify="space-between" className={styles.totalRow}>
         <Typography.Text className={styles.price}>Total</Typography.Text>
-        <Typography.Text>$ 19.5</Typography.Text>
+        <Typography.Text>$ {formatPrice(subTotal + taxAmount)}</Typography.Text>
       </Flex>
 
       <Modal title="Basic Modal" open={openModal} onCancel={closeModal}>

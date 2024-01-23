@@ -1,8 +1,8 @@
 "use client";
 
 import { CatalogProduct, Variation } from "@/types/Product";
-import FormatPrice from "@/utils/formatPrice";
-import useProductCart from "@/utils/hooks/useProductCart";
+import formatPrice from "@/utils/formatPrice";
+import useProductQuantity from "@/hooks/useProductQuantity";
 import { Button, Card, Flex, Select, Typography } from "antd";
 import { createStyles } from "antd-style";
 import React, { useState } from "react";
@@ -12,12 +12,11 @@ type PropTypes = {
 };
 
 export default function ProductCard({ item }: PropTypes) {
-  const { styles, cx, theme } = useStyles();
+  const { styles } = useStyles();
   const [variation, setVariation] = useState<Variation>(item.variations[0]);
-  const { quantity, onClickAdd, onClickSubstract } = useProductCart({
-    item,
-    variation,
-  });
+  const { quantity, addItemToCart, increaseItemInCart, decreaseItemInCart } =
+    useProductQuantity(variation.variationId);
+
   const options = item.variations.map((v) => ({
     value: v.variationId,
     label: v.variant,
@@ -32,15 +31,23 @@ export default function ProductCard({ item }: PropTypes) {
     <Card title={item.name} className={styles.card}>
       <Flex justify="space-between" align="center" className={styles.priceRow}>
         <Typography.Text className={styles.price}>
-          $ {FormatPrice(variation.price.amount)}
+          $ {formatPrice(variation.price.amount)}
         </Typography.Text>
         {quantity > 0 && (
           <Flex justify="center" align="center" gap={10}>
-            <Button shape="circle" onClick={onClickSubstract} size="small">
+            <Button
+              shape="circle"
+              onClick={() => decreaseItemInCart(variation.variationId)}
+              size="small"
+            >
               -
             </Button>
             <Typography.Text>{quantity}</Typography.Text>
-            <Button shape="circle" onClick={onClickAdd} size="small">
+            <Button
+              shape="circle"
+              onClick={() => increaseItemInCart(variation.variationId)}
+              size="small"
+            >
               +
             </Button>
           </Flex>
@@ -54,9 +61,14 @@ export default function ProductCard({ item }: PropTypes) {
           style={{ minWidth: 100 }}
           onChange={onChangeVariation}
         />
-        {quantity === 0 && <Button color="primary" onClick={onClickAdd}>
-          Add to cart
-        </Button>}
+        {quantity === 0 && (
+          <Button
+            color="primary"
+            onClick={() => addItemToCart(item, variation)}
+          >
+            Add to cart
+          </Button>
+        )}
       </Flex>
     </Card>
   );

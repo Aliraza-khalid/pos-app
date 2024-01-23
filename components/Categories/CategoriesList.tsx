@@ -1,4 +1,4 @@
-import useProductsContext from "@/context/useProductsContext";
+import useProductsContext from "@/hooks/useProductsContext";
 import getCategories from "@/utils/apis/getCategories";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Typography } from "antd";

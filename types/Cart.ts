@@ -1,10 +1,16 @@
-import { Variation } from "./Product";
+import { CatalogProduct, Variation } from "./Product";
+import { Tax } from "./Tax";
 
-export type CartProduct = {
-  catalogObjectId: string;
+export interface CartProduct extends Variation {
+  productId: string;
   name: string;
-  variation: Variation;
   imageUrl: string;
   quantity: number;
-  taxIds: string[];
+  taxes: {
+    [key: string]: CartTax
+  };
 };
+
+interface CartTax extends Tax {
+  isApplied: boolean;
+}

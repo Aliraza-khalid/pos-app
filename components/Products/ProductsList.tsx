@@ -2,7 +2,7 @@ import { CatalogProduct } from "@/types/Product";
 import { List, Typography } from "antd";
 import React from "react";
 import ProductCard from "./ProductCard";
-import useProductsContext from "@/context/useProductsContext";
+import useProductsContext from "@/hooks/useProductsContext";
 
 export default function ProductsList() {
   const { data, isLoading, isError } = useProductsContext();
