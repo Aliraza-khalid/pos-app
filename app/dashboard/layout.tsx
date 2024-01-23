@@ -1,84 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Drawer, Menu, MenuProps, Typography } from "antd";
+import { PropsWithChildren, useEffect, useState } from "react";
+import { Typography } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
-import { usePathname, useRouter } from "next/navigation";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import isAuthenticated from "@/utils/isAuthenticated";
 import Products from "@/components/Products/Products";
 import CartDrawer from "@/components/CartDrawer";
+import NavMenu from "@/components/NavMenu";
+import DashboardContainer from "@/containers/DashboardContainer";
 
-const queryClient = new QueryClient();
-
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function DashboardLayout({ children }: PropsWithChildren) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { styles, cx, theme } = useStyles();
   const router = useRouter();
-  const path = usePathname();
 
   useEffect(() => {
     !isAuthenticated() && router.replace("/login");
   }, []);
 
-  const onClickHome = () => {
-    router.push("/dashboard");
-  };
-
-  const onClickCart = () => {
-    setDrawerOpen(true);
-  };
-
-  const onClickLogout = () => {
-    localStorage.clear();
-    router.push("/login");
-  };
-
-  const items: MenuProps["items"] = [
-    {
-      label: "Home",
-      key: "/dashboard",
-      onClick: onClickHome,
-    },
-    {
-      label: "Cart",
-      key: "/dashboard/cart",
-      onClick: onClickCart,
-    },
-    {
-      label: "Log out",
-      key: "logout",
-      onClick: onClickLogout,
-    },
-  ];
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <main>
+    <main>
+      <DashboardContainer>
         <Header className={styles.header}>
           <Typography.Title ellipsis className={styles.headerTitle}>
             POS app
           </Typography.Title>
-          <Menu
-            mode="horizontal"
-            items={items}
-            selectedKeys={[path]}
-            className={styles.menu}
-          />
+          <NavMenu onClickCart={() => setDrawerOpen(true)} />
         </Header>
 
         <Content className={styles.content}>
           <Products>{children}</Products>
         </Content>
 
-        <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}/>
-      </main>
-    </QueryClientProvider>
+        <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      </DashboardContainer>
+    </main>
   );
 }
 
@@ -91,9 +49,6 @@ const useStyles = createStyles(({ token, css }) => ({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: ${token.colorBgLayout};
-  `,
-  menu: css`
     background-color: ${token.colorBgLayout};
   `,
   headerTitle: css`

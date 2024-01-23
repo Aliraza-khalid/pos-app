@@ -68,10 +68,12 @@ const createCartSlice: StateCreator<
   decreaseItemInCart: (variationId) => {
     const cart = get().cartItems;
 
-    if (cart[variationId].quantity === 1) delete cart[variationId];
-    else {
+    if (cart[variationId].quantity === 1) {
+      const cartCopy = { ...cart };
+      delete cartCopy[variationId];
+      set(() => ({ cartItems: cartCopy }));
+    } else {
       const item = cart[variationId];
-
       set((state) => ({
         cartItems: {
           ...state.cartItems,

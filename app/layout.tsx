@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider, theme } from "antd";
-import AntdToken  from "@/constants/AntdToken";
-import ComponentToken from "@/constants/ComponentToken";
+import RootContainer from "@/containers/RootContainer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,18 +13,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ConfigProvider
-      theme={{
-        token: AntdToken,
-        components: ComponentToken,
-        // algorithm: theme.darkAlgorithm,
-      }}
-    >
+    <RootContainer>
       <html lang="en">
-        <body>
-          <AntdRegistry>{children}</AntdRegistry>
-        </body>
+        <body>{children}</body>
       </html>
-    </ConfigProvider>
+    </RootContainer>
   );
 }

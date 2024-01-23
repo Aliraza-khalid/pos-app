@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import formatPrice from "@/utils/formatPrice";
 import { EditOutlined } from "@ant-design/icons";
 import useProductQuantity from "@/hooks/useProductQuantity";
-import { calculateTaxAmount } from "@/utils/calculateTaxAmount";
+import calculateProductTax from "@/utils/calculateProductTax";
 
 type PropTypes = {
   item: CartProduct;
@@ -19,11 +19,7 @@ export default function CartCard({ item }: PropTypes) {
   );
 
   const subTotal = item.price.amount * item.quantity;
-  const taxAmount = Object.values(item.taxes).reduce(
-    (acc, curr) =>
-      curr.isApplied ? acc + calculateTaxAmount(curr, subTotal) : acc,
-    0
-  );
+  const taxAmount = calculateProductTax(item);
 
   const onClickTax = () => {
     setOpenModal(true);
@@ -36,7 +32,7 @@ export default function CartCard({ item }: PropTypes) {
   return (
     <Card title={item.name} className={styles.card} size="small">
       <Flex justify="space-between" align="center" className={styles.priceRow}>
-        <Typography.Text className={styles.price}>
+        <Typography.Text className={styles.label}>
           $ {formatPrice(item.price.amount)}
         </Typography.Text>
 
@@ -62,8 +58,8 @@ export default function CartCard({ item }: PropTypes) {
       </Flex>
 
       <Flex justify="space-between">
-        <Typography.Text className={styles.price}>Sub total</Typography.Text>
-        <Typography.Text className={styles.price}>
+        <Typography.Text className={styles.label}>Sub total</Typography.Text>
+        <Typography.Text className={styles.label}>
           $ {formatPrice(subTotal)}
         </Typography.Text>
       </Flex>
@@ -81,16 +77,16 @@ export default function CartCard({ item }: PropTypes) {
       >
         <Flex justify="space-between">
           <Space>
-            <Typography.Text className={styles.price}>Tax</Typography.Text>
+            <Typography.Text className={styles.label}>Tax</Typography.Text>
             <EditOutlined className={styles.editIcon} />
           </Space>
-          <Typography.Text className={styles.price}>$ {formatPrice(taxAmount)}</Typography.Text>
+          <Typography.Text className={styles.label}>$ {formatPrice(taxAmount)}</Typography.Text>
         </Flex>
       </Button>
 
       <Flex justify="space-between" className={styles.totalRow}>
-        <Typography.Text className={styles.price}>Total</Typography.Text>
-        <Typography.Text>$ {formatPrice(subTotal + taxAmount)}</Typography.Text>
+        <Typography.Text className={styles.label}>Total</Typography.Text>
+        <Typography.Text className={styles.amount}>$ {formatPrice(subTotal + taxAmount)}</Typography.Text>
       </Flex>
 
       <Modal title="Basic Modal" open={openModal} onCancel={closeModal}>
@@ -111,7 +107,7 @@ const useStyles = createStyles(({ token, css }) => ({
   title: {
     fontSize: `${token.fontSizeSM}px;`,
   },
-  price: css`
+  label: css`
     font-size: ${token.fontSizeLG}px;
     color: ${token.colorTextTertiary};
   `,
@@ -123,9 +119,13 @@ const useStyles = createStyles(({ token, css }) => ({
   `,
   editButton: css`
     padding: ${token.paddingXXS}px 0px;
+    font-weight: 400;
   `,
   editIcon: css`
     color: ${token.colorTextTertiary};
+  `,
+  amount: css`
+    font-size: ${token.fontSizeLG}px;
   `,
   totalRow: css`
     padding-top: ${token.marginXS}px;
