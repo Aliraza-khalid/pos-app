@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Flex } from "antd";
-import LoginCard from "@/components/LoginCard";
+import LoginCard from "@/components/auth/LoginCard";
 import getLoginUrl from "@/utils/apis/getLoginUrl";
 
 export default function Login() {

@@ -16,7 +16,7 @@ export default function CartDrawer() {
   const { onToggleTax, onRemoveTaxFromAll } = useCart();
   const {
     cartOpen,
-    setCartOpen,
+    toggleCart,
     activeItem,
     taxModalOpen,
     discountModalOpen,
@@ -37,7 +37,7 @@ export default function CartDrawer() {
     <Drawer
       title="Cart"
       open={cartOpen}
-      onClose={() => setCartOpen(false)}
+      onClose={toggleCart}
       footer={Object.keys(cartItems).length !== 0 && <CartFooter />}
     >
       {Object.values(cartItems).map((item) => (

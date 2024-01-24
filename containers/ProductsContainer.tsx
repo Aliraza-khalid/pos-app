@@ -6,23 +6,22 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import ProductsList from "./ProductsList";
 import { CatalogProduct } from "@/types/Product";
 
 type ContextTypes = {
   categoryId: string;
-  setCategoryId: React.Dispatch<React.SetStateAction<string>>;
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   search: () => void;
-  data: CatalogProduct[] | undefined;
+  searchByCategory: (categoryId: string) => void;
+  products: CatalogProduct[] | undefined;
   isLoading: boolean;
   isError: boolean;
 };
 
 export const ProductsContext = createContext<ContextTypes | null>(null);
 
-function Products({ children }: PropsWithChildren) {
+function ProductsContainer({ children }: PropsWithChildren) {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryId, setCategoryId] = useState("");
 
@@ -41,17 +40,24 @@ function Products({ children }: PropsWithChildren) {
     search();
   }, []);
 
+  const searchByCategory = (id: string) => {
+    setCategoryId((v) => (v === id ? "" : id));
+    setTimeout(() => {
+      search();
+    }, 0);
+  };
+
   return (
     <ProductsContext.Provider
       value={{
         categoryId,
-        setCategoryId,
         searchQuery,
         setSearchQuery,
         search,
-        data,
+        searchByCategory,
         isLoading,
-        isError
+        isError,
+        products: data,
       }}
     >
       {children}
@@ -59,6 +65,4 @@ function Products({ children }: PropsWithChildren) {
   );
 }
 
-Products.List = ProductsList;
-
-export default Products;
+export default ProductsContainer;

@@ -9,6 +9,8 @@ const AntdToken = {
   fontSize: 12,
   padding: 12,
   margin: 12,
+  screenXS: 420,
+  screenXSMin: 420,
 }
 
 export default AntdToken;

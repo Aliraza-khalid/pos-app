@@ -9,15 +9,11 @@ import React from "react";
 export default function NavMenu() {
   const router = useRouter();
   const path = usePathname();
-  const { setCartOpen } = useCartContext();
+  const { toggleCart } = useCartContext();
   const { styles } = useStyles();
 
   const onClickHome = () => {
     router.push("/dashboard");
-  };
-
-  const onClickCart = () => {
-    setCartOpen(true);
   };
 
   const onClickLogout = () => {
@@ -34,7 +30,7 @@ export default function NavMenu() {
     {
       label: "Cart",
       key: "/dashboard/cart",
-      onClick: onClickCart,
+      onClick: toggleCart,
     },
     {
       label: "Log out",

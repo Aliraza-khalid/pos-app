@@ -1,15 +1,15 @@
 "use client";
 
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { Typography } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import { useRouter } from "next/navigation";
-import isAuthenticated from "@/utils/isAuthenticated";
-import Products from "@/components/Products/Products";
-import NavMenu from "@/components/NavMenu";
+import ProductsContainer from "@/containers/ProductsContainer";
 import DashboardContainer from "@/containers/DashboardContainer";
 import CartContainer from "@/containers/CartContainer";
+import NavMenu from "@/components/NavMenu";
+import isAuthenticated from "@/utils/isAuthenticated";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   const { styles, cx, theme } = useStyles();
@@ -23,16 +23,16 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
     <main>
       <DashboardContainer>
         <CartContainer>
-          <Header className={styles.header}>
-            <Typography.Title ellipsis className={styles.headerTitle}>
-              POS app
-            </Typography.Title>
-            <NavMenu />
-          </Header>
+          <ProductsContainer>
+            <Header className={styles.header}>
+              <Typography.Title ellipsis className={styles.headerTitle}>
+                POS app
+              </Typography.Title>
+              <NavMenu />
+            </Header>
 
-          <Content className={styles.content}>
-            <Products>{children}</Products>
-          </Content>
+            <Content className={styles.content}>{children}</Content>
+          </ProductsContainer>
         </CartContainer>
       </DashboardContainer>
     </main>

@@ -3,10 +3,10 @@
 import { Col, Flex, Row } from "antd";
 import { createStyles } from "antd-style";
 import PageHeader from "@/components/PageHeader";
-import Categories from "@/components/Categories";
-import Products from "@/components/Products/Products";
+import Categories from "@/components/categories";
 import SearchBar from "@/components/SearchBar";
-import CartDrawer from "@/components/CartDrawer";
+import CartDrawer from "@/components/cart/CartDrawer";
+import ProductsList from "@/components/products/ProductsList";
 
 export default function ProductsPage() {
   const { styles } = useStyles();
@@ -18,7 +18,7 @@ export default function ProductsPage() {
         right1={<SearchBar />}
         right2={
           <Categories.Modal>
-            <Categories.List />
+            <Categories.List/>
           </Categories.Modal>
         }
       />
@@ -31,12 +31,12 @@ export default function ProductsPage() {
         </Col>
         <Col flex="auto">
           <Flex vertical>
-            <Products.List />
+            <ProductsList />
           </Flex>
         </Col>
       </Row>
 
-      <CartDrawer/>
+      <CartDrawer />
     </main>
   );
 }

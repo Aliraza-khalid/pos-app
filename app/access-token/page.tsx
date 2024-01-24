@@ -1,6 +1,6 @@
 "use client";
 
-import LoginFailedCard from "@/components/LoginFailedCard";
+import LoginFailedCard from "@/components/auth/LoginFailedCard";
 import { PageProps } from "@/types/PageProps";
 import getAccessToken from "@/utils/apis/getAccessToken";
 import { Flex, Spin } from "antd";

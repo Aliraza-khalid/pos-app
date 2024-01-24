@@ -8,9 +8,9 @@ import { createStyles } from "antd-style";
 import React from "react";
 
 export default function CartFooter() {
-  const { styles } = useStyles();
   const cartItems = useStore((state) => state.cartItems);
-  const {toggleModal} = useCartContext();
+  const { toggleModal } = useCartContext();
+  const { styles } = useStyles();
 
   const amounts = Object.values(cartItems).reduce(
     (acc, curr) => ({
@@ -29,7 +29,7 @@ export default function CartFooter() {
         type="link"
         block
         className={styles.editButton}
-        onClick={() => toggleModal('TotalTax')}
+        onClick={() => toggleModal("TotalTax")}
       >
         <Flex justify="space-between">
           <Space>

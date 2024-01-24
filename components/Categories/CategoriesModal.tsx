@@ -6,9 +6,9 @@ import Modal from "../base/Modal";
 
 type PropTypes = {
   children: React.ReactNode;
-}
+};
 
-export default function CategoriesModal({children}: PropTypes) {
+export default function CategoriesModal({ children }: PropTypes) {
   const [modalOpen, setModalOpen] = useState(false);
   const { styles } = useStyles();
 

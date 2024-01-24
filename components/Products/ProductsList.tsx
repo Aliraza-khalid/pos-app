@@ -5,7 +5,7 @@ import ProductCard from "./ProductCard";
 import useProductsContext from "@/hooks/useProductsContext";
 
 export default function ProductsList() {
-  const { data, isLoading, isError } = useProductsContext();
+  const { products, isLoading, isError } = useProductsContext();
 
   if (isLoading)
     return (
@@ -21,10 +21,10 @@ export default function ProductsList() {
       </Typography.Text>
     );
 
-  if (data)
+  if (products)
     return (
       <List
-        dataSource={data}
+        dataSource={products}
         itemLayout="vertical"
         renderItem={(item: CatalogProduct) => (
           <ProductCard key={item.catalogObjectId} item={item} />

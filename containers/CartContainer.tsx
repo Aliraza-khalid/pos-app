@@ -3,7 +3,7 @@ import React, { PropsWithChildren, createContext, useState } from "react";
 
 type ContextTypes = {
   cartOpen: boolean;
-  setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleCart: () => void;
   taxModalOpen: boolean;
   discountModalOpen: boolean;
   totalTaxModalOpen: boolean;
@@ -23,31 +23,33 @@ export default function CartContainer({ children }: PropsWithChildren) {
   const [totalDiscountModalOpen, setTotalDiscountModalOpen] = useState(false);
   const [activeItem, setActiveItem] = useState<CartProduct>();
 
+  const toggleCart = () => setCartOpen((v) => !v);
+
   const toggleModal = (modal: CartModalTypes) => {
-    switch(modal) {
-      case 'ProductTax': 
-        setTaxModalOpen(v => !v);
+    switch (modal) {
+      case "ProductTax":
+        setTaxModalOpen((v) => !v);
         break;
-      case 'TotalTax':
-        setTotalTaxModalOpen(v => !v);
+      case "TotalTax":
+        setTotalTaxModalOpen((v) => !v);
         break;
       default:
         break;
     }
-  }
+  };
 
   return (
     <CartContext.Provider
       value={{
         cartOpen,
-        setCartOpen,
+        toggleCart,
         taxModalOpen,
         discountModalOpen,
         totalTaxModalOpen,
         totalDiscountModalOpen,
         activeItem,
         setActiveItem,
-        toggleModal
+        toggleModal,
       }}
     >
       {children}
