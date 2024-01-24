@@ -6,6 +6,7 @@ import PageHeader from "@/components/PageHeader";
 import Categories from "@/components/Categories";
 import Products from "@/components/Products/Products";
 import SearchBar from "@/components/SearchBar";
+import CartDrawer from "@/components/CartDrawer";
 
 export default function ProductsPage() {
   const { styles } = useStyles();
@@ -34,6 +35,8 @@ export default function ProductsPage() {
           </Flex>
         </Col>
       </Row>
+
+      <CartDrawer/>
     </main>
   );
 }

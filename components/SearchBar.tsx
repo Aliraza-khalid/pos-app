@@ -9,6 +9,7 @@ export default function SearchBar() {
 
   return (
     <Search
+      name="search"
       value={searchQuery}
       placeholder="Search products"
       className={styles.searchBar}

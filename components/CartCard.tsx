@@ -1,11 +1,12 @@
-import { CartProduct } from "@/types/Cart";
-import { Button, Card, Flex, Modal, Space, Typography } from "antd";
+import { CartModalTypes, CartProduct } from "@/types/Cart";
+import { Button, Card, Flex, Space, Typography } from "antd";
 import { createStyles } from "antd-style";
-import React, { useState } from "react";
+import React from "react";
 import formatPrice from "@/utils/formatPrice";
 import { EditOutlined } from "@ant-design/icons";
 import useProductQuantity from "@/hooks/useProductQuantity";
 import calculateProductTax from "@/utils/calculateProductTax";
+import useCartContext from "@/hooks/useCartContext";
 
 type PropTypes = {
   item: CartProduct;
@@ -13,21 +14,18 @@ type PropTypes = {
 
 export default function CartCard({ item }: PropTypes) {
   const { styles } = useStyles();
-  const [openModal, setOpenModal] = useState(false);
   const { increaseItemInCart, decreaseItemInCart } = useProductQuantity(
     item.variationId
   );
+  const {setActiveItem, toggleModal} = useCartContext();
 
   const subTotal = item.price.amount * item.quantity;
   const taxAmount = calculateProductTax(item);
 
-  const onClickTax = () => {
-    setOpenModal(true);
-  };
-
-  const closeModal = () => {
-    setOpenModal(false);
-  };
+  const onClickEdit = (modal: CartModalTypes) => {
+    setActiveItem(item);
+    toggleModal(modal);
+  }
 
   return (
     <Card title={item.name} className={styles.card} size="small">
@@ -73,7 +71,7 @@ export default function CartCard({ item }: PropTypes) {
         type="link"
         block
         className={styles.editButton}
-        onClick={onClickTax}
+        onClick={() => onClickEdit('ProductTax')}
       >
         <Flex justify="space-between">
           <Space>
@@ -88,12 +86,6 @@ export default function CartCard({ item }: PropTypes) {
         <Typography.Text className={styles.label}>Total</Typography.Text>
         <Typography.Text className={styles.amount}>$ {formatPrice(subTotal + taxAmount)}</Typography.Text>
       </Flex>
-
-      <Modal title="Basic Modal" open={openModal} onCancel={closeModal}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
     </Card>
   );
 }

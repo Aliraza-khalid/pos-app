@@ -7,12 +7,11 @@ import { createStyles } from "antd-style";
 import { useRouter } from "next/navigation";
 import isAuthenticated from "@/utils/isAuthenticated";
 import Products from "@/components/Products/Products";
-import CartDrawer from "@/components/CartDrawer";
 import NavMenu from "@/components/NavMenu";
 import DashboardContainer from "@/containers/DashboardContainer";
+import CartContainer from "@/containers/CartContainer";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const { styles, cx, theme } = useStyles();
   const router = useRouter();
 
@@ -23,18 +22,18 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <main>
       <DashboardContainer>
-        <Header className={styles.header}>
-          <Typography.Title ellipsis className={styles.headerTitle}>
-            POS app
-          </Typography.Title>
-          <NavMenu onClickCart={() => setDrawerOpen(true)} />
-        </Header>
+        <CartContainer>
+          <Header className={styles.header}>
+            <Typography.Title ellipsis className={styles.headerTitle}>
+              POS app
+            </Typography.Title>
+            <NavMenu />
+          </Header>
 
-        <Content className={styles.content}>
-          <Products>{children}</Products>
-        </Content>
-
-        <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+          <Content className={styles.content}>
+            <Products>{children}</Products>
+          </Content>
+        </CartContainer>
       </DashboardContainer>
     </main>
   );

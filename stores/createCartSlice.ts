@@ -1,16 +1,18 @@
-import { CartProduct } from "@/types/Cart";
+import { Cart, CartProduct } from "@/types/Cart";
 import { StateCreator } from "zustand";
 import { ProductsSlice } from "./createProductsSlice";
 import { CatalogProduct, Variation } from "@/types/Product";
 
 export interface CartSlice {
-  cartItems: {
-    [key: string]: CartProduct;
-  };
+  cartItems: Cart;
 
   addItemToCart: (product: CatalogProduct, variation: Variation) => void;
   increaseItemInCart: (variationId: string) => void;
   decreaseItemInCart: (variationId: string) => void;
+
+  updateItemInCart: (item: CartProduct) => void;
+
+  setCartItems: (data: Cart) => void;
 }
 
 const createCartSlice: StateCreator<
@@ -65,6 +67,7 @@ const createCartSlice: StateCreator<
       },
     }));
   },
+
   decreaseItemInCart: (variationId) => {
     const cart = get().cartItems;
 
@@ -85,6 +88,16 @@ const createCartSlice: StateCreator<
       }));
     }
   },
+
+  updateItemInCart: (item) =>
+    set((state) => ({
+      cartItems: {
+        ...state.cartItems,
+        [item.variationId]: item,
+      },
+    })),
+
+  setCartItems: (data) => set(() => ({ cartItems: data })),
 });
 
 export default createCartSlice;

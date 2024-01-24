@@ -1,3 +1,4 @@
+import useCartContext from "@/hooks/useCartContext";
 import useStore from "@/stores";
 import calculateProductTax from "@/utils/calculateProductTax";
 import formatPrice from "@/utils/formatPrice";
@@ -9,6 +10,7 @@ import React from "react";
 export default function CartFooter() {
   const { styles } = useStyles();
   const cartItems = useStore((state) => state.cartItems);
+  const {toggleModal} = useCartContext();
 
   const amounts = Object.values(cartItems).reduce(
     (acc, curr) => ({
@@ -27,7 +29,7 @@ export default function CartFooter() {
         type="link"
         block
         className={styles.editButton}
-        // onClick={onClickTax}
+        onClick={() => toggleModal('TotalTax')}
       >
         <Flex justify="space-between">
           <Space>

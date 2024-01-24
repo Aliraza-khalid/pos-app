@@ -1,7 +1,8 @@
 import { MenuOutlined } from "@ant-design/icons";
-import { Button, Modal } from "antd";
+import { Button } from "antd";
 import { createStyles } from "antd-style";
 import React, { useState } from "react";
+import Modal from "../base/Modal";
 
 type PropTypes = {
   children: React.ReactNode;
@@ -20,13 +21,8 @@ export default function CategoriesModal({children}: PropTypes) {
       />
       <Modal
         title="Categories"
-        className={styles.modal}
-        // style={{textAlign: "center"}}
-        // centered
-        width={300}
         open={modalOpen}
-        onCancel={() => setModalOpen(false)}
-        footer={[]}
+        onClose={() => setModalOpen(false)}
       >
         {children}
       </Modal>
@@ -35,9 +31,6 @@ export default function CategoriesModal({children}: PropTypes) {
 }
 
 const useStyles = createStyles(({ token, css }) => ({
-  modal: css`
-    // margin: auto ${token.margin}px;
-  `,
   button: css`
     @media screen and (min-width: ${token.screenSM}px) {
       display: none;

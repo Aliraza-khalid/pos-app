@@ -1,7 +1,7 @@
 import { CartProduct } from "@/types/Cart";
 import { calculateTaxAmount } from "./calculateTaxAmount";
 
-export default function calculateProductTax(item: CartProduct) {
+export default function calculateProductTax(item: CartProduct): number {
   return Object.values(item.taxes).reduce(
     (acc, curr) =>
       curr.isApplied
