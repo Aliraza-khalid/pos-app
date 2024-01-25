@@ -10,6 +10,7 @@ import useCart from "@/hooks/useCart";
 import { CloseOutlined } from "@ant-design/icons";
 import { Tax } from "@/types/Tax";
 import { CartTax } from "@/types/Cart";
+import { filterAppliedTaxes } from "@/utils/filterAppliedTaxes";
 
 const { useToken } = theme;
 
@@ -29,11 +30,7 @@ export default function CartDrawer() {
 
   const { token } = useToken();
 
-  console.log(activeItem);
-  const taxesApplied = Object.values(cartItems).reduce(
-    (acc, item) => [...acc, ...item.taxes.filter((t) => t.isApplied)],
-    [] as CartTax[]
-  );
+  const appliedTaxes = filterAppliedTaxes(cartItems);
 
   return (
     <Drawer
@@ -89,7 +86,7 @@ export default function CartDrawer() {
         open={totalTaxModalOpen}
         onClose={() => toggleModal("TotalTax")}
       >
-        {taxesApplied.map((tax) => (
+        {appliedTaxes.map((tax) => (
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>
