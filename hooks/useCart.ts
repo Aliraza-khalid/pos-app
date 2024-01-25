@@ -5,9 +5,9 @@ import { Cart } from "@/types/Cart";
 
 export default function useCart() {
   const { activeItem, setActiveItem } = useCartContext();
-  const cartItems = useStore((state) => state.cartItems);
+  const cart = useStore((state) => state.cart);
   const updateItemInCart = useStore((state) => state.updateItemInCart);
-  const setCartItems = useStore((state) => state.setCartItems);
+  const setCart = useStore((state) => state.setCart);
 
   const onToggleTax = (id: string, value: boolean) => {
     if (!activeItem) return;
@@ -23,14 +23,14 @@ export default function useCart() {
       ),
     };
 
-    setActiveItem(updatedData);
+    setActiveItem(id, updatedData);
     updateItemInCart(updatedData);
   };
 
   const onRemoveTaxFromAll = (id: string) => {
     const updatedCart: Cart = {};
 
-    Object.values(cartItems).forEach((item) => {
+    Object.values(cart).forEach((item) => {
       updatedCart[item.variationId] = {
         ...item,
         taxes: item.taxes.map((tax) =>
@@ -44,7 +44,7 @@ export default function useCart() {
       };
     });
 
-    setCartItems(updatedCart);
+    setCart(updatedCart);
   };
 
   return {
