@@ -1,6 +1,4 @@
 import useCartContext from "@/hooks/useCartContext";
-import useStore from "@/stores";
-import calculateProductTax from "@/utils/calculateProductTax";
 import formatPrice from "@/utils/formatPrice";
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Flex, Space, Typography } from "antd";
@@ -8,20 +6,23 @@ import { createStyles } from "antd-style";
 import React from "react";
 
 export default function CartFooter() {
-  const cartItems = useStore((state) => state.cartItems);
+  const { order, orderLoading } = useCartContext();
   const { toggleModal } = useCartContext();
   const { styles } = useStyles();
 
-  const amounts = Object.values(cartItems).reduce(
-    (acc, curr) => ({
-      tax: acc.tax + calculateProductTax(curr),
-      woTax: acc.woTax + curr.price.amount * curr.quantity,
-    }),
-    {
-      tax: 0,
-      woTax: 0,
-    }
-  );
+  // const amounts = Object.values(cart).reduce(
+  //   (acc, curr) => ({
+  //     tax: acc.tax + calculateProductTax(curr),
+  //     woTax: acc.woTax + curr.price.amount * curr.quantity,
+  //   }),
+  //   {
+  //     tax: 0,
+  //     woTax: 0,
+  //   }
+  // );
+
+  const totalTax = order?.totalTaxMoney.amount ?? 0;
+  const totalAmount = order?.totalMoney.amount ?? 0;
 
   return (
     <>
@@ -37,7 +38,7 @@ export default function CartFooter() {
             <EditOutlined className={styles.editIcon} />
           </Space>
           <Typography.Text className={styles.label}>
-            $ {formatPrice(amounts.tax)}
+            $ {formatPrice(totalTax)}
           </Typography.Text>
         </Flex>
       </Button>
@@ -45,7 +46,7 @@ export default function CartFooter() {
       <Flex justify="space-between" className={styles.totalRow}>
         <Typography.Text className={styles.label}>Grand Total</Typography.Text>
         <Typography.Text className={styles.label}>
-          $ {formatPrice(amounts.tax + amounts.woTax)}
+          $ {formatPrice(totalAmount)}
         </Typography.Text>
       </Flex>
 

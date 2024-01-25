@@ -23,9 +23,9 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <main>
       <DashboardContainer>
-        <CartContainer>
-          <CategoriesContainer>
-            <ProductsContainer>
+        <CategoriesContainer>
+          <ProductsContainer>
+            <CartContainer>
               <Header className={styles.header}>
                 <Typography.Title ellipsis className={styles.headerTitle}>
                   POS app
@@ -34,9 +34,9 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
               </Header>
 
               <Content className={styles.content}>{children}</Content>
-            </ProductsContainer>
-          </CategoriesContainer>
-        </CartContainer>
+            </CartContainer>
+          </ProductsContainer>
+        </CategoriesContainer>
       </DashboardContainer>
     </main>
   );

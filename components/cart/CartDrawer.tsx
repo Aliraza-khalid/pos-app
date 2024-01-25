@@ -2,20 +2,18 @@ import { Button, Drawer, Flex, Space, Switch, Typography, theme } from "antd";
 import React from "react";
 import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
-import useStore from "@/stores";
 import Modal from "@/components/base/Modal";
-import formatTax from "@/utils/formatTax";
 import useCartContext from "@/hooks/useCartContext";
 import useCart from "@/hooks/useCart";
 import { CloseOutlined } from "@ant-design/icons";
-import { Tax } from "@/types/Tax";
-import { CartTax } from "@/types/Cart";
 import { filterAppliedTaxes } from "@/utils/filterAppliedTaxes";
+import useStore from "@/stores";
 
 const { useToken } = theme;
 
 export default function CartDrawer() {
-  const cartItems = useStore((state) => state.cartItems);
+  const cart = useStore((state) => state.cart);
+  const { order, orderLoading } = useCartContext();
   const { onToggleTax, onRemoveTaxFromAll } = useCart();
   const {
     cartOpen,
@@ -29,18 +27,21 @@ export default function CartDrawer() {
   } = useCartContext();
 
   const { token } = useToken();
-
-  const appliedTaxes = filterAppliedTaxes(cartItems);
+  const appliedTaxes = filterAppliedTaxes(cart);
 
   return (
     <Drawer
       title="Cart"
       open={cartOpen}
       onClose={toggleCart}
-      footer={Object.keys(cartItems).length !== 0 && <CartFooter />}
+      footer={order?.lineItems?.length && <CartFooter />}
     >
-      {Object.values(cartItems).map((item) => (
-        <CartCard key={item.variationId} item={item} />
+      {order?.lineItems?.map((item) => (
+        <CartCard
+          key={item.catalogObjectId}
+          item={item}
+          loading={orderLoading}
+        />
       ))}
 
       <Modal
@@ -52,7 +53,7 @@ export default function CartDrawer() {
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>
-              <Typography.Text>({formatTax(tax)})</Typography.Text>
+              <Typography.Text>({tax.percentage} %)</Typography.Text>
             </Space>
             <Switch
               value={tax.isApplied}
@@ -71,7 +72,7 @@ export default function CartDrawer() {
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>
-              <Typography.Text>({formatTax(tax)})</Typography.Text>
+              <Typography.Text>({tax.percentage} %)</Typography.Text>
             </Space>
             <Switch
               value={tax.isApplied}
@@ -90,7 +91,7 @@ export default function CartDrawer() {
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>
-              <Typography.Text>({formatTax(tax)})</Typography.Text>
+              <Typography.Text>({tax.percentage} %)</Typography.Text>
             </Space>
             <Button
               type="text"

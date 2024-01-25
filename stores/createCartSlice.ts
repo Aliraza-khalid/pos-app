@@ -4,7 +4,7 @@ import { ProductsSlice } from "./createProductsSlice";
 import { CatalogProduct, Variation } from "@/types/Product";
 
 export interface CartSlice {
-  cartItems: Cart;
+  cart: Cart;
 
   addItemToCart: (product: CatalogProduct, variation: Variation) => void;
   increaseItemInCart: (variationId: string) => void;
@@ -12,7 +12,7 @@ export interface CartSlice {
 
   updateItemInCart: (item: CartProduct) => void;
 
-  setCartItems: (data: Cart) => void;
+  setCart: (data: Cart) => void;
 }
 
 const createCartSlice: StateCreator<
@@ -21,7 +21,7 @@ const createCartSlice: StateCreator<
   [],
   CartSlice
 > = (set, get) => ({
-  cartItems: {},
+  cart: {},
 
   addItemToCart: (product, variation) => {
     const allTaxes = get().taxes;
@@ -40,8 +40,8 @@ const createCartSlice: StateCreator<
     );
 
     set((state) => ({
-      cartItems: {
-        ...state.cartItems,
+      cart: {
+        ...state.cart,
         [variation.variationId]: {
           ...variation,
           productId: product.catalogObjectId,
@@ -55,12 +55,12 @@ const createCartSlice: StateCreator<
   },
 
   increaseItemInCart: (variationId) => {
-    const cartItem = get().cartItems[variationId];
+    const cartItem = get().cart[variationId];
     if (!cartItem) return;
 
     set((state) => ({
-      cartItems: {
-        ...state.cartItems,
+      cart: {
+        ...state.cart,
         [variationId]: {
           ...cartItem,
           quantity: cartItem.quantity + 1,
@@ -70,17 +70,17 @@ const createCartSlice: StateCreator<
   },
 
   decreaseItemInCart: (variationId) => {
-    const cart = get().cartItems;
+    const cart = get().cart;
 
     if (cart[variationId].quantity === 1) {
       const cartCopy = { ...cart };
       delete cartCopy[variationId];
-      set(() => ({ cartItems: cartCopy }));
+      set(() => ({ cart: cartCopy }));
     } else {
       const item = cart[variationId];
       set((state) => ({
-        cartItems: {
-          ...state.cartItems,
+        cart: {
+          ...state.cart,
           [variationId]: {
             ...item,
             quantity: item.quantity - 1,
@@ -92,13 +92,13 @@ const createCartSlice: StateCreator<
 
   updateItemInCart: (item) =>
     set((state) => ({
-      cartItems: {
-        ...state.cartItems,
+      cart: {
+        ...state.cart,
         [item.variationId]: item,
       },
     })),
 
-  setCartItems: (data) => set(() => ({ cartItems: data })),
+  setCart: (data) => set(() => ({ cart: data })),
 });
 
 export default createCartSlice;

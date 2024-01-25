@@ -5,25 +5,27 @@ import React from "react";
 import formatPrice from "@/utils/formatPrice";
 import { EditOutlined } from "@ant-design/icons";
 import useProductQuantity from "@/hooks/useProductQuantity";
-import calculateProductTax from "@/utils/calculateProductTax";
 import useCartContext from "@/hooks/useCartContext";
+import { LineItem } from "@/types/Order";
 
 type PropTypes = {
-  item: CartProduct;
+  item: LineItem;
+  loading: boolean;
 };
 
-export default function CartCard({ item }: PropTypes) {
+export default function CartCard({ item, loading }: PropTypes) {
   const { styles } = useStyles();
   const { increaseItemInCart, decreaseItemInCart } = useProductQuantity(
-    item.variationId
+    item.catalogObjectId
   );
   const {setActiveItem, toggleModal} = useCartContext();
 
-  const subTotal = item.price.amount * item.quantity;
-  const taxAmount = calculateProductTax(item);
+  const grossAmount = item.grossSalesMoney.amount;
+  const totalTax = item.totalTaxMoney.amount;
+  const totalAmount = item.totalMoney.amount;
 
   const onClickEdit = (modal: CartModalTypes) => {
-    setActiveItem(item);
+    setActiveItem(item.catalogObjectId);
     toggleModal(modal);
   }
 
@@ -31,7 +33,7 @@ export default function CartCard({ item }: PropTypes) {
     <Card title={item.name} className={styles.card} size="small">
       <Flex justify="space-between" align="center" className={styles.priceRow}>
         <Typography.Text className={styles.label}>
-          $ {formatPrice(item.price.amount)}
+          $ {formatPrice(item.basePriceMoney.amount)}
         </Typography.Text>
 
         <Flex justify="center" align="center" gap={10}>
@@ -39,7 +41,7 @@ export default function CartCard({ item }: PropTypes) {
             shape="circle"
             size="small"
             className={styles.quantityButton}
-            onClick={() => decreaseItemInCart(item.variationId)}
+            onClick={() => decreaseItemInCart(item.catalogObjectId)}
           >
             -
           </Button>
@@ -48,7 +50,7 @@ export default function CartCard({ item }: PropTypes) {
             shape="circle"
             size="small"
             className={styles.quantityButton}
-            onClick={() => increaseItemInCart(item.variationId)}
+            onClick={() => increaseItemInCart(item.catalogObjectId)}
           >
             +
           </Button>
@@ -58,7 +60,7 @@ export default function CartCard({ item }: PropTypes) {
       <Flex justify="space-between">
         <Typography.Text className={styles.label}>Sub total</Typography.Text>
         <Typography.Text className={styles.label}>
-          $ {formatPrice(subTotal)}
+          $ {formatPrice(grossAmount)}
         </Typography.Text>
       </Flex>
 
@@ -78,13 +80,13 @@ export default function CartCard({ item }: PropTypes) {
             <Typography.Text className={styles.label}>Tax</Typography.Text>
             <EditOutlined className={styles.editIcon} />
           </Space>
-          <Typography.Text className={styles.label}>$ {formatPrice(taxAmount)}</Typography.Text>
+          <Typography.Text className={styles.label}>$ {formatPrice(totalTax)}</Typography.Text>
         </Flex>
       </Button>
 
       <Flex justify="space-between" className={styles.totalRow}>
         <Typography.Text className={styles.label}>Total</Typography.Text>
-        <Typography.Text className={styles.amount}>$ {formatPrice(subTotal + taxAmount)}</Typography.Text>
+        <Typography.Text className={styles.amount}>$ {formatPrice(totalAmount)}</Typography.Text>
       </Flex>
     </Card>
   );
