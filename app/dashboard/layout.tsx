@@ -10,6 +10,7 @@ import DashboardContainer from "@/containers/DashboardContainer";
 import CartContainer from "@/containers/CartContainer";
 import NavMenu from "@/components/NavMenu";
 import isAuthenticated from "@/utils/isAuthenticated";
+import CategoriesContainer from "@/containers/CategoriesContainer";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   const { styles, cx, theme } = useStyles();
@@ -23,16 +24,18 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
     <main>
       <DashboardContainer>
         <CartContainer>
-          <ProductsContainer>
-            <Header className={styles.header}>
-              <Typography.Title ellipsis className={styles.headerTitle}>
-                POS app
-              </Typography.Title>
-              <NavMenu />
-            </Header>
+          <CategoriesContainer>
+            <ProductsContainer>
+              <Header className={styles.header}>
+                <Typography.Title ellipsis className={styles.headerTitle}>
+                  POS app
+                </Typography.Title>
+                <NavMenu />
+              </Header>
 
-            <Content className={styles.content}>{children}</Content>
-          </ProductsContainer>
+              <Content className={styles.content}>{children}</Content>
+            </ProductsContainer>
+          </CategoriesContainer>
         </CartContainer>
       </DashboardContainer>
     </main>

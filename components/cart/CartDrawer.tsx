@@ -8,6 +8,8 @@ import formatTax from "@/utils/formatTax";
 import useCartContext from "@/hooks/useCartContext";
 import useCart from "@/hooks/useCart";
 import { CloseOutlined } from "@ant-design/icons";
+import { Tax } from "@/types/Tax";
+import { CartTax } from "@/types/Cart";
 
 const { useToken } = theme;
 
@@ -27,10 +29,10 @@ export default function CartDrawer() {
 
   const { token } = useToken();
 
-  const taxes = new Set(
-    Object.values(cartItems)
-      .flatMap((item) => Object.values(item.taxes))
-      .filter((item) => item.isApplied)
+  console.log(activeItem);
+  const taxesApplied = Object.values(cartItems).reduce(
+    (acc, item) => [...acc, ...item.taxes.filter((t) => t.isApplied)],
+    [] as CartTax[]
   );
 
   return (
@@ -49,7 +51,7 @@ export default function CartDrawer() {
         open={taxModalOpen}
         onClose={() => toggleModal("ProductTax")}
       >
-        {Object.values(activeItem?.taxes ?? []).map((tax) => (
+        {activeItem?.taxes.map((tax) => (
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>
@@ -87,7 +89,7 @@ export default function CartDrawer() {
         open={totalTaxModalOpen}
         onClose={() => toggleModal("TotalTax")}
       >
-        {Array.from(taxes).map((tax) => (
+        {taxesApplied.map((tax) => (
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>

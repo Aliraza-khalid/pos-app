@@ -10,12 +10,10 @@ export interface CartProduct extends Variation {
   name: string;
   imageUrl: string;
   quantity: number;
-  taxes: {
-    [key: string]: CartTax;
-  };
+  taxes: CartTax[];
 }
 
-interface CartTax extends Tax {
+export interface CartTax extends Tax {
   isApplied: boolean;
 }
 

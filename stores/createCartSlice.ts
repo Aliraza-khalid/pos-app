@@ -1,4 +1,4 @@
-import { Cart, CartProduct } from "@/types/Cart";
+import { Cart, CartProduct, CartTax } from "@/types/Cart";
 import { StateCreator } from "zustand";
 import { ProductsSlice } from "./createProductsSlice";
 import { CatalogProduct, Variation } from "@/types/Product";
@@ -25,17 +25,18 @@ const createCartSlice: StateCreator<
 
   addItemToCart: (product, variation) => {
     const allTaxes = get().taxes;
-    const taxesObject = allTaxes.reduce(
-      (prev, curr) => ({
-        ...prev,
-        ...(product.taxIds.includes(curr.id) && {
-          [curr.id]: {
-            ...curr,
-            isApplied: true,
-          },
-        }),
-      }),
-      {}
+    const taxes = allTaxes.reduce(
+      (acc, curr) =>
+        product.taxIds.includes(curr.id)
+          ? [
+              ...acc,
+              {
+                ...curr,
+                isApplied: true,
+              },
+            ]
+          : acc,
+      [] as CartTax[]
     );
 
     set((state) => ({
@@ -46,7 +47,7 @@ const createCartSlice: StateCreator<
           productId: product.catalogObjectId,
           name: product.name,
           imageUrl: product.imageUrl,
-          taxes: taxesObject,
+          taxes,
           quantity: 1,
         },
       },

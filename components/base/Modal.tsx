@@ -33,6 +33,9 @@ const useStyles = createStyles(({ token, css }) => ({
     margin: auto;
   `,
   body: css`
+    display: flex;
+    flex-direction: column;
+    gap: ${token.padding}px;
     margin-top: ${token.marginMD}px;
     margin-bottom: 0px;
     text-align: center;

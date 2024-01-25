@@ -13,13 +13,14 @@ export default function useCart() {
     if (!activeItem) return;
     const updatedData = {
       ...activeItem,
-      taxes: {
-        ...activeItem.taxes,
-        [id]: {
-          ...activeItem.taxes[id],
-          isApplied: value,
-        },
-      },
+      taxes: activeItem.taxes.map((tax) =>
+        tax.id === id
+          ? {
+              ...tax,
+              isApplied: value,
+            }
+          : tax
+      ),
     };
 
     setActiveItem(updatedData);
@@ -32,13 +33,14 @@ export default function useCart() {
     Object.values(cartItems).forEach((item) => {
       updatedCart[item.variationId] = {
         ...item,
-        taxes: {
-          ...item.taxes,
-          [id]: {
-            ...item.taxes[id],
-            isApplied: false,
-          },
-        },
+        taxes: item.taxes.map((tax) =>
+          tax.id === id
+            ? {
+                ...tax,
+                isApplied: false,
+              }
+            : tax
+        ),
       };
     });
 
