@@ -31,7 +31,7 @@ export default function CartCard({ item, loading }: PropTypes) {
   };
 
   return (
-    <Card title={item.name} className={styles.card} size="small">
+    <Card title={`${item.name} - ${item.variationName}`} className={styles.card} size="small">
       <Flex justify="space-between" align="center" className={styles.priceRow}>
         <Typography.Text className={styles.label}>
           $ {formatPrice(item.basePriceMoney.amount)}
