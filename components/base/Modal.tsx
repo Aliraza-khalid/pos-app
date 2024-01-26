@@ -9,7 +9,7 @@ type PropTypes = {
   children: React.ReactNode;
 };
 
-export default function Modal({ title, open, onClose, children }: PropTypes) {
+export default function Modal({ title, open, onClose, children, ...props }: PropTypes) {
   const { styles } = useStyles();
 
   return (
@@ -21,6 +21,7 @@ export default function Modal({ title, open, onClose, children }: PropTypes) {
       open={open}
       onCancel={onClose}
       footer={[]}
+      {...props}
     >
       {children}
     </ModalAntd>

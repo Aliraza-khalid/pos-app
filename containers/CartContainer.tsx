@@ -17,7 +17,7 @@ type ContextTypes = {
   toggleCart: () => void;
   modalData: CartProduct | undefined;
   setModalData: (id: string, item?: CartProduct) => void;
-  cartModal: CartModalTypes  | '';
+  cartModal: CartModalTypes | "";
   toggleModal: (modal: CartModalTypes) => void;
   order: OrderResponseDTO | undefined;
   orderLoading: boolean;
@@ -30,7 +30,7 @@ export default function CartContainer({ children }: PropsWithChildren) {
   const cart = useStore((state) => state.cart);
 
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartModal, setCartModal] = useState<CartModalTypes | ''>('');
+  const [cartModal, setCartModal] = useState<CartModalTypes | "">("");
   const [modalData, setModalData] = useState<CartProduct>();
   const [order, setOrder] = useState<OrderResponseDTO>();
 
@@ -51,7 +51,7 @@ export default function CartContainer({ children }: PropsWithChildren) {
   const toggleCart = () => setCartOpen((v) => !v);
 
   const toggleModal = (modal: CartModalTypes) => {
-    setCartModal(v => v === modal ? "" : modal);
+    setCartModal((v) => (v === modal ? "" : modal));
   };
 
   const updateModalData = (id: string, item?: CartProduct) => {

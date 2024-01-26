@@ -4,7 +4,7 @@ const ComponentToken = {
   },
   Typography: {
     titleMarginBottom: 0,
-  }
+  },
 }
 
 export default ComponentToken;

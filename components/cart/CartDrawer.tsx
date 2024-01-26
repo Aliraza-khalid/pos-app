@@ -8,6 +8,7 @@ import useCart from "@/hooks/useCart";
 import appliedTaxes from "@/utils/appliedTaxes";
 import useStore from "@/stores";
 import appliedDiscounts from "@/utils/appliedDiscounts";
+import { createStyles } from "antd-style";
 
 const { useToken } = theme;
 
@@ -15,16 +16,16 @@ export default function CartDrawer() {
   const cart = useStore((state) => state.cart);
   const discounts = useStore((state) => state.discounts);
   const { order, orderLoading } = useCartContext();
-  const { onToggleTax, onToggleDiscount, onToggleGlobalTax, onToggleGlobalDiscount } = useCart();
   const {
-    cartOpen,
-    modalData,
-    toggleCart,
-    cartModal,
-    toggleModal,
-  } = useCartContext();
+    onToggleTax,
+    onToggleDiscount,
+    onToggleGlobalTax,
+    onToggleGlobalDiscount,
+  } = useCart();
+  const { cartOpen, modalData, toggleCart, cartModal, toggleModal } =
+    useCartContext();
 
-  const { token } = useToken();
+  const { styles } = useStyles();
   const allAppliedTaxes = appliedTaxes(cart);
   const allAppliedDiscounts = appliedDiscounts(cart);
 
@@ -45,7 +46,7 @@ export default function CartDrawer() {
 
       <Modal
         title={`Taxes - ${modalData?.name}`}
-        open={cartModal === 'ProductTax'}
+        open={cartModal === "ProductTax"}
         onClose={() => toggleModal("ProductTax")}
       >
         {modalData?.taxes.map((tax) => (
@@ -64,7 +65,7 @@ export default function CartDrawer() {
 
       <Modal
         title={`Discounts - ${modalData?.name}`}
-        open={cartModal === 'ProductDiscount'}
+        open={cartModal === "ProductDiscount"}
         onClose={() => toggleModal("ProductDiscount")}
       >
         {discounts.map((discount) => (
@@ -83,7 +84,7 @@ export default function CartDrawer() {
 
       <Modal
         title="All Taxes"
-        open={cartModal === 'TotalTax'}
+        open={cartModal === "TotalTax"}
         onClose={() => toggleModal("TotalTax")}
       >
         {allAppliedTaxes.map((tax) => (
@@ -102,7 +103,7 @@ export default function CartDrawer() {
 
       <Modal
         title="All Discounts"
-        open={cartModal === 'TotalDiscount'}
+        open={cartModal === "TotalDiscount"}
         onClose={() => toggleModal("TotalDiscount")}
       >
         {discounts.map((discount) => (
@@ -121,3 +122,9 @@ export default function CartDrawer() {
     </Drawer>
   );
 }
+
+const useStyles = createStyles(({ token, css }) => ({
+  drawer: css`
+    // background-color: ${token.colorPrimaryBorder}
+  `,
+}));

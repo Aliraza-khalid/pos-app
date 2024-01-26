@@ -14,7 +14,7 @@ type PropTypes = {
 };
 
 export default function CartCard({ item, loading }: PropTypes) {
-  const quantity = useStore((state) => state.cart[item.catalogObjectId].quantity);
+  const quantity = useStore((state) => state.cart[item.catalogObjectId]?.quantity ?? 0);
   const increaseItemInCart = useStore((state) => state.increaseItemInCart);
   const decreaseItemInCart = useStore((state) => state.decreaseItemInCart);
   const { setModalData, toggleModal } = useCartContext();
@@ -113,7 +113,8 @@ const useStyles = createStyles(({ token, css }) => ({
   card: css`
     width: 100%;
     margin-bottom: ${token.marginMD}px;
-    background-color: ${token.colorBgLayout};
+    background-color: ${token.colorPrimaryBorder};
+    border-color: ${token.colorPrimaryBorder};
   `,
   title: {
     fontSize: `${token.fontSizeSM}px;`,
@@ -126,7 +127,7 @@ const useStyles = createStyles(({ token, css }) => ({
     margin-bottom: ${token.marginMD}px;
   `,
   quantityButton: css`
-    background-color: ${token.colorBgMask};
+    border-color: ${token.colorBgContainer};
   `,
   editButton: css`
     padding: ${token.paddingXXS}px 0px;
@@ -140,6 +141,6 @@ const useStyles = createStyles(({ token, css }) => ({
   `,
   totalRow: css`
     padding-top: ${token.marginXS}px;
-    border-top: 1px solid ${token.colorBorderSecondary};
+    border-top: 1px solid ${token.colorBorderBg};
   `,
 }));

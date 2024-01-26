@@ -2,7 +2,7 @@
 
 import { PropsWithChildren, useEffect } from "react";
 import { Typography } from "antd";
-import { Content, Header } from "antd/es/layout/layout";
+import Layout, { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import { useRouter } from "next/navigation";
 import ProductsContainer from "@/containers/ProductsContainer";
@@ -21,11 +21,11 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   }, []);
 
   return (
-    <main>
-      <DashboardContainer>
-        <CategoriesContainer>
-          <ProductsContainer>
-            <CartContainer>
+    <DashboardContainer>
+      <CategoriesContainer>
+        <ProductsContainer>
+          <CartContainer>
+            <Layout style={{ height: "100vh" }}>
               <Header className={styles.header}>
                 <Typography.Title ellipsis className={styles.headerTitle}>
                   POS app
@@ -34,11 +34,11 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
               </Header>
 
               <Content className={styles.content}>{children}</Content>
-            </CartContainer>
-          </ProductsContainer>
-        </CategoriesContainer>
-      </DashboardContainer>
-    </main>
+            </Layout>
+          </CartContainer>
+        </ProductsContainer>
+      </CategoriesContainer>
+    </DashboardContainer>
   );
 }
 
@@ -51,12 +51,13 @@ const useStyles = createStyles(({ token, css }) => ({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: ${token.colorBgLayout};
+    background-color: ${token.colorPrimaryBorder};
   `,
   headerTitle: css`
     margin-bottom: 0;
   `,
   content: css`
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

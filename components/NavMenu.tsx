@@ -51,6 +51,6 @@ export default function NavMenu() {
 
 const useStyles = createStyles(({ token, css }) => ({
   menu: css`
-    background-color: ${token.colorBgLayout};
+    background-color: ${token.colorPrimaryBorder};
   `,
 }));
