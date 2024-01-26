@@ -1,0 +1,13 @@
+import { Discount } from "@/types/Discount";
+
+export default async function getDiscounts(): Promise<Discount[] | undefined> {
+  const merchant = JSON.parse(localStorage.getItem("merchant") ?? "");
+
+  const res = await fetch(`${process.env.SERVER_URL}/api/get-discounts?type=DISCOUNT&locationId=${merchant.mainLocationId}`, {
+    headers: {
+      Authorization: JSON.parse(localStorage.getItem("accessToken") ?? ""),
+    },
+  });
+  const { result } = await res.json();
+  return result;
+}

@@ -1,24 +1,26 @@
 import { Button, Drawer, Flex, Space, Switch, Typography, theme } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 import React from "react";
 import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
 import Modal from "@/components/base/Modal";
 import useCartContext from "@/hooks/useCartContext";
 import useCart from "@/hooks/useCart";
-import { CloseOutlined } from "@ant-design/icons";
-import { filterAppliedTaxes } from "@/utils/filterAppliedTaxes";
+import appliedTaxes from "@/utils/appliedTaxes";
 import useStore from "@/stores";
+import appliedDiscounts from "@/utils/appliedDiscounts";
 
 const { useToken } = theme;
 
 export default function CartDrawer() {
   const cart = useStore((state) => state.cart);
+  const discounts = useStore((state) => state.discounts);
   const { order, orderLoading } = useCartContext();
-  const { onToggleTax, onRemoveTaxFromAll } = useCart();
+  const { onToggleTax, onToggleDiscount, onToggleGlobalTax, onToggleGlobalDiscount } = useCart();
   const {
     cartOpen,
+    modalData,
     toggleCart,
-    activeItem,
     taxModalOpen,
     discountModalOpen,
     totalTaxModalOpen,
@@ -27,7 +29,8 @@ export default function CartDrawer() {
   } = useCartContext();
 
   const { token } = useToken();
-  const appliedTaxes = filterAppliedTaxes(cart);
+  const allAppliedTaxes = appliedTaxes(cart);
+  const allAppliedDiscounts = appliedDiscounts(cart);
 
   return (
     <Drawer
@@ -45,11 +48,11 @@ export default function CartDrawer() {
       ))}
 
       <Modal
-        title={`Taxes - ${activeItem?.name}`}
+        title={`Taxes - ${modalData?.name}`}
         open={taxModalOpen}
         onClose={() => toggleModal("ProductTax")}
       >
-        {activeItem?.taxes.map((tax) => (
+        {modalData?.taxes.map((tax) => (
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>
@@ -64,19 +67,19 @@ export default function CartDrawer() {
       </Modal>
 
       <Modal
-        title={`Discounts - ${activeItem?.name}`}
+        title={`Discounts - ${modalData?.name}`}
         open={discountModalOpen}
         onClose={() => toggleModal("ProductDiscount")}
       >
-        {Object.values(activeItem?.taxes ?? []).map((tax) => (
-          <Flex key={tax.id} justify="space-between">
+        {discounts.map((discount) => (
+          <Flex key={discount.id} justify="space-between">
             <Space>
-              <Typography.Text>{tax.name}</Typography.Text>
-              <Typography.Text>({tax.percentage} %)</Typography.Text>
+              <Typography.Text>{discount.name}</Typography.Text>
+              {/* <Typography.Text>({tax.percentage} %)</Typography.Text> */}
             </Space>
             <Switch
-              value={tax.isApplied}
-              onChange={(v) => onToggleTax(tax.id, v)}
+              value={modalData?.discounts.includes(discount.id)}
+              onChange={(v) => onToggleDiscount(discount.id, v)}
             />
           </Flex>
         ))}
@@ -87,16 +90,34 @@ export default function CartDrawer() {
         open={totalTaxModalOpen}
         onClose={() => toggleModal("TotalTax")}
       >
-        {appliedTaxes.map((tax) => (
+        {allAppliedTaxes.map((tax) => (
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>
               <Typography.Text>({tax.percentage} %)</Typography.Text>
             </Space>
-            <Button
-              type="text"
-              icon={<CloseOutlined style={{ color: `${token.colorError}` }} />}
-              onClick={() => onRemoveTaxFromAll(tax.id)}
+            <Switch
+              value={true}
+              onChange={(v) => onToggleGlobalTax(tax.id, v)}
+            />
+          </Flex>
+        ))}
+      </Modal>
+
+      <Modal
+        title="All Discounts"
+        open={totalDiscountModalOpen}
+        onClose={() => toggleModal("TotalDiscount")}
+      >
+        {discounts.map((discount) => (
+          <Flex key={discount.id} justify="space-between">
+            <Space>
+              <Typography.Text>{discount.name}</Typography.Text>
+              {/* <Typography.Text>({tax.percentage} %)</Typography.Text> */}
+            </Space>
+            <Switch
+              value={allAppliedDiscounts.includes(discount.id)}
+              onChange={(v) => onToggleGlobalDiscount(discount.id, v)}
             />
           </Flex>
         ))}

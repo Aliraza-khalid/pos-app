@@ -18,16 +18,17 @@ export default function CartCard({ item, loading }: PropTypes) {
   const { increaseItemInCart, decreaseItemInCart } = useProductQuantity(
     item.catalogObjectId
   );
-  const {setActiveItem, toggleModal} = useCartContext();
+  const { setModalData, toggleModal } = useCartContext();
 
   const grossAmount = item.grossSalesMoney.amount;
-  const totalTax = item.totalTaxMoney.amount;
+  const discountAmount = item.totalDiscountMoney.amount;
+  const taxAmount = item.totalTaxMoney.amount;
   const totalAmount = item.totalMoney.amount;
 
   const onClickEdit = (modal: CartModalTypes) => {
-    setActiveItem(item.catalogObjectId);
+    setModalData(item.catalogObjectId);
     toggleModal(modal);
-  }
+  };
 
   return (
     <Card title={item.name} className={styles.card} size="small">
@@ -64,29 +65,45 @@ export default function CartCard({ item, loading }: PropTypes) {
         </Typography.Text>
       </Flex>
 
-      {/* <Flex justify="space-between">
-        <Typography.Text className={styles.price}>Discount</Typography.Text>
-        <Typography.Text className={styles.price}>- $ 2</Typography.Text>
-      </Flex> */}
+      <Button
+        type="link"
+        block
+        className={styles.editButton}
+        onClick={() => onClickEdit("ProductDiscount")}
+      >
+        <Flex justify="space-between">
+          <Space>
+            <Typography.Text className={styles.label}>Discount</Typography.Text>
+            <EditOutlined className={styles.editIcon} />
+          </Space>
+          <Typography.Text className={styles.label}>
+            $ {formatPrice(discountAmount)}
+          </Typography.Text>
+        </Flex>
+      </Button>
 
       <Button
         type="link"
         block
         className={styles.editButton}
-        onClick={() => onClickEdit('ProductTax')}
+        onClick={() => onClickEdit("ProductTax")}
       >
         <Flex justify="space-between">
           <Space>
             <Typography.Text className={styles.label}>Tax</Typography.Text>
             <EditOutlined className={styles.editIcon} />
           </Space>
-          <Typography.Text className={styles.label}>$ {formatPrice(totalTax)}</Typography.Text>
+          <Typography.Text className={styles.label}>
+            $ {formatPrice(taxAmount)}
+          </Typography.Text>
         </Flex>
       </Button>
 
       <Flex justify="space-between" className={styles.totalRow}>
         <Typography.Text className={styles.label}>Total</Typography.Text>
-        <Typography.Text className={styles.amount}>$ {formatPrice(totalAmount)}</Typography.Text>
+        <Typography.Text className={styles.amount}>
+          $ {formatPrice(totalAmount)}
+        </Typography.Text>
       </Flex>
     </Card>
   );

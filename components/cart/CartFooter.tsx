@@ -21,11 +21,29 @@ export default function CartFooter() {
   //   }
   // );
 
+  const totalDiscount = order?.totalDiscountMoney.amount ?? 0;
   const totalTax = order?.totalTaxMoney.amount ?? 0;
   const totalAmount = order?.totalMoney.amount ?? 0;
 
   return (
     <>
+      <Button
+        type="link"
+        block
+        className={styles.editButton}
+        onClick={() => toggleModal("TotalDiscount")}
+      >
+        <Flex justify="space-between">
+          <Space>
+            <Typography.Text className={styles.label}>Discount</Typography.Text>
+            <EditOutlined className={styles.editIcon} />
+          </Space>
+          <Typography.Text className={styles.label}>
+            $ {formatPrice(totalDiscount)}
+          </Typography.Text>
+        </Flex>
+      </Button>
+
       <Button
         type="link"
         block

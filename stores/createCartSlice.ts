@@ -48,6 +48,7 @@ const createCartSlice: StateCreator<
           name: product.name,
           imageUrl: product.imageUrl,
           taxes,
+          discounts: [],
           quantity: 1,
         },
       },

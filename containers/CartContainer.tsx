@@ -1,10 +1,16 @@
+import React, {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import useStore from "@/stores";
+import { useQuery } from "@tanstack/react-query";
 import { CartProduct, CartModalTypes } from "@/types/Cart";
 import { CreateOrderDTO, OrderResponseDTO } from "@/types/Order";
 import calculateOrder from "@/utils/apis/calculateOrder";
-import { filterAppliedTaxes } from "@/utils/filterAppliedTaxes";
-import { useQuery } from "@tanstack/react-query";
-import React, { PropsWithChildren, createContext, useEffect, useMemo, useState } from "react";
+import { convertCartToOrder } from "@/utils/convertCartToOrder";
 
 type ContextTypes = {
   cartOpen: boolean;
@@ -13,8 +19,8 @@ type ContextTypes = {
   discountModalOpen: boolean;
   totalTaxModalOpen: boolean;
   totalDiscountModalOpen: boolean;
-  activeItem: CartProduct | undefined;
-  setActiveItem: (id: string, item?: CartProduct) => void;
+  modalData: CartProduct | undefined;
+  setModalData: (id: string, item?: CartProduct) => void;
   toggleModal: (modal: CartModalTypes) => void;
   order: OrderResponseDTO | undefined;
   orderLoading: boolean;
@@ -31,36 +37,22 @@ export default function CartContainer({ children }: PropsWithChildren) {
   const [discountModalOpen, setDiscountModalOpen] = useState(false);
   const [totalTaxModalOpen, setTotalTaxModalOpen] = useState(false);
   const [totalDiscountModalOpen, setTotalDiscountModalOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState<CartProduct>();
+  const [modalData, setModalData] = useState<CartProduct>();
   const [order, setOrder] = useState<OrderResponseDTO>();
 
-  const orderDTO: CreateOrderDTO = useMemo(() => ({
-    lineItems: Object.values(cart).map((item) => ({
-      catalogObjectId: item.variationId,
-      quantity: item.quantity.toString(),
-      itemType: "ITEM",
-      appliedTaxes: item.taxes.reduce(
-        (acc, curr) => (curr.isApplied ? [...acc, { taxUid: curr.id }] : acc),
-        [] as { taxUid: string }[]
-      ),
-      appliedDiscounts: [],
-    })),
-    taxes: filterAppliedTaxes(cart).map((tax) => ({
-      uid: tax.id,
-      catalogObjectId: tax.id,
-      scope: "LINE_ITEM",
-    })),
-    discounts: [],
-  }), [cart]);
+  const orderDTO: CreateOrderDTO = useMemo(
+    () => convertCartToOrder(cart),
+    [cart]
+  );
 
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["calculateOrder", orderDTO],
     queryFn: () => calculateOrder(orderDTO),
   });
 
   useEffect(() => {
     data && setOrder(data);
-  }, [data])
+  }, [data]);
 
   const toggleCart = () => setCartOpen((v) => !v);
 
@@ -69,17 +61,23 @@ export default function CartContainer({ children }: PropsWithChildren) {
       case "ProductTax":
         setTaxModalOpen((v) => !v);
         break;
+      case "ProductDiscount":
+        setDiscountModalOpen((v) => !v);
+        break;
       case "TotalTax":
         setTotalTaxModalOpen((v) => !v);
+        break;
+      case "TotalDiscount":
+        setTotalDiscountModalOpen((v) => !v);
         break;
       default:
         break;
     }
   };
 
-  const updateActiveItem = (id: string, item?: CartProduct) => {
-    setActiveItem(item ?? cart[id]);
-  }
+  const updateModalData = (id: string, item?: CartProduct) => {
+    setModalData(item ?? cart[id]);
+  };
 
   return (
     <CartContext.Provider
@@ -90,12 +88,12 @@ export default function CartContainer({ children }: PropsWithChildren) {
         discountModalOpen,
         totalTaxModalOpen,
         totalDiscountModalOpen,
-        activeItem,
-        setActiveItem: updateActiveItem,
+        modalData,
+        setModalData: updateModalData,
         toggleModal,
         order,
         orderLoading: isLoading,
-        orderError: isError
+        orderError: isError,
       }}
     >
       {children}

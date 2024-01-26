@@ -1,0 +1,31 @@
+import appliedTaxes from "./appliedTaxes";
+import appliedDiscounts from "./appliedDiscounts";
+import { Cart } from "@/types/Cart";
+import { CreateOrderDTO } from "@/types/Order";
+
+export function convertCartToOrder(cart: Cart): CreateOrderDTO {
+  return {
+    lineItems: Object.values(cart).map((item) => ({
+      catalogObjectId: item.variationId,
+      quantity: item.quantity.toString(),
+      itemType: "ITEM",
+      appliedTaxes: item.taxes.reduce(
+        (acc, curr) => (curr.isApplied ? [...acc, { taxUid: curr.id }] : acc),
+        [] as { taxUid: string }[]
+      ),
+      appliedDiscounts: item.discounts.map((discount) => ({
+        discountUid: discount,
+      })),
+    })),
+    taxes: appliedTaxes(cart).map((tax) => ({
+      uid: tax.id,
+      catalogObjectId: tax.id,
+      scope: "LINE_ITEM",
+    })),
+    discounts: appliedDiscounts(cart).map((discount) => ({
+      uid: discount,
+      catalogObjectId: discount,
+      scope: "LINE_ITEM",
+    })),
+  };
+}

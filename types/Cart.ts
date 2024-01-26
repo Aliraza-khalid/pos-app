@@ -1,4 +1,4 @@
-import { CatalogProduct, Variation } from "./Product";
+import { Variation } from "./Product";
 import { Tax } from "./Tax";
 
 export type Cart = {
@@ -11,6 +11,7 @@ export interface CartProduct extends Variation {
   imageUrl: string;
   quantity: number;
   taxes: CartTax[];
+  discounts: string[];
 }
 
 export interface CartTax extends Tax {
