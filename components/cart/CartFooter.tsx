@@ -6,20 +6,8 @@ import { createStyles } from "antd-style";
 import React from "react";
 
 export default function CartFooter() {
-  const { order, orderLoading } = useCartContext();
-  const { toggleModal } = useCartContext();
+  const { order, orderLoading, toggleModal } = useCartContext();
   const { styles } = useStyles();
-
-  // const amounts = Object.values(cart).reduce(
-  //   (acc, curr) => ({
-  //     tax: acc.tax + calculateProductTax(curr),
-  //     woTax: acc.woTax + curr.price.amount * curr.quantity,
-  //   }),
-  //   {
-  //     tax: 0,
-  //     woTax: 0,
-  //   }
-  // );
 
   const totalDiscount = order?.totalDiscountMoney.amount ?? 0;
   const totalTax = order?.totalTaxMoney.amount ?? 0;

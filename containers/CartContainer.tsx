@@ -15,12 +15,9 @@ import { convertCartToOrder } from "@/utils/convertCartToOrder";
 type ContextTypes = {
   cartOpen: boolean;
   toggleCart: () => void;
-  taxModalOpen: boolean;
-  discountModalOpen: boolean;
-  totalTaxModalOpen: boolean;
-  totalDiscountModalOpen: boolean;
   modalData: CartProduct | undefined;
   setModalData: (id: string, item?: CartProduct) => void;
+  cartModal: CartModalTypes  | '';
   toggleModal: (modal: CartModalTypes) => void;
   order: OrderResponseDTO | undefined;
   orderLoading: boolean;
@@ -33,10 +30,7 @@ export default function CartContainer({ children }: PropsWithChildren) {
   const cart = useStore((state) => state.cart);
 
   const [cartOpen, setCartOpen] = useState(false);
-  const [taxModalOpen, setTaxModalOpen] = useState(false);
-  const [discountModalOpen, setDiscountModalOpen] = useState(false);
-  const [totalTaxModalOpen, setTotalTaxModalOpen] = useState(false);
-  const [totalDiscountModalOpen, setTotalDiscountModalOpen] = useState(false);
+  const [cartModal, setCartModal] = useState<CartModalTypes | ''>('');
   const [modalData, setModalData] = useState<CartProduct>();
   const [order, setOrder] = useState<OrderResponseDTO>();
 
@@ -57,22 +51,7 @@ export default function CartContainer({ children }: PropsWithChildren) {
   const toggleCart = () => setCartOpen((v) => !v);
 
   const toggleModal = (modal: CartModalTypes) => {
-    switch (modal) {
-      case "ProductTax":
-        setTaxModalOpen((v) => !v);
-        break;
-      case "ProductDiscount":
-        setDiscountModalOpen((v) => !v);
-        break;
-      case "TotalTax":
-        setTotalTaxModalOpen((v) => !v);
-        break;
-      case "TotalDiscount":
-        setTotalDiscountModalOpen((v) => !v);
-        break;
-      default:
-        break;
-    }
+    setCartModal(v => v === modal ? "" : modal);
   };
 
   const updateModalData = (id: string, item?: CartProduct) => {
@@ -84,12 +63,9 @@ export default function CartContainer({ children }: PropsWithChildren) {
       value={{
         cartOpen,
         toggleCart,
-        taxModalOpen,
-        discountModalOpen,
-        totalTaxModalOpen,
-        totalDiscountModalOpen,
         modalData,
         setModalData: updateModalData,
+        cartModal,
         toggleModal,
         order,
         orderLoading: isLoading,

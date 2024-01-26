@@ -1,12 +1,12 @@
-import { CartModalTypes, CartProduct } from "@/types/Cart";
+import { CartModalTypes } from "@/types/Cart";
 import { Button, Card, Flex, Space, Typography } from "antd";
 import { createStyles } from "antd-style";
 import React from "react";
 import formatPrice from "@/utils/formatPrice";
 import { EditOutlined } from "@ant-design/icons";
-import useProductQuantity from "@/hooks/useProductQuantity";
 import useCartContext from "@/hooks/useCartContext";
 import { LineItem } from "@/types/Order";
+import useStore from "@/stores";
 
 type PropTypes = {
   item: LineItem;
@@ -14,11 +14,11 @@ type PropTypes = {
 };
 
 export default function CartCard({ item, loading }: PropTypes) {
-  const { styles } = useStyles();
-  const { increaseItemInCart, decreaseItemInCart } = useProductQuantity(
-    item.catalogObjectId
-  );
+  const quantity = useStore((state) => state.cart[item.catalogObjectId].quantity);
+  const increaseItemInCart = useStore((state) => state.increaseItemInCart);
+  const decreaseItemInCart = useStore((state) => state.decreaseItemInCart);
   const { setModalData, toggleModal } = useCartContext();
+  const { styles } = useStyles();
 
   const grossAmount = item.grossSalesMoney.amount;
   const discountAmount = item.totalDiscountMoney.amount;
@@ -46,7 +46,7 @@ export default function CartCard({ item, loading }: PropTypes) {
           >
             -
           </Button>
-          <Typography.Text>{item.quantity}</Typography.Text>
+          <Typography.Text>{quantity}</Typography.Text>
           <Button
             shape="circle"
             size="small"

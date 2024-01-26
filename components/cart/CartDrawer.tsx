@@ -1,5 +1,4 @@
-import { Button, Drawer, Flex, Space, Switch, Typography, theme } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
+import { Drawer, Flex, Space, Switch, Typography, theme } from "antd";
 import React from "react";
 import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
@@ -21,10 +20,7 @@ export default function CartDrawer() {
     cartOpen,
     modalData,
     toggleCart,
-    taxModalOpen,
-    discountModalOpen,
-    totalTaxModalOpen,
-    totalDiscountModalOpen,
+    cartModal,
     toggleModal,
   } = useCartContext();
 
@@ -49,7 +45,7 @@ export default function CartDrawer() {
 
       <Modal
         title={`Taxes - ${modalData?.name}`}
-        open={taxModalOpen}
+        open={cartModal === 'ProductTax'}
         onClose={() => toggleModal("ProductTax")}
       >
         {modalData?.taxes.map((tax) => (
@@ -68,7 +64,7 @@ export default function CartDrawer() {
 
       <Modal
         title={`Discounts - ${modalData?.name}`}
-        open={discountModalOpen}
+        open={cartModal === 'ProductDiscount'}
         onClose={() => toggleModal("ProductDiscount")}
       >
         {discounts.map((discount) => (
@@ -87,7 +83,7 @@ export default function CartDrawer() {
 
       <Modal
         title="All Taxes"
-        open={totalTaxModalOpen}
+        open={cartModal === 'TotalTax'}
         onClose={() => toggleModal("TotalTax")}
       >
         {allAppliedTaxes.map((tax) => (
@@ -106,7 +102,7 @@ export default function CartDrawer() {
 
       <Modal
         title="All Discounts"
-        open={totalDiscountModalOpen}
+        open={cartModal === 'TotalDiscount'}
         onClose={() => toggleModal("TotalDiscount")}
       >
         {discounts.map((discount) => (
