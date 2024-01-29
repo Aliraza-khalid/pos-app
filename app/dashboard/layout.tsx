@@ -36,7 +36,7 @@ const useStyles = createStyles(({ token, css }) => ({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: ${token.colorPrimaryBorder};
+    background-color: ${token.colorBgElevated};
   `,
   headerTitle: css`
     margin-bottom: 0;

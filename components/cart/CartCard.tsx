@@ -123,8 +123,8 @@ const useStyles = createStyles(({ token, css }) => ({
   card: css`
     width: 100%;
     margin-bottom: ${token.marginMD}px;
-    background-color: ${token.colorFillSecondary};
-    border-color: ${token.colorBorderSecondary};
+    // background-color: ${token.colorFillSecondary};
+    border-width: 0px;
   `,
   title: {
     fontSize: `${token.fontSizeSM}px;`,
@@ -137,8 +137,7 @@ const useStyles = createStyles(({ token, css }) => ({
     margin-bottom: ${token.marginMD}px;
   `,
   quantityButton: css`
-    background-color: ${token.colorFillSecondary};
-    border-color: ${token.colorBorderSecondary};
+    background-color: ${token.colorBgContainer};
   `,
   editButton: css`
     padding: ${token.paddingXXS}px 0px;

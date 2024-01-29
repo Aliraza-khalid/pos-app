@@ -45,12 +45,13 @@ export default function NavMenu() {
       items={items}
       selectedKeys={[path]}
       className={styles.menu}
+      theme="dark"
     />
   );
 }
 
 const useStyles = createStyles(({ token, css }) => ({
   menu: css`
-    background-color: ${token.colorPrimaryBorder};
+    background-color: ${token.colorBgElevated};
   `,
 }));
