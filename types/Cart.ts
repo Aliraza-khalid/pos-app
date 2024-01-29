@@ -10,7 +10,7 @@ export interface CartProduct extends Variation {
   name: string;
   imageUrl: string;
   quantity: number;
-  taxes: CartTax[];
+  taxes: string[];
   discounts: string[];
 }
 

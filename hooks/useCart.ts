@@ -13,14 +13,18 @@ export default function useCart() {
     if (!modalData) return;
     const updatedData = {
       ...modalData,
-      taxes: modalData.taxes.map((tax) =>
-        tax.id === id
-          ? {
-              ...tax,
-              isApplied: value,
-            }
-          : tax
-      ),
+      taxes:
+        // modalData.taxes.map((tax) =>
+        //   tax.id === id
+        //     ? {
+        //         ...tax,
+        //         isApplied: value,
+        //       }
+        //     : tax
+        // ),
+        value
+          ? [...modalData.taxes, id]
+          : modalData.taxes.filter((t) => t !== id),
     };
 
     setModalData(id, updatedData);
@@ -46,14 +50,18 @@ export default function useCart() {
     Object.values(cart).forEach((item) => {
       updatedCart[item.variationId] = {
         ...item,
-        taxes: item.taxes.map((tax) =>
-          tax.id === id
-            ? {
-                ...tax,
-                isApplied: value,
-              }
-            : tax
-        ),
+        taxes:
+        // item.taxes.map((tax) =>
+        //   tax.id === id
+        //     ? {
+        //         ...tax,
+        //         isApplied: value,
+        //       }
+        //     : tax
+        // ),
+        value
+          ? [...item.taxes, id]
+          : item.taxes.filter((t) => t !== id),
       };
     });
 

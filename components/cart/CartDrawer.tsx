@@ -1,4 +1,4 @@
-import { Drawer, Flex, Space, Switch, Typography, theme } from "antd";
+import { Drawer, Flex, Space, Switch, Typography } from "antd";
 import React from "react";
 import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
@@ -10,11 +10,10 @@ import useStore from "@/stores";
 import appliedDiscounts from "@/utils/appliedDiscounts";
 import { createStyles } from "antd-style";
 
-const { useToken } = theme;
-
 export default function CartDrawer() {
   const cart = useStore((state) => state.cart);
   const discounts = useStore((state) => state.discounts);
+  const taxes = useStore((state) => state.taxes);
   const { order, orderLoading } = useCartContext();
   const {
     onToggleTax,
@@ -49,14 +48,14 @@ export default function CartDrawer() {
         open={cartModal === "ProductTax"}
         onClose={() => toggleModal("ProductTax")}
       >
-        {modalData?.taxes.map((tax) => (
+        {taxes.map((tax) => (
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>
               <Typography.Text>({tax.percentage} %)</Typography.Text>
             </Space>
             <Switch
-              value={tax.isApplied}
+              value={modalData?.taxes.includes(tax.id)}
               onChange={(v) => onToggleTax(tax.id, v)}
             />
           </Flex>
@@ -87,14 +86,14 @@ export default function CartDrawer() {
         open={cartModal === "TotalTax"}
         onClose={() => toggleModal("TotalTax")}
       >
-        {allAppliedTaxes.map((tax) => (
+        {taxes.map((tax) => (
           <Flex key={tax.id} justify="space-between">
             <Space>
               <Typography.Text>{tax.name}</Typography.Text>
               <Typography.Text>({tax.percentage} %)</Typography.Text>
             </Space>
             <Switch
-              value={true}
+              value={allAppliedTaxes.includes(tax.id)}
               onChange={(v) => onToggleGlobalTax(tax.id, v)}
             />
           </Flex>

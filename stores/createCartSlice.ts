@@ -30,13 +30,14 @@ const createCartSlice: StateCreator<
         product.taxIds.includes(curr.id)
           ? [
               ...acc,
-              {
-                ...curr,
-                isApplied: true,
-              },
+              // {
+              //   ...curr,
+              //   isApplied: true,
+              // },
+              curr.id
             ]
           : acc,
-      [] as CartTax[]
+      [] as string[]
     );
 
     set((state) => ({

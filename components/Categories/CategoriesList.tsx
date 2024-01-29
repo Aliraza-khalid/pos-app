@@ -1,5 +1,6 @@
 import useCategoriesContext from "@/hooks/useCategoriesContext";
 import useProductsContext from "@/hooks/useProductsContext";
+import { capitalizeText } from "@/utils/capitalizeText";
 import { Button, Typography } from "antd";
 import React from "react";
 
@@ -21,7 +22,7 @@ export default function CategoriesList() {
         block
         onClick={() => searchByCategory(item.id)}
       >
-        {item.name}
+        {capitalizeText(item.name)}
       </Button>
     ));
 }
