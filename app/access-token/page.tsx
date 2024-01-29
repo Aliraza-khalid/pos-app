@@ -22,7 +22,7 @@ export default function AccessToken({searchParams}: PageProps) {
 
   const verifyToken = async (code: string) => {
     setLoading(true);
-    const result = await getAccessToken(code as string);
+    const result = await getAccessToken(code);
     if (result) {
       localStorage.setItem("accessToken", JSON.stringify(result.token));
       localStorage.setItem("merchant", JSON.stringify(result.merchant));

@@ -36,7 +36,7 @@ export default function CartModals() {
           mode="multiple"
           allowClear
           placeholder="Select Discounts"
-          defaultValue={modalData?.discounts}
+          value={modalData?.discounts}
           onChange={updateDiscounts}
           options={discounts.map((discount) => ({
             label: formatDiscount(discount),
@@ -54,7 +54,7 @@ export default function CartModals() {
           mode="multiple"
           allowClear
           placeholder="Select Taxes"
-          defaultValue={modalData?.taxes}
+          value={modalData?.taxes}
           onChange={updateTaxes}
           options={taxes.map((tax) => ({
             label: formatTax(tax),
@@ -70,9 +70,8 @@ export default function CartModals() {
       >
         <Select
           mode="multiple"
-          allowClear
           placeholder="Select Discounts"
-          defaultValue={allAppliedDiscounts}
+          value={allAppliedDiscounts}
           onChange={updateGlobalDiscounts}
           options={discounts.map((discount) => ({
             label: formatDiscount(discount),
@@ -88,9 +87,8 @@ export default function CartModals() {
       >
         <Select
           mode="multiple"
-          allowClear
           placeholder="Select Taxes"
-          defaultValue={allAppliedTaxes}
+          value={allAppliedTaxes}
           onChange={updateGlobalTaxes}
           options={taxes.map((tax) => ({
             label: formatTax(tax),
