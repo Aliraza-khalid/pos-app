@@ -5,7 +5,7 @@ const AntdConfig: ThemeConfig = {
     // colorBgBase: "#615545",
     // colorBgLayout: "#121112",
     // colorBgContainer: "#615545",
-    colorBgElevated: "#615545",
+    // colorBgElevated: "#615545",
 
     colorPrimary: "#9b773d",
     colorInfo: "#9b773d",
