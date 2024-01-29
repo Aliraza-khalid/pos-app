@@ -3,9 +3,11 @@
 import useStore from "@/stores";
 import { CatalogProduct, Variation } from "@/types/Product";
 import formatPrice from "@/utils/formatPrice";
-import { Button, Card, Flex, Select, Typography } from "antd";
+import { Button, Card, Flex, Select } from "antd";
 import { createStyles } from "antd-style";
 import React, { useState } from "react";
+import Text from "@/components/base/Text";
+import QuantityControls from "../composite/QuantityControls";
 
 type PropTypes = {
   item: CatalogProduct;
@@ -35,28 +37,17 @@ export default function ProductCard({ item }: PropTypes) {
   return (
     <Card title={item.name} className={styles.card}>
       <Flex justify="space-between" align="center" className={styles.priceRow}>
-        <Typography.Text className={styles.price}>
-          $ {formatPrice(variation.price.amount)}
-        </Typography.Text>
-        {quantity > 0 && (
-          <Flex justify="center" align="center" gap={10}>
-            <Button
-              shape="circle"
-              onClick={() => decreaseItemInCart(variation.variationId)}
-              size="small"
-            >
-              -
-            </Button>
-            <Typography.Text>{quantity}</Typography.Text>
-            <Button
-              shape="circle"
-              onClick={() => increaseItemInCart(variation.variationId)}
-              size="small"
-            >
-              +
-            </Button>
-          </Flex>
-        )}
+        <Text
+          title={`$ ${formatPrice(variation.price.amount)}`}
+          className={styles.price}
+        />
+
+        <QuantityControls
+          show={quantity !== 0}
+          quantity={quantity}
+          onClickDecrease={() => decreaseItemInCart(variation.variationId)}
+          onClickIncrease={() => increaseItemInCart(variation.variationId)}
+        />
       </Flex>
 
       <Flex justify="space-between">

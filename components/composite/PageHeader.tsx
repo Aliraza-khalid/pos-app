@@ -1,21 +1,20 @@
-import { Flex, Typography } from "antd";
+import { Flex } from "antd";
 import { createStyles } from "antd-style";
 import React from "react";
+import Title from "../base/Title";
 
 type PropTypes = {
-  title: string,
-  right1?: React.ReactNode,
-  right2?: React.ReactNode, 
+  title: string;
+  right1?: React.ReactNode;
+  right2?: React.ReactNode;
 };
 
-export default function PageHeader({
-  title, right1, right2
-}: PropTypes) {
+export default function PageHeader({ title, right1, right2 }: PropTypes) {
   const { styles } = useStyles();
 
   return (
     <Flex justify="space-between" gap={12} className={styles.row}>
-      <Typography.Title level={2} ellipsis>{title}</Typography.Title>
+      <Title title={title} level={2} ellipsis />
 
       <Flex justify="flex-end" gap={8} style={{ flex: 1 }}>
         {right1}

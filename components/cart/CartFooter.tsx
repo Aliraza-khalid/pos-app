@@ -1,9 +1,11 @@
+import React from "react";
+import { Button, Flex } from "antd";
+import { createStyles } from "antd-style";
+import { EditOutlined } from "@ant-design/icons";
 import useCartContext from "@/hooks/useCartContext";
 import formatPrice from "@/utils/formatPrice";
-import { EditOutlined } from "@ant-design/icons";
-import { Button, Flex, Space, Typography } from "antd";
-import { createStyles } from "antd-style";
-import React from "react";
+import Text from "@/components/base/Text";
+import CardItem from "../composite/CardItem";
 
 export default function CartFooter() {
   const { order, orderLoading, toggleModal } = useCartContext();
@@ -21,15 +23,17 @@ export default function CartFooter() {
         className={styles.editButton}
         onClick={() => toggleModal("TotalDiscount")}
       >
-        <Flex justify="space-between">
-          <Space>
-            <Typography.Text className={styles.label}>Discount</Typography.Text>
-            <EditOutlined className={styles.editIcon} />
-          </Space>
-          <Typography.Text className={styles.label}>
-            $ {formatPrice(totalDiscount)}
-          </Typography.Text>
-        </Flex>
+        <CardItem
+          title="Discount"
+          titleClass={styles.label}
+          icon={<EditOutlined className={styles.editIcon} />}
+          right={
+            <Text
+              title={`- $ ${formatPrice(totalDiscount)}`}
+              className={styles.label}
+            />
+          }
+        />
       </Button>
 
       <Button
@@ -38,23 +42,30 @@ export default function CartFooter() {
         className={styles.editButton}
         onClick={() => toggleModal("TotalTax")}
       >
-        <Flex justify="space-between">
-          <Space>
-            <Typography.Text className={styles.label}>Tax</Typography.Text>
-            <EditOutlined className={styles.editIcon} />
-          </Space>
-          <Typography.Text className={styles.label}>
-            $ {formatPrice(totalTax)}
-          </Typography.Text>
-        </Flex>
+        <CardItem
+          title="Tax"
+          titleClass={styles.label}
+          icon={<EditOutlined className={styles.editIcon} />}
+          right={
+            <Text
+              title={`$ ${formatPrice(totalTax)}`}
+              className={styles.label}
+            />
+          }
+        />
       </Button>
 
-      <Flex justify="space-between" className={styles.totalRow}>
-        <Typography.Text className={styles.label}>Grand Total</Typography.Text>
-        <Typography.Text className={styles.label}>
-          $ {formatPrice(totalAmount)}
-        </Typography.Text>
-      </Flex>
+      <CardItem
+        title="Grand Total"
+        titleClass={styles.label}
+        containerClass={styles.totalRow}
+        right={
+          <Text
+            title={`$ ${formatPrice(totalAmount)}`}
+            className={styles.label}
+          />
+        }
+      />
 
       <Flex justify="flex-end">
         <Button type="primary" size="large" className={styles.button}>

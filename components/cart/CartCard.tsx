@@ -1,12 +1,15 @@
-import { CartModalTypes } from "@/types/Cart";
-import { Button, Card, Flex, Space, Typography } from "antd";
-import { createStyles } from "antd-style";
 import React from "react";
-import formatPrice from "@/utils/formatPrice";
+import { Button, Card, Flex, Space } from "antd";
+import { createStyles } from "antd-style";
 import { EditOutlined } from "@ant-design/icons";
+import Text from "@/components/base/Text";
 import useCartContext from "@/hooks/useCartContext";
-import { LineItem } from "@/types/Order";
 import useStore from "@/stores";
+import formatPrice from "@/utils/formatPrice";
+import { CartModalTypes } from "@/types/Cart";
+import { LineItem } from "@/types/Order";
+import QuantityControls from "../composite/QuantityControls";
+import CardItem from "../composite/CardItem";
 
 type PropTypes = {
   item: LineItem;
@@ -14,7 +17,9 @@ type PropTypes = {
 };
 
 export default function CartCard({ item, loading }: PropTypes) {
-  const quantity = useStore((state) => state.cart[item.catalogObjectId]?.quantity ?? 0);
+  const quantity = useStore(
+    (state) => state.cart[item.catalogObjectId]?.quantity ?? 0
+  );
   const increaseItemInCart = useStore((state) => state.increaseItemInCart);
   const decreaseItemInCart = useStore((state) => state.decreaseItemInCart);
   const { setModalData, toggleModal } = useCartContext();
@@ -31,39 +36,35 @@ export default function CartCard({ item, loading }: PropTypes) {
   };
 
   return (
-    <Card title={`${item.name} - ${item.variationName}`} className={styles.card} size="small">
+    <Card
+      title={`${item.name} - ${item.variationName}`}
+      className={styles.card}
+      size="small"
+    >
       <Flex justify="space-between" align="center" className={styles.priceRow}>
-        <Typography.Text className={styles.label}>
-          $ {formatPrice(item.basePriceMoney.amount)}
-        </Typography.Text>
+        <Text
+          className={styles.label}
+          title={`$ ${formatPrice(item.basePriceMoney.amount)}`}
+        />
 
-        <Flex justify="center" align="center" gap={10}>
-          <Button
-            shape="circle"
-            size="small"
-            className={styles.quantityButton}
-            onClick={() => decreaseItemInCart(item.catalogObjectId)}
-          >
-            -
-          </Button>
-          <Typography.Text>{quantity}</Typography.Text>
-          <Button
-            shape="circle"
-            size="small"
-            className={styles.quantityButton}
-            onClick={() => increaseItemInCart(item.catalogObjectId)}
-          >
-            +
-          </Button>
-        </Flex>
+        <QuantityControls
+          quantity={quantity}
+          onClickDecrease={() => decreaseItemInCart(item.catalogObjectId)}
+          onClickIncrease={() => increaseItemInCart(item.catalogObjectId)}
+          buttonClass={styles.quantityButton}
+        />
       </Flex>
 
-      <Flex justify="space-between">
-        <Typography.Text className={styles.label}>Sub total</Typography.Text>
-        <Typography.Text className={styles.label}>
-          $ {formatPrice(grossAmount)}
-        </Typography.Text>
-      </Flex>
+      <CardItem
+        title="Sub total"
+        titleClass={styles.label}
+        right={
+          <Text
+            title={`$ ${formatPrice(grossAmount)}`}
+            className={styles.label}
+          />
+        }
+      />
 
       <Button
         type="link"
@@ -71,15 +72,17 @@ export default function CartCard({ item, loading }: PropTypes) {
         className={styles.editButton}
         onClick={() => onClickEdit("ProductDiscount")}
       >
-        <Flex justify="space-between">
-          <Space>
-            <Typography.Text className={styles.label}>Discount</Typography.Text>
-            <EditOutlined className={styles.editIcon} />
-          </Space>
-          <Typography.Text className={styles.label}>
-            $ {formatPrice(discountAmount)}
-          </Typography.Text>
-        </Flex>
+        <CardItem
+          title="Discount"
+          titleClass={styles.label}
+          icon={<EditOutlined className={styles.editIcon} />}
+          right={
+            <Text
+              title={`- $ ${formatPrice(discountAmount)}`}
+              className={styles.label}
+            />
+          }
+        />
       </Button>
 
       <Button
@@ -88,23 +91,30 @@ export default function CartCard({ item, loading }: PropTypes) {
         className={styles.editButton}
         onClick={() => onClickEdit("ProductTax")}
       >
-        <Flex justify="space-between">
-          <Space>
-            <Typography.Text className={styles.label}>Tax</Typography.Text>
-            <EditOutlined className={styles.editIcon} />
-          </Space>
-          <Typography.Text className={styles.label}>
-            $ {formatPrice(taxAmount)}
-          </Typography.Text>
-        </Flex>
+        <CardItem
+          title="Tax"
+          titleClass={styles.label}
+          icon={<EditOutlined className={styles.editIcon} />}
+          right={
+            <Text
+              title={`$ ${formatPrice(taxAmount)}`}
+              className={styles.label}
+            />
+          }
+        />
       </Button>
 
-      <Flex justify="space-between" className={styles.totalRow}>
-        <Typography.Text className={styles.label}>Total</Typography.Text>
-        <Typography.Text className={styles.amount}>
-          $ {formatPrice(totalAmount)}
-        </Typography.Text>
-      </Flex>
+      <CardItem
+        title="Total"
+        titleClass={styles.label}
+        containerClass={styles.totalRow}
+        right={
+          <Text
+            title={`$ ${formatPrice(totalAmount)}`}
+            className={styles.amount}
+          />
+        }
+      />
     </Card>
   );
 }

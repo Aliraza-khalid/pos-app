@@ -1,19 +1,20 @@
+import React from "react";
+import { Button } from "antd";
+import Text from "@/components/base/Text";
 import useCategoriesContext from "@/hooks/useCategoriesContext";
 import useProductsContext from "@/hooks/useProductsContext";
 import { capitalizeText } from "@/utils/capitalizeText";
-import { Button, Typography } from "antd";
-import React from "react";
 
 export default function CategoriesList() {
   const { categoryId, searchByCategory } = useProductsContext();
-  const {categories, isError, isLoading} = useCategoriesContext();
+  const { categories, isError, isLoading } = useCategoriesContext();
 
   const buttonType = (id: string) => {
-    return categoryId === id ? undefined : "text"
-  }
+    return categoryId === id ? undefined : "text";
+  };
 
-  if (isLoading) return <Typography.Text>Loading...</Typography.Text>;
-  if (isError) return <Typography.Text>No Data Found</Typography.Text>;
+  if (isLoading) return <Text title="Loading..." />;
+  if (isError) return <Text title="No Data Found" />;
   if (categories)
     return categories?.map((item, i) => (
       <Button

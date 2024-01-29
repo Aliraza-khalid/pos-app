@@ -2,7 +2,7 @@
 
 import { Col, Flex, Row } from "antd";
 import { createStyles } from "antd-style";
-import PageHeader from "@/components/PageHeader";
+import PageHeader from "@/components/composite/PageHeader";
 import Categories from "@/components/categories";
 import SearchBar from "@/components/SearchBar";
 import CartDrawer from "@/components/cart/CartDrawer";

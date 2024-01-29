@@ -1,25 +1,18 @@
 import { CatalogProduct } from "@/types/Product";
-import { List, Typography } from "antd";
+import { List } from "antd";
 import React from "react";
 import ProductCard from "./ProductCard";
 import useProductsContext from "@/hooks/useProductsContext";
+import Text from "@/components/base/Text";
 
 export default function ProductsList() {
   const { products, isLoading, isError } = useProductsContext();
 
   if (isLoading)
-    return (
-      <Typography.Text style={{ textAlign: "center" }}>
-        Loading...
-      </Typography.Text>
-    );
+    return <Text title="Loading..." style={{ textAlign: "center" }} />;
 
   if (isError)
-    return (
-      <Typography.Text style={{ textAlign: "center" }}>
-        No Data Found
-      </Typography.Text>
-    );
+    return <Text title="No Data Found" style={{ textAlign: "center" }} />;
 
   if (products)
     return (

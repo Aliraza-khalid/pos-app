@@ -1,11 +1,11 @@
 "use client";
 
 import { PropsWithChildren } from "react";
-import { Typography } from "antd";
 import Layout, { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import DashboardContainer from "@/containers/DashboardContainer";
 import NavMenu from "@/components/NavMenu";
+import Title from "@/components/base/Title";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   const { styles } = useStyles();
@@ -14,9 +14,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
     <DashboardContainer>
       <Layout className={styles.layout}>
         <Header className={styles.header}>
-          <Typography.Title ellipsis className={styles.headerTitle}>
-            POS app
-          </Typography.Title>
+          <Title title="POS app" ellipsis className={styles.headerTitle} />
           <NavMenu />
         </Header>
 
