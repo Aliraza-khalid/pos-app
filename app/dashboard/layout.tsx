@@ -1,48 +1,35 @@
 "use client";
 
-import { PropsWithChildren, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { PropsWithChildren } from "react";
 import { Typography } from "antd";
 import Layout, { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import DashboardContainer from "@/containers/DashboardContainer";
-import CategoriesContainer from "@/containers/CategoriesContainer";
-import ProductsContainer from "@/containers/ProductsContainer";
-import CartContainer from "@/containers/CartContainer";
 import NavMenu from "@/components/NavMenu";
-import isAuthenticated from "@/utils/isAuthenticated";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   const { styles } = useStyles();
-  const router = useRouter();
-
-  useEffect(() => {
-    !isAuthenticated() && router.replace("/login");
-  }, []);
 
   return (
     <DashboardContainer>
-      <CategoriesContainer>
-        <ProductsContainer>
-          <CartContainer>
-            <Layout style={{ height: "100vh" }}>
-              <Header className={styles.header}>
-                <Typography.Title ellipsis className={styles.headerTitle}>
-                  POS app
-                </Typography.Title>
-                <NavMenu />
-              </Header>
+      <Layout className={styles.layout}>
+        <Header className={styles.header}>
+          <Typography.Title ellipsis className={styles.headerTitle}>
+            POS app
+          </Typography.Title>
+          <NavMenu />
+        </Header>
 
-              <Content className={styles.content}>{children}</Content>
-            </Layout>
-          </CartContainer>
-        </ProductsContainer>
-      </CategoriesContainer>
+        <Content className={styles.content}>{children}</Content>
+      </Layout>
     </DashboardContainer>
   );
 }
 
 const useStyles = createStyles(({ token, css }) => ({
+  layout: css`
+    height: 100vh;
+  `,
   header: css`
     position: sticky;
     top: 0;

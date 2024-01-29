@@ -127,6 +127,7 @@ const useStyles = createStyles(({ token, css }) => ({
     margin-bottom: ${token.marginMD}px;
   `,
   quantityButton: css`
+    background-color: ${token.colorFillSecondary};
     border-color: ${token.colorBgContainer};
   `,
   editButton: css`
