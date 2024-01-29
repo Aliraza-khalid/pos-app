@@ -1,19 +1,19 @@
 "use client";
 
 import { PropsWithChildren, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Typography } from "antd";
 import Layout, { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
-import { useRouter } from "next/navigation";
-import ProductsContainer from "@/containers/ProductsContainer";
 import DashboardContainer from "@/containers/DashboardContainer";
+import CategoriesContainer from "@/containers/CategoriesContainer";
+import ProductsContainer from "@/containers/ProductsContainer";
 import CartContainer from "@/containers/CartContainer";
 import NavMenu from "@/components/NavMenu";
 import isAuthenticated from "@/utils/isAuthenticated";
-import CategoriesContainer from "@/containers/CategoriesContainer";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
-  const { styles, cx, theme } = useStyles();
+  const { styles } = useStyles();
   const router = useRouter();
 
   useEffect(() => {
