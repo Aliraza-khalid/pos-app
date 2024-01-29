@@ -9,74 +9,48 @@ export default function useCart() {
   const updateItemInCart = useStore((state) => state.updateItemInCart);
   const setCart = useStore((state) => state.setCart);
 
-  const onToggleTax = (id: string, value: boolean) => {
+  const updateTaxes = (value: string[]) => {
     if (!modalData) return;
     const updatedData = {
       ...modalData,
-      taxes:
-        // modalData.taxes.map((tax) =>
-        //   tax.id === id
-        //     ? {
-        //         ...tax,
-        //         isApplied: value,
-        //       }
-        //     : tax
-        // ),
-        value
-          ? [...modalData.taxes, id]
-          : modalData.taxes.filter((t) => t !== id),
+      taxes: value,
     };
 
-    setModalData(id, updatedData);
+    setModalData(updatedData.variationId, updatedData);
     updateItemInCart(updatedData);
   };
 
-  const onToggleDiscount = (id: string, value: boolean) => {
+  const updateDiscounts = (value: string[]) => {
     if (!modalData) return;
     const updatedData = {
       ...modalData,
-      discounts: value
-        ? [...modalData.discounts, id]
-        : modalData.discounts.filter((d) => d !== id),
+      discounts: value,
     };
 
-    setModalData(id, updatedData);
+    setModalData(modalData.variationId, updatedData);
     updateItemInCart(updatedData);
   };
 
-  const onToggleGlobalTax = (id: string, value: boolean) => {
+  const updateGlobalTaxes = (value: string[]) => {
     const updatedCart: Cart = {};
 
     Object.values(cart).forEach((item) => {
       updatedCart[item.variationId] = {
         ...item,
-        taxes:
-        // item.taxes.map((tax) =>
-        //   tax.id === id
-        //     ? {
-        //         ...tax,
-        //         isApplied: value,
-        //       }
-        //     : tax
-        // ),
-        value
-          ? [...item.taxes, id]
-          : item.taxes.filter((t) => t !== id),
+        taxes: value,
       };
     });
 
     setCart(updatedCart);
   };
 
-  const onToggleGlobalDiscount = (id: string, value: boolean) => {
+  const updateGlobalDiscounts = (value: string[]) => {
     const updatedCart: Cart = {};
 
     Object.values(cart).forEach((item) => {
       updatedCart[item.variationId] = {
         ...item,
-        discounts: value
-          ? [...item.discounts, id]
-          : item.discounts.filter((d) => d !== id),
+        discounts: value,
       };
     });
 
@@ -84,9 +58,9 @@ export default function useCart() {
   };
 
   return {
-    onToggleTax,
-    onToggleDiscount,
-    onToggleGlobalTax,
-    onToggleGlobalDiscount,
+    updateTaxes,
+    updateDiscounts,
+    updateGlobalTaxes,
+    updateGlobalDiscounts,
   };
 }

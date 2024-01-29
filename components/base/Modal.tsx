@@ -30,7 +30,7 @@ export default function Modal({ title, open, onClose, children, ...props }: Prop
 
 const useStyles = createStyles(({ token, css }) => ({
   content: css`
-    max-width: min(100%, ${token.screenSM}px);
+    max-width: min(100%, ${token.screenXS}px);
     margin: auto;
   `,
   body: css`
