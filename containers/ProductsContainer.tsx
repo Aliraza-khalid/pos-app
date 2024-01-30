@@ -1,12 +1,12 @@
 import searchProducts from "@/utils/apis/searchProducts";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import React, {
   PropsWithChildren,
   createContext,
   useEffect,
   useState,
 } from "react";
-import { CatalogProduct } from "@/types/Product";
+import { SearchProductsData } from "@/types/Search";
 
 type ContextTypes = {
   categoryId: string;
@@ -14,9 +14,11 @@ type ContextTypes = {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   search: () => void;
   searchByCategory: (categoryId: string) => void;
-  products: CatalogProduct[] | undefined;
+  productPages: SearchProductsData[] | undefined;
   isLoading: boolean;
   isError: boolean;
+  isLoadingPage: boolean;
+  nextPage: () => void;
 };
 
 export const ProductsContext = createContext<ContextTypes | null>(null);
@@ -30,9 +32,15 @@ function ProductsContainer({ children }: PropsWithChildren) {
     isLoading,
     isError,
     refetch: search,
-  } = useQuery({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
     queryKey: ["searchProducts", searchQuery, categoryId],
-    queryFn: () => searchProducts(searchQuery, categoryId),
+    queryFn: ({ pageParam }) =>
+      searchProducts(searchQuery, categoryId, pageParam),
+    getNextPageParam: (page) => (page.cursor === "" ? undefined : page.cursor),
+    initialPageParam: "",
     enabled: false,
   });
 
@@ -47,6 +55,10 @@ function ProductsContainer({ children }: PropsWithChildren) {
     }, 0);
   };
 
+  const nextPage = () => {
+    hasNextPage && !isFetchingNextPage && fetchNextPage();
+  };
+
   return (
     <ProductsContext.Provider
       value={{
@@ -57,7 +69,9 @@ function ProductsContainer({ children }: PropsWithChildren) {
         searchByCategory,
         isLoading,
         isError,
-        products: data,
+        productPages: data?.pages,
+        isLoadingPage: isFetchingNextPage,
+        nextPage,
       }}
     >
       {children}

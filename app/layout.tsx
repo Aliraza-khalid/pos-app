@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import RootContainer from "@/containers/RootContainer";
 import "./globals.css";
+import AntdConfig from "@/constants/AntdConfig";
 
 export const metadata: Metadata = {
   title: "POS app",
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <RootContainer>
       <html lang="en">
-        <body style={{ backgroundColor: "black" }}>{children}</body>
+        <body style={{ backgroundColor: AntdConfig.token?.colorBgBase }}>{children}</body>
       </html>
     </RootContainer>
   );
