@@ -1,14 +1,18 @@
 "use client";
 
 import useCartContext from "@/hooks/useCartContext";
-import { Menu, MenuProps } from "antd";
+import useStore from "@/stores";
+import cartSize from "@/utils/cartSize";
+import { LogoutOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { Badge, Menu, MenuProps, Tooltip } from "antd";
 import { createStyles } from "antd-style";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
-export default function NavMenu() {
+export default function HeaderMenu() {
   const router = useRouter();
   const path = usePathname();
+  const cart = useStore((state) => state.cart);
   const { toggleCart } = useCartContext();
   const { styles } = useStyles();
 
@@ -22,20 +26,30 @@ export default function NavMenu() {
   };
 
   const items: MenuProps["items"] = [
+    // {
+    //   label: "Home",
+    //   key: "/dashboard",
+    //   onClick: onClickHome,
+    // },
     {
-      label: "Home",
-      key: "/dashboard",
-      onClick: onClickHome,
-    },
-    {
-      label: "Cart",
-      key: "/dashboard/cart",
+      key: "cart",
       onClick: toggleCart,
+      icon: (
+        <Tooltip title="Cart">
+          <Badge count={cartSize(cart)} size="small">
+            <ShoppingCartOutlined style={{ fontSize: "20px" }} />
+          </Badge>
+        </Tooltip>
+      ),
     },
     {
-      label: "Log out",
       key: "logout",
       onClick: onClickLogout,
+      icon: (
+        <Tooltip title="Logout">
+          <LogoutOutlined style={{ fontSize: "16px" }} />
+        </Tooltip>
+      ),
     },
   ];
 
@@ -46,6 +60,7 @@ export default function NavMenu() {
       selectedKeys={[path]}
       className={styles.menu}
       theme="dark"
+      inlineCollapsed={false}
     />
   );
 }

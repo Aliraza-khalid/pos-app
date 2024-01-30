@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react";
 import Layout, { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import DashboardContainer from "@/containers/DashboardContainer";
-import NavMenu from "@/components/NavMenu";
+import HeaderMenu from "@/components/HeaderMenu";
 import Title from "@/components/base/Title";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
       <Layout className={styles.layout}>
         <Header className={styles.header}>
           <Title title="POS app" ellipsis className={styles.headerTitle} />
-          <NavMenu />
+          <HeaderMenu />
         </Header>
 
         <Content className={styles.content}>{children}</Content>

@@ -1,10 +1,10 @@
-import { CatalogProduct } from "@/types/Product";
-import { List, Spin } from "antd";
 import React, { useEffect } from "react";
-import ProductCard from "./ProductCard";
-import useProductsContext from "@/hooks/useProductsContext";
-import Text from "@/components/base/Text";
+import { Badge, List, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
+import ProductCard from "./ProductCard";
+import Text from "@/components/base/Text";
+import useProductsContext from "@/hooks/useProductsContext";
+import { CatalogProduct } from "@/types/Product";
 
 export default function ProductsList() {
   const { productPages, isLoading, isError, isLoadingPage, nextPage } =
@@ -14,8 +14,6 @@ export default function ProductsList() {
   useEffect(() => {
     inView && nextPage();
   }, [inView, nextPage]);
-
-  const renderItem = () => {};
 
   if (isLoading)
     return <Text title="Loading..." style={{ textAlign: "center" }} />;
@@ -31,16 +29,10 @@ export default function ProductsList() {
             key={page.cursor}
             dataSource={page.items}
             itemLayout="vertical"
-            renderItem={(item: CatalogProduct, eIndex) =>
-              productPages.length === pIndex + 1 &&
-              page.items.length === eIndex + 1 ? (
-                <div key={eIndex} ref={ref}>
-                  <ProductCard key={item.catalogObjectId} item={item} />
-                </div>
-              ) : (
-                <ProductCard key={item.catalogObjectId} item={item} />
-              )
-            }
+            renderItem={(item: CatalogProduct) => (
+              <ProductCard key={item.catalogObjectId} item={item} />
+            )}
+            footer={productPages.length === pIndex + 1 && <div ref={ref}></div>}
           />
         ))}
         {isLoadingPage && <Spin style={{ marginBottom: 20 }} />}
