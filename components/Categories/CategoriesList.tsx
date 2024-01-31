@@ -1,13 +1,13 @@
 import React from "react";
 import { Button } from "antd";
 import Text from "@/components/base/Text";
-import useCategoriesContext from "@/hooks/context/useCategoriesContext";
 import useProductsContext from "@/hooks/context/useProductsContext";
 import { capitalizeText } from "@/utils/capitalizeText";
+import useCategories from "@/hooks/query/useCategories";
 
 export default function CategoriesList() {
   const { categoryId, searchByCategory } = useProductsContext();
-  const { categories, isError, isLoading } = useCategoriesContext();
+  const { data: categories, isError, isLoading } = useCategories();
 
   const buttonType = (id: string) => {
     return categoryId === id ? undefined : "text";

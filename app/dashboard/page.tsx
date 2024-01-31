@@ -7,7 +7,6 @@ import Categories from "@/components/categories";
 import SearchBar from "@/components/SearchBar";
 import CartDrawer from "@/components/cart/CartDrawer";
 import ProductsList from "@/components/products/ProductsList";
-import CategoriesContainer from "@/containers/CategoriesContainer";
 import ProductsContainer from "@/containers/ProductsContainer";
 import CartContainer from "@/containers/CartContainer";
 import DashboardContainer from "@/containers/DashboardContainer";
@@ -18,32 +17,30 @@ export default function ProductsPage() {
   return (
     <DashboardContainer>
       <main className={styles.main}>
-        <CategoriesContainer>
-          <ProductsContainer>
-            <PageHeader
-              title="Products"
-              right1={<SearchBar />}
-              right2={
-                <Categories.Modal>
-                  <Categories.List />
-                </Categories.Modal>
-              }
-            />
+        <ProductsContainer>
+          <PageHeader
+            title="Products"
+            right1={<SearchBar />}
+            right2={
+              <Categories.Modal>
+                <Categories.List />
+              </Categories.Modal>
+            }
+          />
 
-            <Row wrap={false}>
-              <Col flex="250px" className={styles.categories}>
-                <Categories.Card>
-                  <Categories.List />
-                </Categories.Card>
-              </Col>
-              <Col flex="auto">
-                <Flex vertical>
-                  <ProductsList />
-                </Flex>
-              </Col>
-            </Row>
-          </ProductsContainer>
-        </CategoriesContainer>
+          <Row wrap={false}>
+            <Col flex="250px" className={styles.categories}>
+              <Categories.Card>
+                <Categories.List />
+              </Categories.Card>
+            </Col>
+            <Col flex="auto">
+              <Flex vertical>
+                <ProductsList />
+              </Flex>
+            </Col>
+          </Row>
+        </ProductsContainer>
 
         <CartContainer>
           <CartDrawer />
