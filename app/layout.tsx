@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import RootContainer from "@/containers/RootContainer";
-import "./globals.css";
 import AntdConfig from "@/constants/AntdConfig";
 
 export const metadata: Metadata = {

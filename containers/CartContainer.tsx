@@ -13,8 +13,6 @@ import calculateOrder from "@/utils/apis/calculateOrder";
 import { convertCartToOrder } from "@/utils/convertCartToOrder";
 
 type ContextTypes = {
-  cartOpen: boolean;
-  toggleCart: () => void;
   modalData: CartProduct | undefined;
   setModalData: (id: string, item?: CartProduct) => void;
   cartModal: CartModalTypes | "";
@@ -29,7 +27,6 @@ export const CartContext = createContext<ContextTypes | null>(null);
 export default function CartContainer({ children }: PropsWithChildren) {
   const cart = useStore((state) => state.cart);
 
-  const [cartOpen, setCartOpen] = useState(false);
   const [cartModal, setCartModal] = useState<CartModalTypes | "">("");
   const [modalData, setModalData] = useState<CartProduct>();
   const [order, setOrder] = useState<OrderResponseDTO>();
@@ -48,8 +45,6 @@ export default function CartContainer({ children }: PropsWithChildren) {
     data && setOrder(data);
   }, [data]);
 
-  const toggleCart = () => setCartOpen((v) => !v);
-
   const toggleModal = (modal: CartModalTypes) => {
     setCartModal((v) => (v === modal ? "" : modal));
   };
@@ -61,8 +56,6 @@ export default function CartContainer({ children }: PropsWithChildren) {
   return (
     <CartContext.Provider
       value={{
-        cartOpen,
-        toggleCart,
         modalData,
         setModalData: updateModalData,
         cartModal,

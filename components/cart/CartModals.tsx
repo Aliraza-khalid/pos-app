@@ -8,11 +8,13 @@ import useCart from "@/hooks/useCart";
 import useCartContext from "@/hooks/useCartContext";
 import formatDiscount from "@/utils/formatDiscount";
 import formatTax from "@/utils/formatTax";
+import useTaxes from "@/hooks/query/useTaxes";
+import useDiscounts from "@/hooks/query/useDiscounts";
 
 export default function CartModals() {
   const cart = useStore((state) => state.cart);
-  const discounts = useStore((state) => state.discounts);
-  const taxes = useStore((state) => state.taxes);
+  const { data: taxes } = useTaxes();
+  const { data: discounts } = useDiscounts();
 
   const {
     updateDiscounts,
@@ -38,7 +40,7 @@ export default function CartModals() {
           placeholder="Select Discounts"
           value={modalData?.discounts}
           onChange={updateDiscounts}
-          options={discounts.map((discount) => ({
+          options={discounts?.map((discount) => ({
             label: formatDiscount(discount),
             value: discount.id,
           }))}
@@ -56,7 +58,7 @@ export default function CartModals() {
           placeholder="Select Taxes"
           value={modalData?.taxes}
           onChange={updateTaxes}
-          options={taxes.map((tax) => ({
+          options={taxes?.map((tax) => ({
             label: formatTax(tax),
             value: tax.id,
           }))}
@@ -73,7 +75,7 @@ export default function CartModals() {
           placeholder="Select Discounts"
           value={allAppliedDiscounts}
           onChange={updateGlobalDiscounts}
-          options={discounts.map((discount) => ({
+          options={discounts?.map((discount) => ({
             label: formatDiscount(discount),
             value: discount.id,
           }))}
@@ -90,7 +92,7 @@ export default function CartModals() {
           placeholder="Select Taxes"
           value={allAppliedTaxes}
           onChange={updateGlobalTaxes}
-          options={taxes.map((tax) => ({
+          options={taxes?.map((tax) => ({
             label: formatTax(tax),
             value: tax.id,
           }))}

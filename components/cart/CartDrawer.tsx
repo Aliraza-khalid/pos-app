@@ -1,14 +1,15 @@
-import { Drawer, Select } from "antd";
+import { Drawer } from "antd";
 import React from "react";
-import { createStyles } from "antd-style";
 import useCartContext from "@/hooks/useCartContext";
 import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
 import CartModals from "./CartModals";
+import useStore from "@/stores";
 
 export default function CartDrawer() {
   const { order, orderLoading } = useCartContext();
-  const { cartOpen, toggleCart } = useCartContext();
+  const cartOpen = useStore((state) => state.cartOpen);
+  const toggleCart = useStore((state) => state.toggleCart);
 
   return (
     <Drawer
@@ -25,7 +26,7 @@ export default function CartDrawer() {
         />
       ))}
 
-      <CartModals/>
+      <CartModals />
     </Drawer>
   );
 }

@@ -1,8 +1,8 @@
 import { CreateOrderDTO, OrderResponseDTO } from "@/types/Order";
 
 export default async function calculateOrder(
-  data: CreateOrderDTO
-): Promise<OrderResponseDTO | undefined> {
+  dto: CreateOrderDTO
+): Promise<OrderResponseDTO> {
   const merchant = JSON.parse(localStorage.getItem("merchant") ?? "");
 
   const res = await fetch(`${process.env.SERVER_URL}/api/calculate-order`, {
@@ -13,11 +13,12 @@ export default async function calculateOrder(
     },
     body: JSON.stringify({
       order: {
-        ...data,
+        ...dto,
         locationId: merchant.mainLocationId,
       },
     }),
   });
-  const { result } = await res.json();
-  return result;
+  const data = await res.json();
+  if(data.success) return data.result;
+  throw new Error(data.message);
 }

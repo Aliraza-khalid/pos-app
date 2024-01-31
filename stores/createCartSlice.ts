@@ -5,14 +5,16 @@ import { CatalogProduct, Variation } from "@/types/Product";
 
 export interface CartSlice {
   cart: Cart;
+  cartOpen: boolean;
 
   addItemToCart: (product: CatalogProduct, variation: Variation) => void;
   increaseItemInCart: (variationId: string) => void;
   decreaseItemInCart: (variationId: string) => void;
 
   updateItemInCart: (item: CartProduct) => void;
-
   setCart: (data: Cart) => void;
+
+  toggleCart: () => void;
 }
 
 const createCartSlice: StateCreator<
@@ -22,24 +24,9 @@ const createCartSlice: StateCreator<
   CartSlice
 > = (set, get) => ({
   cart: {},
+  cartOpen: false,
 
   addItemToCart: (product, variation) => {
-    const allTaxes = get().taxes;
-    const taxes = allTaxes.reduce(
-      (acc, curr) =>
-        product.taxIds.includes(curr.id)
-          ? [
-              ...acc,
-              // {
-              //   ...curr,
-              //   isApplied: true,
-              // },
-              curr.id
-            ]
-          : acc,
-      [] as string[]
-    );
-
     set((state) => ({
       cart: {
         ...state.cart,
@@ -48,7 +35,7 @@ const createCartSlice: StateCreator<
           productId: product.catalogObjectId,
           name: product.name,
           imageUrl: product.imageUrl,
-          taxes,
+          taxes: product.taxIds,
           discounts: [],
           quantity: 1,
         },
@@ -101,6 +88,8 @@ const createCartSlice: StateCreator<
     })),
 
   setCart: (data) => set(() => ({ cart: data })),
+
+  toggleCart: () => set((state) => ({ cartOpen: !state.cartOpen })),
 });
 
 export default createCartSlice;

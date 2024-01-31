@@ -3,7 +3,6 @@
 import { PropsWithChildren } from "react";
 import Layout, { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
-import DashboardContainer from "@/containers/DashboardContainer";
 import HeaderMenu from "@/components/HeaderMenu";
 import Title from "@/components/base/Title";
 
@@ -11,16 +10,14 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   const { styles } = useStyles();
 
   return (
-    <DashboardContainer>
-      <Layout className={styles.layout}>
-        <Header className={styles.header}>
-          <Title title="POS app" ellipsis className={styles.headerTitle} />
-          <HeaderMenu />
-        </Header>
+    <Layout className={styles.layout}>
+      <Header className={styles.header}>
+        <Title title="POS app" ellipsis className={styles.headerTitle} />
+        <HeaderMenu />
+      </Header>
 
-        <Content className={styles.content}>{children}</Content>
-      </Layout>
-    </DashboardContainer>
+      <Content className={styles.content}>{children}</Content>
+    </Layout>
   );
 }
 

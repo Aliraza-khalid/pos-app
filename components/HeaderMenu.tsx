@@ -1,6 +1,5 @@
 "use client";
 
-import useCartContext from "@/hooks/useCartContext";
 import useStore from "@/stores";
 import cartSize from "@/utils/cartSize";
 import { LogoutOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -13,12 +12,8 @@ export default function HeaderMenu() {
   const router = useRouter();
   const path = usePathname();
   const cart = useStore((state) => state.cart);
-  const { toggleCart } = useCartContext();
+  const toggleCart = useStore((state) => state.toggleCart);
   const { styles } = useStyles();
-
-  const onClickHome = () => {
-    router.push("/dashboard");
-  };
 
   const onClickLogout = () => {
     localStorage.clear();
@@ -26,11 +21,6 @@ export default function HeaderMenu() {
   };
 
   const items: MenuProps["items"] = [
-    // {
-    //   label: "Home",
-    //   key: "/dashboard",
-    //   onClick: onClickHome,
-    // },
     {
       key: "cart",
       onClick: toggleCart,
