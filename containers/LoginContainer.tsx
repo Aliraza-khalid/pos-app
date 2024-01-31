@@ -1,0 +1,25 @@
+"use client";
+
+import LoginCard from "@/components/auth/LoginCard";
+import getLoginUrl from "@/utils/apis/getLoginUrl";
+import { useQuery } from "@tanstack/react-query";
+import { redirect } from "next/navigation";
+import React, { useEffect } from "react";
+
+export default function LoginContainer() {
+  const {
+    data: url,
+    isFetching,
+    refetch,
+  } = useQuery({
+    queryKey: ["loginUrl"],
+    queryFn: getLoginUrl,
+    enabled: false,
+  });
+
+  useEffect(() => {
+    url && redirect(url);
+  }, [url]);
+
+  return <LoginCard loading={isFetching} onClickLogin={refetch} />;
+}
