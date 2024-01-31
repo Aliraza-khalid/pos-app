@@ -1,6 +1,6 @@
 import { Drawer } from "antd";
 import React from "react";
-import useCartContext from "@/hooks/useCartContext";
+import useCartContext from "@/hooks/context/useCartContext";
 import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
 import CartModals from "./CartModals";

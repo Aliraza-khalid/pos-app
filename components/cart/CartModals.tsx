@@ -5,7 +5,7 @@ import useStore from "@/stores";
 import appliedTaxes from "@/utils/appliedTaxes";
 import appliedDiscounts from "@/utils/appliedDiscounts";
 import useCart from "@/hooks/useCart";
-import useCartContext from "@/hooks/useCartContext";
+import useCartContext from "@/hooks/context/useCartContext";
 import formatDiscount from "@/utils/formatDiscount";
 import formatTax from "@/utils/formatTax";
 import useTaxes from "@/hooks/query/useTaxes";

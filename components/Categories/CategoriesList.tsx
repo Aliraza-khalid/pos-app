@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "antd";
 import Text from "@/components/base/Text";
-import useCategoriesContext from "@/hooks/useCategoriesContext";
-import useProductsContext from "@/hooks/useProductsContext";
+import useCategoriesContext from "@/hooks/context/useCategoriesContext";
+import useProductsContext from "@/hooks/context/useProductsContext";
 import { capitalizeText } from "@/utils/capitalizeText";
 
 export default function CategoriesList() {

@@ -1,4 +1,4 @@
-import useProductsContext from "@/hooks/useProductsContext";
+import useProductsContext from "@/hooks/context/useProductsContext";
 import { createStyles } from "antd-style";
 import Search from "antd/es/input/Search";
 import React from "react";

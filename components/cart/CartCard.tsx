@@ -3,7 +3,7 @@ import { Button, Card, Flex, Space } from "antd";
 import { createStyles } from "antd-style";
 import { EditOutlined } from "@ant-design/icons";
 import Text from "@/components/base/Text";
-import useCartContext from "@/hooks/useCartContext";
+import useCartContext from "@/hooks/context/useCartContext";
 import useStore from "@/stores";
 import formatPrice from "@/utils/formatPrice";
 import { CartModalTypes } from "@/types/Cart";

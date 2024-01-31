@@ -3,7 +3,7 @@ import { Badge, List, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "./ProductCard";
 import Text from "@/components/base/Text";
-import useProductsContext from "@/hooks/useProductsContext";
+import useProductsContext from "@/hooks/context/useProductsContext";
 import { CatalogProduct } from "@/types/Product";
 
 export default function ProductsList() {

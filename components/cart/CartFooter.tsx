@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Flex } from "antd";
 import { createStyles } from "antd-style";
 import { EditOutlined } from "@ant-design/icons";
-import useCartContext from "@/hooks/useCartContext";
+import useCartContext from "@/hooks/context/useCartContext";
 import formatPrice from "@/utils/formatPrice";
 import Text from "@/components/base/Text";
 import CardItem from "../composite/CardItem";
