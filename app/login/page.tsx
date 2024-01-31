@@ -1,27 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Flex } from "antd";
 import LoginCard from "@/components/auth/LoginCard";
 import getLoginUrl from "@/utils/apis/getLoginUrl";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Login() {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const onClickLogin = async () => {
-    setLoading(true);
-    const url = await getLoginUrl();
+  const { data, isFetching, refetch } = useQuery({
+    queryKey: ["loginUrl"],
+    queryFn: getLoginUrl,
+    enabled: false,
+  });
 
-    if (url) {
-      router.push(url as any);
-    }
-  };
+  useEffect(() => {
+    data && router.push(data as any);
+  }, [data, router]);
 
   return (
     <Flex align="center" justify="center" style={{ height: "100vh" }}>
-      <LoginCard loading={loading} onClickLogin={onClickLogin} />
+      <LoginCard loading={isFetching} onClickLogin={() => refetch()} />
     </Flex>
   );
 }
