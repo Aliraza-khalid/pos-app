@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import LoginCard from "@/components/auth/LoginCard";
-import getLoginUrl from "@/utils/apis/getLoginUrl";
+import getLoginUrl from "@/services/getLoginUrl";
 import { useQuery } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 

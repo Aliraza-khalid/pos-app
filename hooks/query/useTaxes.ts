@@ -1,4 +1,4 @@
-import getTaxes from "@/utils/apis/getTaxes";
+import getTaxes from "@/services/getTaxes";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 

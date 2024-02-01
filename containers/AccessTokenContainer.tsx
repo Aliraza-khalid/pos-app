@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { Spin } from "antd";
 import LoginFailedCard from "@/components/auth/LoginFailedCard";
-import getAccessToken from "@/utils/apis/getAccessToken";
+import getAccessToken from "@/services/getAccessToken";
 import { LoginData } from "@/types/Login";
 
 type PropTypes = {

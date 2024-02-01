@@ -1,4 +1,4 @@
-import getCategories from "@/utils/apis/getCategories";
+import getCategories from "@/services/getCategories";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 

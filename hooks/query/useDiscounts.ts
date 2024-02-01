@@ -1,4 +1,4 @@
-import getDiscounts from "@/utils/apis/getDiscounts";
+import getDiscounts from "@/services/getDiscounts";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 

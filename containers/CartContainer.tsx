@@ -9,7 +9,7 @@ import useStore from "@/stores";
 import { useQuery } from "@tanstack/react-query";
 import { CartProduct, CartModalTypes } from "@/types/Cart";
 import { CreateOrderDTO, OrderResponseDTO } from "@/types/Order";
-import calculateOrder from "@/utils/apis/calculateOrder";
+import calculateOrder from "@/services/calculateOrder";
 import { convertCartToOrder } from "@/utils/convertCartToOrder";
 
 type ContextTypes = {

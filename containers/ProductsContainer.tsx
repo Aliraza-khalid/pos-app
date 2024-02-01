@@ -1,4 +1,4 @@
-import searchProducts from "@/utils/apis/searchProducts";
+import searchProducts from "@/services/searchProducts";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, {
   PropsWithChildren,
