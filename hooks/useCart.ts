@@ -9,17 +9,6 @@ export default function useCart() {
   const updateItemInCart = useStore((state) => state.updateItemInCart);
   const setCart = useStore((state) => state.setCart);
 
-  const updateTaxes = (value: string[]) => {
-    if (!modalData) return;
-    const updatedData = {
-      ...modalData,
-      taxes: value,
-    };
-
-    setModalData(updatedData.variationId, updatedData);
-    updateItemInCart(updatedData);
-  };
-
   const updateDiscounts = (value: string[]) => {
     if (!modalData) return;
     const updatedData = {
@@ -31,17 +20,17 @@ export default function useCart() {
     updateItemInCart(updatedData);
   };
 
-  const updateGlobalTaxes = (value: string[]) => {
-    const updatedCart: Cart = {};
+  const toggleTax = (value: string, toggle: boolean) => {
+    if (!modalData) return;
+    const updatedData = {
+      ...modalData,
+      taxes: toggle
+        ? [...modalData.taxes, value]
+        : modalData.taxes.filter((t) => t !== value),
+    };
 
-    Object.values(cart).forEach((item) => {
-      updatedCart[item.variationId] = {
-        ...item,
-        taxes: value,
-      };
-    });
-
-    setCart(updatedCart);
+    setModalData(updatedData.variationId, updatedData);
+    updateItemInCart(updatedData);
   };
 
   const updateGlobalDiscounts = (value: string[]) => {
@@ -57,10 +46,25 @@ export default function useCart() {
     setCart(updatedCart);
   };
 
+  const toggleGlobalTax = (value: string, toggle: boolean) => {
+    const updatedCart: Cart = {};
+
+    Object.values(cart).forEach((item) => {
+      updatedCart[item.variationId] = {
+        ...item,
+        taxes: toggle
+          ? [...item.taxes, value]
+          : item.taxes.filter((t) => t !== value),
+      };
+    });
+
+    setCart(updatedCart);
+  };
+
   return {
-    updateTaxes,
     updateDiscounts,
-    updateGlobalTaxes,
+    toggleTax,
     updateGlobalDiscounts,
+    toggleGlobalTax,
   };
 }

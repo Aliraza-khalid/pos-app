@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "../base/Modal";
-import { Select } from "antd";
+import { Flex, Select, Space, Switch } from "antd";
 import useStore from "@/stores";
 import appliedTaxes from "@/utils/appliedTaxes";
 import appliedDiscounts from "@/utils/appliedDiscounts";
@@ -10,6 +10,8 @@ import formatDiscount from "@/utils/formatDiscount";
 import formatTax from "@/utils/formatTax";
 import useTaxes from "@/hooks/query/useTaxes";
 import useDiscounts from "@/hooks/query/useDiscounts";
+import Text from "@/components/base/Text";
+import globalTaxes from "@/utils/globalTaxes";
 
 export default function CartModals() {
   const cart = useStore((state) => state.cart);
@@ -18,13 +20,13 @@ export default function CartModals() {
 
   const {
     updateDiscounts,
-    updateTaxes,
+    toggleTax,
     updateGlobalDiscounts,
-    updateGlobalTaxes,
+    toggleGlobalTax,
   } = useCart();
   const { cartModal, modalData, toggleModal } = useCartContext();
 
-  const allAppliedTaxes = appliedTaxes(cart);
+  const allTaxes = globalTaxes(cart);
   const allAppliedDiscounts = appliedDiscounts(cart);
 
   return (
@@ -52,17 +54,15 @@ export default function CartModals() {
         open={cartModal === "ProductTax"}
         onClose={() => toggleModal("ProductTax")}
       >
-        <Select
-          mode="multiple"
-          allowClear
-          placeholder="Select Taxes"
-          value={modalData?.taxes}
-          onChange={updateTaxes}
-          options={taxes?.map((tax) => ({
-            label: formatTax(tax),
-            value: tax.id,
-          }))}
-        />
+        {taxes?.map((tax) => (
+          <Flex key={tax.id} justify="space-between">
+            <Text title={formatTax(tax)} />
+            <Switch
+              value={modalData?.taxes.includes(tax.id)}
+              onChange={(v) => toggleTax(tax.id, v)}
+            />
+          </Flex>
+        ))}
       </Modal>
 
       <Modal
@@ -83,20 +83,19 @@ export default function CartModals() {
       </Modal>
 
       <Modal
-        title="All Taxes"
+        title="Taxes - Applied Globally"
         open={cartModal === "TotalTax"}
         onClose={() => toggleModal("TotalTax")}
       >
-        <Select
-          mode="multiple"
-          placeholder="Select Taxes"
-          value={allAppliedTaxes}
-          onChange={updateGlobalTaxes}
-          options={taxes?.map((tax) => ({
-            label: formatTax(tax),
-            value: tax.id,
-          }))}
-        />
+        {taxes?.map((tax) => (
+          <Flex key={tax.id} justify="space-between">
+            <Text title={formatTax(tax)} />
+            <Switch
+              value={allTaxes.includes(tax.id)}
+              onChange={(v) => toggleGlobalTax(tax.id, v)}
+            />
+          </Flex>
+        ))}
       </Modal>
     </>
   );

@@ -1,10 +1,12 @@
-import LoginFailedCard from "@/components/auth/LoginFailedCard";
-import { LoginData } from "@/types/Login";
-import getAccessToken from "@/utils/apis/getAccessToken";
+'use client';
+
+import React, { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { Spin } from "antd";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useRef } from "react";
+import LoginFailedCard from "@/components/auth/LoginFailedCard";
+import getAccessToken from "@/utils/apis/getAccessToken";
+import { LoginData } from "@/types/Login";
 
 type PropTypes = {
   authenticationCode: string;
