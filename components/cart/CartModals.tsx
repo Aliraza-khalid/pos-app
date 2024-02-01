@@ -1,31 +1,28 @@
 import React from "react";
-import Modal from "../base/Modal";
-import { Flex, Select, Space, Switch } from "antd";
+import { Flex, Select, Switch } from "antd";
+import Modal from "@/components/base/Modal";
+import Text from "@/components/base/Text";
 import useStore from "@/stores";
-import appliedTaxes from "@/utils/appliedTaxes";
-import appliedDiscounts from "@/utils/appliedDiscounts";
 import useCart from "@/hooks/useCart";
 import useCartContext from "@/hooks/context/useCartContext";
-import formatDiscount from "@/utils/formatDiscount";
-import formatTax from "@/utils/formatTax";
 import useTaxes from "@/hooks/query/useTaxes";
 import useDiscounts from "@/hooks/query/useDiscounts";
-import Text from "@/components/base/Text";
+import appliedDiscounts from "@/utils/appliedDiscounts";
+import formatDiscount from "@/utils/formatDiscount";
+import formatTax from "@/utils/formatTax";
 import globalTaxes from "@/utils/globalTaxes";
 
 export default function CartModals() {
   const cart = useStore((state) => state.cart);
   const { data: taxes } = useTaxes();
   const { data: discounts } = useDiscounts();
+  const nonAmountDiscounts = discounts?.filter(d => d.discountType !== 'FIXED_AMOUNT');
 
-  const {
-    updateDiscounts,
-    toggleTax,
-    updateGlobalDiscounts,
-    toggleGlobalTax,
-  } = useCart();
+  const { updateDiscounts, toggleTax, updateGlobalDiscounts, toggleGlobalTax } =
+    useCart();
   const { cartModal, modalData, toggleModal } = useCartContext();
 
+  const productDiscounts = nonAmountDiscounts?.reduce((acc, curr) => modalData?.discounts.includes(curr.id) ? [...acc, curr.id] : acc, [] as string[]);
   const allTaxes = globalTaxes(cart);
   const allAppliedDiscounts = appliedDiscounts(cart);
 
@@ -40,9 +37,9 @@ export default function CartModals() {
           mode="multiple"
           allowClear
           placeholder="Select Discounts"
-          value={modalData?.discounts}
+          value={productDiscounts}
           onChange={updateDiscounts}
-          options={discounts?.map((discount) => ({
+          options={nonAmountDiscounts?.map((discount) => ({
             label: formatDiscount(discount),
             value: discount.id,
           }))}

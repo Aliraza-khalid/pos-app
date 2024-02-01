@@ -53,7 +53,7 @@ export default function useCart() {
       updatedCart[item.variationId] = {
         ...item,
         taxes: toggle
-          ? [...item.taxes, value]
+          ? [...item.taxes.filter((t) => t !== value), value]
           : item.taxes.filter((t) => t !== value),
       };
     });
