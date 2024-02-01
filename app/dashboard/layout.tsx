@@ -12,7 +12,7 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <Layout className={styles.layout}>
       <Header className={styles.header}>
-        <Title title="POS app" ellipsis className={styles.headerTitle} />
+        <Title title="POS app" ellipsis />
         <HeaderMenu />
       </Header>
 
@@ -34,9 +34,6 @@ const useStyles = createStyles(({ token, css }) => ({
     align-items: center;
     justify-content: space-between;
     background-color: ${token.colorBgElevated};
-  `,
-  headerTitle: css`
-    margin-bottom: 0;
   `,
   content: css`
     width: 100%;

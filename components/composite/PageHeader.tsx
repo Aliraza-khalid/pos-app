@@ -1,7 +1,7 @@
 import { Flex } from "antd";
 import { createStyles } from "antd-style";
 import React from "react";
-import Title from "../base/Title";
+import Title from "@/components/base/Title";
 
 type PropTypes = {
   title: string;
@@ -10,13 +10,13 @@ type PropTypes = {
 };
 
 export default function PageHeader({ title, right1, right2 }: PropTypes) {
-  const { styles } = useStyles();
+  const { styles, theme } = useStyles();
 
   return (
-    <Flex justify="space-between" gap={12} className={styles.row}>
+    <Flex justify="space-between" gap={theme.margin} className={styles.row}>
       <Title title={title} level={2} ellipsis />
 
-      <Flex justify="flex-end" gap={8} style={{ flex: 1 }}>
+      <Flex justify="flex-end" gap={theme.marginXS} style={{ flex: 1 }}>
         {right1}
         {right2}
       </Flex>

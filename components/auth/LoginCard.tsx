@@ -1,14 +1,17 @@
 import { Button, Card } from "antd";
+import { useTheme } from "antd-style";
 import React from "react";
 
 type PropTypes = {
   onClickLogin: () => void;
   loading: boolean;
-}
+};
 
-export default function LoginCard({loading, onClickLogin}: PropTypes) {
+export default function LoginCard({ loading, onClickLogin }: PropTypes) {
+  const theme = useTheme();
+
   return (
-    <Card title="Login" style={{ width: 300, margin: 12 }}>
+    <Card title="Login" style={{ width: 300, margin: theme.margin }}>
       <Button
         value="large"
         block

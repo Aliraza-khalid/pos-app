@@ -1,12 +1,12 @@
 "use client";
 
+import React from "react";
 import useStore from "@/stores";
 import cartSize from "@/utils/cartSize";
 import { LogoutOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Badge, Menu, MenuProps, Tooltip } from "antd";
 import { createStyles } from "antd-style";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
 
 export default function HeaderMenu() {
   const router = useRouter();
@@ -27,7 +27,7 @@ export default function HeaderMenu() {
       icon: (
         <Tooltip title="Cart">
           <Badge count={cartSize(cart)} size="small">
-            <ShoppingCartOutlined style={{ fontSize: "20px" }} />
+            <ShoppingCartOutlined style={{ fontSize: "22px" }} />
           </Badge>
         </Tooltip>
       ),
