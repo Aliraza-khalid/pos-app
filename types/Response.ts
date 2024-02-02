@@ -2,7 +2,7 @@ export type APIResponse<T> = APIResponseSuccess<T> | APIResponseError;
 
 export type APIResponseError = {
   success: false,
-  message: string,
+  error: string,
 }
 
 export type APIResponseSuccess<T> = {

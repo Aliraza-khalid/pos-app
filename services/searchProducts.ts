@@ -20,7 +20,7 @@ export default async function searchProducts(
     );
     const data: APIResponse<SearchProductsData> = await res.json();
     if (data.success) return data.result;
-    else throw new Error(data.message);
+    else throw new Error(data.error);
   } catch (error: any) {
     throw new Error(error?.message ?? error);
   }

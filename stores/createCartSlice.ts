@@ -1,7 +1,9 @@
-import { Cart, CartModalTypes, CartProduct, CartTax } from "@/types/Cart";
+import { Cart, CartModalTypes, CartProduct } from "@/types/Cart";
 import { StateCreator } from "zustand";
 import { ProductsSlice } from "./createProductsSlice";
 import { CatalogProduct, Variation } from "@/types/Product";
+import { CalculateOrderDTO } from "@/types/Order";
+import { convertCartToOrder } from "@/utils/convertCartToOrder";
 
 export interface CartSlice {
   cart: Cart;
@@ -22,6 +24,8 @@ export interface CartSlice {
   _activeVartiationId: string;
   setActiveVariationId: (id: string) => void;
   getActiveProduct: () => CartProduct | undefined;
+
+  getOrderDTO: () => CalculateOrderDTO;
 }
 
 const createCartSlice: StateCreator<
@@ -106,6 +110,8 @@ const createCartSlice: StateCreator<
   _activeVartiationId: "",
   setActiveVariationId: (id) => set(() => ({ _activeVartiationId: id })),
   getActiveProduct: () => get().cart[get()._activeVartiationId],
+
+  getOrderDTO: () => convertCartToOrder(get().cart),
 });
 
 export default createCartSlice;

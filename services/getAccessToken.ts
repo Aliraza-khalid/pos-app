@@ -9,7 +9,7 @@ export default async function getAccessToken(code: string): Promise<LoginData> {
     );
     const data: APIResponse<LoginData> = await res.json();
     if (data.success) return data.result;
-    else throw new Error(data.message);
+    else throw new Error(data.error);
   } catch (error: any) {
     throw new Error(error?.message ?? error);
   }

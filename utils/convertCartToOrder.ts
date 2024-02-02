@@ -1,9 +1,9 @@
 import appliedTaxes from "./appliedTaxes";
 import appliedDiscounts from "./appliedDiscounts";
 import { Cart } from "@/types/Cart";
-import { CreateOrderDTO } from "@/types/Order";
+import { CalculateOrderDTO } from "@/types/Order";
 
-export function convertCartToOrder(cart: Cart): CreateOrderDTO {
+export function convertCartToOrder(cart: Cart): CalculateOrderDTO {
   return {
     lineItems: Object.values(cart).map((item) => ({
       catalogObjectId: item.variationId,

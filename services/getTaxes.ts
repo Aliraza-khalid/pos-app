@@ -1,3 +1,4 @@
+import { APIResponse } from "@/types/Response";
 import { Tax } from "@/types/Tax";
 
 export default async function getTaxes(): Promise<Tax[]> {
@@ -12,9 +13,9 @@ export default async function getTaxes(): Promise<Tax[]> {
         },
       }
     );
-    const data = await res.json();
+    const data: APIResponse<Tax[]> = await res.json();
     if (data.success) return data.result;
-    else throw new Error(data.message);
+    else throw new Error(data.error);
   } catch (error: any) {
     throw new Error(error?.message ?? error);
   }

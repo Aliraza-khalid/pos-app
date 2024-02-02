@@ -8,15 +8,39 @@ import Loading from "../wrapper/Loading";
 import useOrderQuery from "@/hooks/query/useOrderQuery";
 import useStore from "@/stores";
 import formatPrice from "@/utils/formatPrice";
+import useOrderMutation from "@/hooks/query/useOrderMutation";
+import useNotificationContext from "@/hooks/context/useNotificationContext";
 
 export default function CartFooter() {
   const toggleCartModal = useStore((state) => state.toggleCartModal);
-  const { data: order, isLoading } = useOrderQuery();
+  const getOrderDTO = useStore((state) => state.getOrderDTO);
+  const { data: order, isLoading: orderLoading } = useOrderQuery();
+  const { mutate: generateOrder, isPending: checkoutLoading } =
+    useOrderMutation();
+  const { showSuccessNotification, showErrorNotification } =
+    useNotificationContext();
   const { styles } = useStyles();
 
   const totalDiscount = order?.totalDiscountMoney.amount ?? 0;
   const totalTax = order?.totalTaxMoney.amount ?? 0;
   const totalAmount = order?.totalMoney.amount ?? 0;
+
+  const onClickCheckout = () => {
+    generateOrder(getOrderDTO(), { onSuccess, onError });
+  };
+
+  const onSuccess = () => {
+    
+    showSuccessNotification({
+      description: "Order Generated",
+    });
+  };
+
+  const onError = (error: Error) => {
+    showErrorNotification({
+      description: error.message,
+    });
+  };
 
   return (
     <>
@@ -31,7 +55,7 @@ export default function CartFooter() {
           titleClass={styles.label}
           icon={<EditOutlined className={styles.editIcon} />}
           right={
-            <Loading loading={isLoading}>
+            <Loading loading={orderLoading}>
               <Text
                 title={`- $ ${formatPrice(totalDiscount)}`}
                 className={styles.label}
@@ -52,7 +76,7 @@ export default function CartFooter() {
           titleClass={styles.label}
           icon={<EditOutlined className={styles.editIcon} />}
           right={
-            <Loading loading={isLoading}>
+            <Loading loading={orderLoading}>
               <Text
                 title={`$ ${formatPrice(totalTax)}`}
                 className={styles.label}
@@ -67,7 +91,7 @@ export default function CartFooter() {
         titleClass={styles.label}
         containerClass={styles.totalRow}
         right={
-          <Loading loading={isLoading}>
+          <Loading loading={orderLoading}>
             <Text
               title={`$ ${formatPrice(totalAmount)}`}
               className={styles.label}
@@ -80,8 +104,10 @@ export default function CartFooter() {
         <Button
           type="primary"
           size="large"
-          disabled={isLoading}
+          disabled={orderLoading}
           className={styles.button}
+          loading={checkoutLoading}
+          onClick={onClickCheckout}
         >
           Checkout
         </Button>

@@ -1,10 +1,10 @@
-export interface CreateOrderDTO {
-  lineItems: CreateOrderLineItem[];
-  taxes: CreateOrderTax[];
-  discounts: CreateOrderDiscount[];
+export interface CalculateOrderDTO {
+  lineItems: CalculateOrderLineItem[];
+  taxes: CalculateOrderTax[];
+  discounts: CalculateOrderDiscount[];
 }
 
-export interface CreateOrderLineItem {
+export interface CalculateOrderLineItem {
   quantity: string;
   catalogObjectId: string;
   itemType: "ITEM";
@@ -16,18 +16,18 @@ export interface CreateOrderLineItem {
   }[];
 }
 
-export interface CreateOrderTax {
+export interface CalculateOrderTax {
   uid: string;
   catalogObjectId: string;
   scope: "ORDER" | "LINE_ITEM";
 }
 
-export type CreateOrderDiscount = CreateOrderTax;
+export type CalculateOrderDiscount = CalculateOrderTax;
 
-export type OrderResponseDTO = {
+export type CalculateOrderResponse = {
   locationId: string;
   lineItems?: LineItem[];
-  taxes?: OrderResponseTax[];
+  taxes?: CalculateOrderResponseTax[];
   netAmounts: NetAmounts;
   createdAt: Date;
   updatedAt: Date;
@@ -82,7 +82,7 @@ export interface NetAmounts {
   serviceChargeMoney: Money;
 }
 
-export interface OrderResponseTax {
+export interface CalculateOrderResponseTax {
   uid: string;
   catalogObjectId: string;
   catalogVersion: number;
@@ -91,4 +91,15 @@ export interface OrderResponseTax {
   percentage: string;
   appliedMoney: Money;
   scope: string;
+}
+
+export type GenerateOrderDTO = CalculateOrderDTO;
+
+export interface GenerateOrderResponse {
+  order: {
+    id: string;
+    customerId: string;
+    referenceId: string;
+    netAmount: Money;
+  };
 }
