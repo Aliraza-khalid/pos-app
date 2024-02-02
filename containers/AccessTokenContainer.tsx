@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -7,16 +7,20 @@ import { Spin } from "antd";
 import LoginFailedCard from "@/components/auth/LoginFailedCard";
 import getAccessToken from "@/services/getAccessToken";
 import { LoginData } from "@/types/Login";
+import useNotificationContext from "@/hooks/context/useNotificationContext";
 
 type PropTypes = {
   authenticationCode: string;
 };
 
-export default function AccessTokenContainer({ authenticationCode }: PropTypes) {
+export default function AccessTokenContainer({
+  authenticationCode,
+}: PropTypes) {
   const router = useRouter();
   const apiCalled = useRef(false);
+  const { showErrorNotification } = useNotificationContext();
 
-  const handleSuccess = (data: LoginData | null) => {
+  const handleSuccess = (data: LoginData) => {
     if (!data) return;
     localStorage.setItem("accessToken", JSON.stringify(data.token));
     localStorage.setItem("merchant", JSON.stringify(data.merchant));
@@ -28,8 +32,11 @@ export default function AccessTokenContainer({ authenticationCode }: PropTypes) 
     mutationKey: ["loginUrl"],
     mutationFn: (authCode: string) => getAccessToken(authCode),
     onSuccess: handleSuccess,
+    onError: (error) =>
+      showErrorNotification({
+        description: error.message,
+      }),
   });
-  console.log(isPending)
 
   useEffect(() => {
     if (authenticationCode && !apiCalled.current) {
