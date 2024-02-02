@@ -12,11 +12,15 @@ import useOrderMutation from "@/hooks/query/useOrderMutation";
 import useNotificationContext from "@/hooks/context/useNotificationContext";
 
 export default function CartFooter() {
+  const toggleCart = useStore((state) => state.toggleCart);
   const toggleCartModal = useStore((state) => state.toggleCartModal);
   const getOrderDTO = useStore((state) => state.getOrderDTO);
+  const setCart = useStore((state) => state.setCart);
+
   const { data: order, isLoading: orderLoading } = useOrderQuery();
   const { mutate: generateOrder, isPending: checkoutLoading } =
     useOrderMutation();
+
   const { showSuccessNotification, showErrorNotification } =
     useNotificationContext();
   const { styles } = useStyles();
@@ -30,7 +34,8 @@ export default function CartFooter() {
   };
 
   const onSuccess = () => {
-    
+    setCart({});
+    toggleCart();
     showSuccessNotification({
       description: "Order Generated",
     });
