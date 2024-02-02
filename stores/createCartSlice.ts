@@ -1,11 +1,10 @@
-import { Cart, CartProduct, CartTax } from "@/types/Cart";
+import { Cart, CartModalTypes, CartProduct, CartTax } from "@/types/Cart";
 import { StateCreator } from "zustand";
 import { ProductsSlice } from "./createProductsSlice";
 import { CatalogProduct, Variation } from "@/types/Product";
 
 export interface CartSlice {
   cart: Cart;
-  cartOpen: boolean;
 
   addItemToCart: (product: CatalogProduct, variation: Variation) => void;
   increaseItemInCart: (variationId: string) => void;
@@ -14,7 +13,15 @@ export interface CartSlice {
   updateItemInCart: (item: CartProduct) => void;
   setCart: (data: Cart) => void;
 
+  cartOpen: boolean;
   toggleCart: () => void;
+
+  cartModal: CartModalTypes;
+  toggleCartModal: (value: CartModalTypes) => void;
+
+  _activeVartiationId: string;
+  setActiveVariationId: (id: string) => void;
+  getActiveProduct: () => CartProduct | undefined;
 }
 
 const createCartSlice: StateCreator<
@@ -24,7 +31,6 @@ const createCartSlice: StateCreator<
   CartSlice
 > = (set, get) => ({
   cart: {},
-  cartOpen: false,
 
   addItemToCart: (product, variation) => {
     set((state) => ({
@@ -89,7 +95,17 @@ const createCartSlice: StateCreator<
 
   setCart: (data) => set(() => ({ cart: data })),
 
+  cartOpen: false,
   toggleCart: () => set((state) => ({ cartOpen: !state.cartOpen })),
+
+  cartModal: "",
+  toggleCartModal: (value) => {
+    set((state) => ({ cartModal: state.cartModal === value ? "" : value }));
+  },
+
+  _activeVartiationId: "",
+  setActiveVariationId: (id) => set(() => ({ _activeVartiationId: id })),
+  getActiveProduct: () => get().cart[get()._activeVartiationId],
 });
 
 export default createCartSlice;

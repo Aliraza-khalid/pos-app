@@ -22,4 +22,5 @@ export type CartModalTypes =
   | "ProductTax"
   | "ProductDiscount"
   | "TotalTax"
-  | "TotalDiscount";
+  | "TotalDiscount"
+  | "";

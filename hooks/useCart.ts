@@ -1,35 +1,32 @@
 import React from "react";
-import useCartContext from "./context/useCartContext";
 import useStore from "@/stores";
 import { Cart } from "@/types/Cart";
 
 export default function useCart() {
-  const { modalData, setModalData } = useCartContext();
   const cart = useStore((state) => state.cart);
+  const activeProduct = useStore(state => state.getActiveProduct)();
   const updateItemInCart = useStore((state) => state.updateItemInCart);
   const setCart = useStore((state) => state.setCart);
 
   const updateDiscounts = (value: string[]) => {
-    if (!modalData) return;
+    if (!activeProduct) return;
     const updatedData = {
-      ...modalData,
+      ...activeProduct,
       discounts: value,
     };
 
-    setModalData(modalData.variationId, updatedData);
     updateItemInCart(updatedData);
   };
 
   const toggleTax = (value: string, toggle: boolean) => {
-    if (!modalData) return;
+    if (!activeProduct) return;
     const updatedData = {
-      ...modalData,
+      ...activeProduct,
       taxes: toggle
-        ? [...modalData.taxes, value]
-        : modalData.taxes.filter((t) => t !== value),
+        ? [...activeProduct.taxes, value]
+        : activeProduct.taxes.filter((t) => t !== value),
     };
 
-    setModalData(updatedData.variationId, updatedData);
     updateItemInCart(updatedData);
   };
 

@@ -1,15 +1,20 @@
 import { Drawer, Flex, Spin } from "antd";
-import React from "react";
-import useCartContext from "@/hooks/context/useCartContext";
+import React, { useEffect, useState } from "react";
 import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
 import CartModals from "./CartModals";
 import useStore from "@/stores";
+import useOrderQuery from "@/hooks/query/useOrderQuery";
 
 export default function CartDrawer() {
-  const { order, orderLoading } = useCartContext();
   const cartOpen = useStore((state) => state.cartOpen);
   const toggleCart = useStore((state) => state.toggleCart);
+  const { data, isLoading } = useOrderQuery();
+  const [order, setOrder] = useState(data);
+
+  useEffect(() => {
+    data && setOrder(data);
+  }, [data])
 
   return (
     <Drawer
@@ -22,11 +27,11 @@ export default function CartDrawer() {
         <CartCard
           key={item.catalogObjectId}
           item={item}
-          loading={orderLoading}
+          loading={isLoading}
         />
       ))}
 
-      {orderLoading && (
+      {isLoading && (
         <Flex justify="center">
           <Spin size="large" style={{ marginBottom: 20 }} />
         </Flex>

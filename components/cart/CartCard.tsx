@@ -3,7 +3,6 @@ import { Button, Card, Flex } from "antd";
 import { createStyles } from "antd-style";
 import { EditOutlined } from "@ant-design/icons";
 import Text from "@/components/base/Text";
-import useCartContext from "@/hooks/context/useCartContext";
 import useStore from "@/stores";
 import formatPrice from "@/utils/formatPrice";
 import { CartModalTypes } from "@/types/Cart";
@@ -23,7 +22,8 @@ export default function CartCard({ item, loading }: PropTypes) {
   );
   const increaseItemInCart = useStore((state) => state.increaseItemInCart);
   const decreaseItemInCart = useStore((state) => state.decreaseItemInCart);
-  const { setModalData, toggleModal } = useCartContext();
+  const toggleCartModal = useStore((state) => state.toggleCartModal);
+  const setActiveVariationId = useStore((state) => state.setActiveVariationId);
   const { styles } = useStyles();
 
   const grossAmount = item.grossSalesMoney.amount;
@@ -32,8 +32,8 @@ export default function CartCard({ item, loading }: PropTypes) {
   const totalAmount = item.totalMoney.amount;
 
   const onClickEdit = (modal: CartModalTypes) => {
-    setModalData(item.catalogObjectId);
-    toggleModal(modal);
+    setActiveVariationId(item.catalogObjectId);
+    toggleCartModal(modal);
   };
 
   return (

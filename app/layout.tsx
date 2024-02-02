@@ -25,8 +25,6 @@ export default function RootLayout({
 const styles: { [key: string]: CSSProperties } = {
   html: {
     colorScheme: "dark",
-    maxWidth: "100vw",
-    overflowX: "hidden",
   },
   body: {
     backgroundColor: AntdConfig.token?.colorBgBase,

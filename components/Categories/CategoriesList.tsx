@@ -3,11 +3,11 @@ import { Button, Skeleton, Space } from "antd";
 import Text from "@/components/base/Text";
 import useProductsContext from "@/hooks/context/useProductsContext";
 import { capitalizeText } from "@/utils/capitalizeText";
-import useCategories from "@/hooks/query/useCategories";
+import useCategoriesQuery from "@/hooks/query/useCategoriesQuery";
 
 export default function CategoriesList() {
   const { categoryId, searchByCategory } = useProductsContext();
-  const { data: categories, isError, isLoading, error } = useCategories();
+  const { data: categories, isError, isLoading, error } = useCategoriesQuery();
 
   const buttonType = (id: string) => {
     return categoryId === id ? undefined : "text";

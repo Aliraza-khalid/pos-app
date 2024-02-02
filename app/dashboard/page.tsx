@@ -8,7 +8,6 @@ import SearchBar from "@/components/SearchBar";
 import CartDrawer from "@/components/cart/CartDrawer";
 import ProductsList from "@/components/products/ProductsList";
 import ProductsContainer from "@/containers/ProductsContainer";
-import CartContainer from "@/containers/CartContainer";
 import DashboardContainer from "@/containers/DashboardContainer";
 
 export default function ProductsPage() {
@@ -42,9 +41,7 @@ export default function ProductsPage() {
           </Row>
         </ProductsContainer>
 
-        <CartContainer>
-          <CartDrawer />
-        </CartContainer>
+        <CartDrawer />
       </main>
     </DashboardContainer>
   );
