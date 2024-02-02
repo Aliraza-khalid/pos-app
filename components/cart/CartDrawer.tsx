@@ -1,4 +1,4 @@
-import { Drawer } from "antd";
+import { Drawer, Flex, Spin } from "antd";
 import React from "react";
 import useCartContext from "@/hooks/context/useCartContext";
 import CartFooter from "./CartFooter";
@@ -25,6 +25,12 @@ export default function CartDrawer() {
           loading={orderLoading}
         />
       ))}
+
+      {orderLoading && (
+        <Flex justify="center">
+          <Spin size="large" style={{ marginBottom: 20 }} />
+        </Flex>
+      )}
 
       <CartModals />
     </Drawer>

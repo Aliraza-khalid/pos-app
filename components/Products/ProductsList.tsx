@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Badge, List, Spin } from "antd";
+import { List, Space, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "./ProductCard";
 import Text from "@/components/base/Text";
 import useProductsContext from "@/hooks/context/useProductsContext";
 import { CatalogProduct } from "@/types/Product";
+import ProductCardLoading from "./ProductCardLoading";
 
 export default function ProductsList() {
   const { productPages, isLoading, isError, isLoadingPage, nextPage } =
@@ -16,7 +17,13 @@ export default function ProductsList() {
   }, [inView, nextPage]);
 
   if (isLoading)
-    return <Text title="Loading..." style={{ textAlign: "center" }} />;
+    return (
+      <Space direction="vertical" size={"large"}>
+        {[1, 2, 3, 4, 5].map((i) => (
+          <ProductCardLoading key={i} />
+        ))}
+      </Space>
+    );
 
   if (isError)
     return <Text title="No Data Found" style={{ textAlign: "center" }} />;

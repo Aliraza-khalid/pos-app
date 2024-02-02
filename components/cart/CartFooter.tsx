@@ -6,6 +6,7 @@ import useCartContext from "@/hooks/context/useCartContext";
 import formatPrice from "@/utils/formatPrice";
 import Text from "@/components/base/Text";
 import CardItem from "../composite/CardItem";
+import Loading from "../wrapper/Loading";
 
 export default function CartFooter() {
   const { order, orderLoading, toggleModal } = useCartContext();
@@ -28,10 +29,12 @@ export default function CartFooter() {
           titleClass={styles.label}
           icon={<EditOutlined className={styles.editIcon} />}
           right={
-            <Text
-              title={`- $ ${formatPrice(totalDiscount)}`}
-              className={styles.label}
-            />
+            <Loading loading={orderLoading}>
+              <Text
+                title={`- $ ${formatPrice(totalDiscount)}`}
+                className={styles.label}
+              />
+            </Loading>
           }
         />
       </Button>
@@ -47,10 +50,12 @@ export default function CartFooter() {
           titleClass={styles.label}
           icon={<EditOutlined className={styles.editIcon} />}
           right={
-            <Text
-              title={`$ ${formatPrice(totalTax)}`}
-              className={styles.label}
-            />
+            <Loading loading={orderLoading}>
+              <Text
+                title={`$ ${formatPrice(totalTax)}`}
+                className={styles.label}
+              />
+            </Loading>
           }
         />
       </Button>
@@ -60,15 +65,22 @@ export default function CartFooter() {
         titleClass={styles.label}
         containerClass={styles.totalRow}
         right={
-          <Text
-            title={`$ ${formatPrice(totalAmount)}`}
-            className={styles.label}
-          />
+          <Loading loading={orderLoading}>
+            <Text
+              title={`$ ${formatPrice(totalAmount)}`}
+              className={styles.label}
+            />
+          </Loading>
         }
       />
 
       <Flex justify="flex-end">
-        <Button type="primary" size="large" className={styles.button}>
+        <Button
+          type="primary"
+          size="large"
+          disabled={orderLoading}
+          className={styles.button}
+        >
           Checkout
         </Button>
       </Flex>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Flex, Space } from "antd";
+import { Button, Card, Flex } from "antd";
 import { createStyles } from "antd-style";
 import { EditOutlined } from "@ant-design/icons";
 import Text from "@/components/base/Text";
@@ -10,6 +10,7 @@ import { CartModalTypes } from "@/types/Cart";
 import { LineItem } from "@/types/Order";
 import QuantityControls from "../composite/QuantityControls";
 import CardItem from "../composite/CardItem";
+import Loading from "../wrapper/Loading";
 
 type PropTypes = {
   item: LineItem;
@@ -77,10 +78,12 @@ export default function CartCard({ item, loading }: PropTypes) {
           titleClass={styles.label}
           icon={<EditOutlined className={styles.editIcon} />}
           right={
-            <Text
-              title={`- $ ${formatPrice(discountAmount)}`}
-              className={styles.label}
-            />
+            <Loading loading={loading}>
+              <Text
+                title={`- $ ${formatPrice(discountAmount)}`}
+                className={styles.label}
+              />
+            </Loading>
           }
         />
       </Button>
@@ -96,10 +99,12 @@ export default function CartCard({ item, loading }: PropTypes) {
           titleClass={styles.label}
           icon={<EditOutlined className={styles.editIcon} />}
           right={
-            <Text
-              title={`$ ${formatPrice(taxAmount)}`}
-              className={styles.label}
-            />
+            <Loading loading={loading}>
+              <Text
+                title={`$ ${formatPrice(taxAmount)}`}
+                className={styles.label}
+              />
+            </Loading>
           }
         />
       </Button>
@@ -109,10 +114,12 @@ export default function CartCard({ item, loading }: PropTypes) {
         titleClass={styles.label}
         containerClass={styles.totalRow}
         right={
-          <Text
-            title={`$ ${formatPrice(totalAmount)}`}
-            className={styles.amount}
-          />
+          <Loading loading={loading}>
+            <Text
+              title={`$ ${formatPrice(totalAmount)}`}
+              className={styles.amount}
+            />
+          </Loading>
         }
       />
     </Card>
