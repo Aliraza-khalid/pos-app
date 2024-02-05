@@ -7,7 +7,7 @@ import { Spin } from "antd";
 import LoginFailedCard from "@/components/auth/LoginFailedCard";
 import getAccessToken from "@/services/getAccessToken";
 import { LoginData } from "@/types/Login";
-import useNotificationContext from "@/hooks/context/useNotificationContext";
+import useNotificationContext from "@/hooks/useNotificationContext";
 
 type PropTypes = {
   authenticationCode: string;

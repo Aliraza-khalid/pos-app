@@ -4,7 +4,7 @@ import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
 import CartModals from "./CartModals";
 import useStore from "@/stores";
-import useOrderQuery from "@/hooks/query/useCalculateOrder";
+import useOrderQuery from "@/hooks/useCalculateOrder";
 import ErrorMessage from "../composite/ErrorMessage";
 
 export default function CartDrawer() {

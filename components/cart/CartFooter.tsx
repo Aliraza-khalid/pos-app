@@ -5,10 +5,10 @@ import { EditOutlined } from "@ant-design/icons";
 import Text from "@/components/base/Text";
 import CardItem from "../composite/CardItem";
 import Loading from "../wrapper/Loading";
-import useOrderQuery from "@/hooks/query/useCalculateOrder";
+import useOrderQuery from "@/hooks/useCalculateOrder";
 import useStore from "@/stores";
 import formatPrice from "@/utils/formatPrice";
-import useGenerateOrder from "@/hooks/query/useGenerateOrder";
+import useGenerateOrder from "@/hooks/useGenerateOrder";
 
 export default function CartFooter() {
   const toggleCartModal = useStore((state) => state.toggleCartModal);

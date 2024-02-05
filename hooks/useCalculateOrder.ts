@@ -2,7 +2,7 @@ import calculateOrder from "@/services/calculateOrder";
 import useStore from "@/stores";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import useNotificationContext from "../context/useNotificationContext";
+import useNotificationContext from "./useNotificationContext";
 
 export default function useOrderQuery() {
   useStore(state => state.cart);

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { List, Space, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "./ProductCard";
-import useProductsContext from "@/hooks/context/useProductsContext";
+import useProductsContext from "@/hooks/useProductsContext";
 import { CatalogProduct } from "@/types/Product";
 import ProductCardLoading from "./ProductCardLoading";
 import ErrorMessage from "../composite/ErrorMessage";

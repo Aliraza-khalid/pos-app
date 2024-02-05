@@ -3,7 +3,7 @@ import useStore from "@/stores";
 import { GenerateOrderDTO } from "@/types/Order";
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
-import useNotificationContext from "../context/useNotificationContext";
+import useNotificationContext from "./useNotificationContext";
 
 export default function useOrderMutation() {
   const getOrderDTO = useStore((state) => state.getOrderDTO);
