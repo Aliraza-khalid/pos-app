@@ -5,47 +5,23 @@ import { EditOutlined } from "@ant-design/icons";
 import Text from "@/components/base/Text";
 import CardItem from "../composite/CardItem";
 import Loading from "../wrapper/Loading";
-import useOrderQuery from "@/hooks/query/useOrderQuery";
+import useOrderQuery from "@/hooks/query/useCalculateOrder";
 import useStore from "@/stores";
 import formatPrice from "@/utils/formatPrice";
-import useOrderMutation from "@/hooks/query/useOrderMutation";
-import useNotificationContext from "@/hooks/context/useNotificationContext";
+import useGenerateOrder from "@/hooks/query/useGenerateOrder";
 
 export default function CartFooter() {
-  const toggleCart = useStore((state) => state.toggleCart);
   const toggleCartModal = useStore((state) => state.toggleCartModal);
-  const getOrderDTO = useStore((state) => state.getOrderDTO);
-  const setCart = useStore((state) => state.setCart);
 
-  const { data: order, isLoading: orderLoading } = useOrderQuery();
-  const { mutate: generateOrder, isPending: checkoutLoading } =
-    useOrderMutation();
+  const { data: calculation, isLoading: orderLoading } = useOrderQuery();
+  const { onClick: onClickCheckout, isPending: checkoutLoading } =
+    useGenerateOrder();
 
-  const { showSuccessNotification, showErrorNotification } =
-    useNotificationContext();
   const { styles } = useStyles();
 
-  const totalDiscount = order?.totalDiscountMoney.amount ?? 0;
-  const totalTax = order?.totalTaxMoney.amount ?? 0;
-  const totalAmount = order?.totalMoney.amount ?? 0;
-
-  const onClickCheckout = () => {
-    generateOrder(getOrderDTO(), { onSuccess, onError });
-  };
-
-  const onSuccess = () => {
-    setCart({});
-    toggleCart();
-    showSuccessNotification({
-      description: "Order Generated",
-    });
-  };
-
-  const onError = (error: Error) => {
-    showErrorNotification({
-      description: error.message,
-    });
-  };
+  const totalDiscount = calculation?.totalDiscountMoney.amount ?? 0;
+  const totalTax = calculation?.totalTaxMoney.amount ?? 0;
+  const totalAmount = calculation?.totalMoney.amount ?? 0;
 
   return (
     <>

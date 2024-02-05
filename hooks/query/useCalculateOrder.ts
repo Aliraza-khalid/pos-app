@@ -16,6 +16,7 @@ export default function useOrderQuery() {
 
   useEffect(() => {
     query.error && showErrorNotification({
+      message: 'Cart Error',
       description: query.error?.message
     })
   }, [query.error]);

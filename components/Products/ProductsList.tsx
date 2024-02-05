@@ -2,14 +2,22 @@ import React, { useEffect } from "react";
 import { List, Space, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "./ProductCard";
-import Text from "@/components/base/Text";
 import useProductsContext from "@/hooks/context/useProductsContext";
 import { CatalogProduct } from "@/types/Product";
 import ProductCardLoading from "./ProductCardLoading";
+import ErrorMessage from "../composite/ErrorMessage";
+import Iterate from "../wrapper/Iterate";
 
 export default function ProductsList() {
-  const { productPages, isLoading, isError, isLoadingPage, nextPage } =
-    useProductsContext();
+  const {
+    productPages,
+    isLoading,
+    isLoadingPage,
+    isError,
+    error,
+    nextPage,
+    search,
+  } = useProductsContext();
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -19,14 +27,12 @@ export default function ProductsList() {
   if (isLoading)
     return (
       <Space direction="vertical" size={"large"}>
-        {[1, 2, 3, 4, 5].map((i) => (
-          <ProductCardLoading key={i} />
-        ))}
+        {Iterate({ Component: ProductCardLoading })}
       </Space>
     );
 
   if (isError)
-    return <Text title="No Data Found" style={{ textAlign: "center" }} />;
+    return <ErrorMessage message={error?.message} onRetry={search} />;
 
   if (productPages)
     return (

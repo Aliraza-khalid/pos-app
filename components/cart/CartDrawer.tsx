@@ -4,12 +4,14 @@ import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
 import CartModals from "./CartModals";
 import useStore from "@/stores";
-import useOrderQuery from "@/hooks/query/useOrderQuery";
+import useOrderQuery from "@/hooks/query/useCalculateOrder";
+import ErrorMessage from "../composite/ErrorMessage";
 
 export default function CartDrawer() {
   const cartOpen = useStore((state) => state.cartOpen);
   const toggleCart = useStore((state) => state.toggleCart);
-  const { data, isLoading } = useOrderQuery();
+  const { data, isLoading, isError, error, refetch } = useOrderQuery();
+  
   const [order, setOrder] = useState(data);
 
   useEffect(() => {
@@ -34,6 +36,12 @@ export default function CartDrawer() {
       {isLoading && (
         <Flex justify="center">
           <Spin size="large" style={{ marginBottom: 20 }} />
+        </Flex>
+      )}
+
+      {isError && (
+        <Flex justify="center">
+          <ErrorMessage message={error.message} onRetry={() => refetch()}/>
         </Flex>
       )}
 

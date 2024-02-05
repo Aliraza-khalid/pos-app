@@ -17,6 +17,7 @@ type ContextTypes = {
   productPages: SearchProductsData[] | undefined;
   isLoading: boolean;
   isError: boolean;
+  error: Error | null;
   isLoadingPage: boolean;
   nextPage: () => void;
 };
@@ -31,7 +32,8 @@ function ProductsContainer({ children }: PropsWithChildren) {
     data,
     isLoading,
     isError,
-    refetch: search,
+    error,
+    refetch,
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
@@ -45,13 +47,13 @@ function ProductsContainer({ children }: PropsWithChildren) {
   });
 
   useEffect(() => {
-    search();
+    refetch();
   }, []);
 
   const searchByCategory = (id: string) => {
     setCategoryId((v) => (v === id ? "" : id));
     setTimeout(() => {
-      search();
+      refetch();
     }, 0);
   };
 
@@ -65,10 +67,11 @@ function ProductsContainer({ children }: PropsWithChildren) {
         categoryId,
         searchQuery,
         setSearchQuery,
-        search,
         searchByCategory,
+        search: refetch,
         isLoading,
         isError,
+        error,
         productPages: data?.pages,
         isLoadingPage: isFetchingNextPage,
         nextPage,
