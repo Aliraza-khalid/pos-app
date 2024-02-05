@@ -7,7 +7,7 @@ export default function DashboardContainer({ children }: PropsWithChildren) {
 
   useEffect(() => {
     !isAuthenticated() && router.replace("/login");
-  }, []);
+  }, [router]);
 
   return children;
 }

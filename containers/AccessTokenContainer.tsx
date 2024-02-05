@@ -20,7 +20,7 @@ export default function AccessTokenContainer({
   const apiCalled = useRef(false);
   const { showErrorNotification } = useNotificationContext();
 
-  const handleSuccess = (data: LoginData) => {
+  const onSuccess = (data: LoginData) => {
     if (!data) return;
     localStorage.setItem("accessToken", JSON.stringify(data.token));
     localStorage.setItem("merchant", JSON.stringify(data.merchant));
@@ -28,14 +28,18 @@ export default function AccessTokenContainer({
     router.replace("/dashboard");
   };
 
+  const onError = (error: Error) => {
+    showErrorNotification({
+      message: "Login Error",
+      description: error?.message,
+    });
+  };
+
   const { isPending, isError, mutate } = useMutation({
     mutationKey: ["loginUrl"],
     mutationFn: (authCode: string) => getAccessToken(authCode),
-    onSuccess: handleSuccess,
-    onError: (error) =>
-      showErrorNotification({
-        description: error.message,
-      }),
+    onSuccess,
+    onError,
   });
 
   useEffect(() => {

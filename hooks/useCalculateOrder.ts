@@ -19,7 +19,7 @@ export default function useOrderQuery() {
       message: 'Cart Error',
       description: query.error?.message
     })
-  }, [query.error]);
+  }, [query.error, showErrorNotification]);
 
   return query;
 }

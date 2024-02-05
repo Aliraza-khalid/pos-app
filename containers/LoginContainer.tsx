@@ -1,25 +1,37 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import LoginCard from "@/components/auth/LoginCard";
 import getLoginUrl from "@/services/getLoginUrl";
-import { useQuery } from "@tanstack/react-query";
-import { redirect } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import useNotificationContext from "@/hooks/useNotificationContext";
 
 export default function LoginContainer() {
-  const {
-    data: url,
-    isFetching,
-    refetch,
-  } = useQuery({
-    queryKey: ["loginUrl"],
-    queryFn: getLoginUrl,
-    enabled: false,
+  const router = useRouter();
+  const { showErrorNotification } = useNotificationContext();
+
+  const onSuccess = (url: string) => {
+    router.push(url as any);
+  };
+
+  const onError = (error: Error) => {
+    showErrorNotification({
+      message: "Login Error",
+      description: error?.message,
+    });
+  };
+
+  const { isPending, mutate } = useMutation({
+    mutationKey: ["loginUrl"],
+    mutationFn: getLoginUrl,
+    onSuccess,
+    onError,
   });
 
-  useEffect(() => {
-    url && redirect(url);
-  }, [url]);
+  const onClickLogin = () => {
+    mutate();
+  };
 
-  return <LoginCard loading={isFetching} onClickLogin={refetch} />;
+  return <LoginCard loading={isPending} onClickLogin={onClickLogin} />;
 }
