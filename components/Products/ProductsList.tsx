@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useEffect } from "react";
 import { List, Space, Spin } from "antd";
@@ -9,6 +9,7 @@ import { CatalogProduct } from "@/types/Product";
 import ProductCardLoading from "./ProductCardLoading";
 import ErrorMessage from "../composite/ErrorMessage";
 import Iterate from "../wrapper/Iterate";
+import * as Sentry from '@sentry/nextjs';
 
 export default function ProductsList() {
   const {
@@ -38,7 +39,7 @@ export default function ProductsList() {
 
   if (productPages)
     return (
-      <>
+      <Sentry.ErrorBoundary fallback={<ErrorMessage onRetry={search} />}>
         {productPages.map((page, pIndex) => (
           <List
             key={page.cursor}
@@ -51,6 +52,6 @@ export default function ProductsList() {
           />
         ))}
         {isLoadingPage && <Spin style={{ marginBottom: 20 }} />}
-      </>
+      </Sentry.ErrorBoundary>
     );
 }
