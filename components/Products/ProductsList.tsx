@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect } from "react";
 import { List, Space, Spin } from "antd";
 import { useInView } from "react-intersection-observer";

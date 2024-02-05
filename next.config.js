@@ -5,7 +5,7 @@ const nextConfig = {
   },
   redirects: () => [{
     source: '/',
-    destination: '/dashboard',
+    destination: '/products',
     permanent: true,
   }],
   experimental: {

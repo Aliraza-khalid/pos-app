@@ -5,19 +5,22 @@ import Layout, { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import HeaderMenu from "@/components/HeaderMenu";
 import Title from "@/components/base/Title";
+import DashboardContainer from "@/containers/DashboardContainer";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   const { styles } = useStyles();
 
   return (
-    <Layout className={styles.layout}>
-      <Header className={styles.header}>
-        <Title title="POS app" ellipsis />
-        <HeaderMenu />
-      </Header>
+    <DashboardContainer>
+      <Layout className={styles.layout}>
+        <Header className={styles.header}>
+          <Title title="POS app" ellipsis />
+          <HeaderMenu />
+        </Header>
 
-      <Content className={styles.content}>{children}</Content>
-    </Layout>
+        <Content className={styles.content}>{children}</Content>
+      </Layout>
+    </DashboardContainer>
   );
 }
 
