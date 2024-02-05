@@ -8,6 +8,7 @@ import LoginFailedCard from "@/components/auth/LoginFailedCard";
 import getAccessToken from "@/services/getAccessToken";
 import { LoginData } from "@/types/Login";
 import useNotificationContext from "@/hooks/useNotificationContext";
+import * as Sentry from '@sentry/nextjs';
 
 type PropTypes = {
   authenticationCode: string;
@@ -29,6 +30,7 @@ export default function AccessTokenContainer({
   };
 
   const onError = (error: Error) => {
+    Sentry.captureException(error);
     showErrorNotification({
       message: "Login Error",
       description: error?.message,
