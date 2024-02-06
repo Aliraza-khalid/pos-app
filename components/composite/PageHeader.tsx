@@ -1,3 +1,5 @@
+"use client";
+
 import { Flex } from "antd";
 import { createStyles } from "antd-style";
 import React from "react";

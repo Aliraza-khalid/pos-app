@@ -1,3 +1,5 @@
+"use client";
+
 import searchProducts from "@/services/searchProducts";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, {

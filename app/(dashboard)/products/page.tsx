@@ -26,7 +26,7 @@ export default function ProductsPage() {
         />
 
         <Row wrap={false}>
-          <Col flex="250px" className={styles.categories}>
+          <Col flex="250px" className={styles.categoriesCol}>
             <Categories.Card>
               <Categories.List />
             </Categories.Card>
@@ -51,7 +51,7 @@ const useStyles = createStyles(({ token, css }) => ({
       width: 1280px;
     }
   `,
-  categories: css`
+  categoriesCol: css`
     display: none;
     @media screen and (min-width: ${token.screenSM}px) {
       display: block;

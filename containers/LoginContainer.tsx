@@ -6,15 +6,13 @@ import getLoginUrl from "@/services/getLoginUrl";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import useNotificationContext from "@/hooks/useNotificationContext";
-import * as Sentry from '@sentry/nextjs';
+import * as Sentry from "@sentry/nextjs";
 
 export default function LoginContainer() {
   const router = useRouter();
   const { showErrorNotification } = useNotificationContext();
 
-  const onSuccess = (url: string) => {
-    router.push(url as any);
-  };
+  const onSuccess = (url: string) => router.push(url as any);
 
   const onError = (error: Error) => {
     Sentry.captureException(error);
@@ -31,9 +29,7 @@ export default function LoginContainer() {
     onError,
   });
 
-  const onClickLogin = () => {
-    mutate();
-  };
+  const onClickLogin = () => mutate();
 
   return <LoginCard loading={isPending} onClickLogin={onClickLogin} />;
 }

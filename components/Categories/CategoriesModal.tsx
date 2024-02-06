@@ -1,3 +1,5 @@
+"use client";
+
 import { MenuOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { createStyles } from "antd-style";

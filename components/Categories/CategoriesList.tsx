@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Button, Skeleton, Space } from "antd";
 import useProductsContext from "@/hooks/useProductsContext";
