@@ -5,13 +5,16 @@
   "scripts": {
     "dev": "next dev -p 4000",
     "dev:https": "local-ssl-proxy --key pos-app-key.pem --cert pos-app.pem --source 3000 --target 4000",
+    "predev": "ts-node --project ./tsconfig.node.json ./scripts/genAntdCss.tsx",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/cssinjs": "^1.18.4",
     "@ant-design/icons": "^5.2.6",
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@ant-design/static-style-extract": "^1.0.2",
     "@sentry/nextjs": "^7.99.0",
     "@tanstack/react-query": "^5.17.12",
     "antd": "^5.12.8",
@@ -27,10 +30,13 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "^9.1.0",
     "local-ssl-proxy": "^2.0.5",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
     "typescript": "^5"
   }
 }

@@ -11,7 +11,9 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
-  output: 'standalone',
+  compiler: {
+    styledComponents: true,
+  }
 }
 
 module.exports = nextConfig

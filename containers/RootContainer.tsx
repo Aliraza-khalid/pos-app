@@ -10,8 +10,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     mutations: {
       retry: false,
-    }
-  }
+    },
+  },
 });
 
 export default function RootContainer({ children }: PropsWithChildren) {
