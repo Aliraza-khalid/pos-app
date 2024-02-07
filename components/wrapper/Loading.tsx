@@ -1,4 +1,4 @@
-import SkeletonButton from "antd/es/skeleton/Button";
+import { Skeleton } from "antd";
 import React from "react";
 
 type PropTypes = {
@@ -7,6 +7,6 @@ type PropTypes = {
 };
 
 export default function Loading({ loading, children }: PropTypes) {
-  if (loading) return <SkeletonButton style={{ height: 20 }} />;
+  if (loading) return <Skeleton.Button style={{ height: 20 }} />;
   return children;
 }

@@ -11,7 +11,7 @@ interface PropTypes {
 }
 
 export default function QuantityControls({
-  quantity,
+  quantity = 0,
   onClickDecrease,
   onClickIncrease,
   buttonClass,

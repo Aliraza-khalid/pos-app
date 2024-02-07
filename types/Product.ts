@@ -1,3 +1,5 @@
+import { Money } from "./Order";
+
 export type CatalogProduct = {
   catalogObjectId: string;
   name: string;
@@ -10,11 +12,6 @@ export type CatalogProduct = {
 export type Variation = {
   variationId: string;
   variant: string;
-  price: Price;
+  price: Money;
   sku: string;
-};
-
-export type Price = {
-  amount: number;
-  currency: string;
 };

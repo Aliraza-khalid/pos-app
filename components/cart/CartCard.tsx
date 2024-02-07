@@ -18,7 +18,7 @@ type PropTypes = {
 
 export default function CartCard({ item, loading }: PropTypes) {
   const quantity = useStore(
-    (state) => state.cart[item.catalogObjectId]?.quantity ?? 0
+    (state) => state.cart[item.catalogObjectId]?.quantity
   );
   const increaseItemInCart = useStore((state) => state.increaseItemInCart);
   const decreaseItemInCart = useStore((state) => state.decreaseItemInCart);
@@ -60,10 +60,12 @@ export default function CartCard({ item, loading }: PropTypes) {
         title="Sub total"
         titleClass={styles.label}
         right={
-          <Text
-            title={`$ ${formatPrice(grossAmount)}`}
-            className={styles.label}
-          />
+          <Loading loading={loading}>
+            <Text
+              title={`$ ${formatPrice(grossAmount)}`}
+              className={styles.label}
+            />
+          </Loading>
         }
       />
 
@@ -71,7 +73,7 @@ export default function CartCard({ item, loading }: PropTypes) {
         type="link"
         block
         className={styles.editButton}
-        onClick={() => onClickEdit("ProductDiscount")}
+        onClick={() => onClickEdit(CartModalTypes.productDiscount)}
       >
         <CardItem
           title="Discount"
@@ -92,7 +94,7 @@ export default function CartCard({ item, loading }: PropTypes) {
         type="link"
         block
         className={styles.editButton}
-        onClick={() => onClickEdit("ProductTax")}
+        onClick={() => onClickEdit(CartModalTypes.productTax)}
       >
         <CardItem
           title="Tax"

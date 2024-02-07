@@ -49,7 +49,8 @@ export interface LineItem {
   catalogVersion: number;
   variationName: string;
   itemType: string;
-  appliedTaxes: AppliedTax[];
+  appliedTaxes?: AppliedTax[];
+  appliedDiscounts?: AppliedDiscount[];
   basePriceMoney: Money;
   variationTotalPriceMoney: Money;
   grossSalesMoney: Money;
@@ -58,6 +59,12 @@ export interface LineItem {
   totalMoney: Money;
   totalServiceChargeMoney: Money;
 }
+
+export type AppliedDiscount = {
+  uid: string;
+  discountUid: string;
+  appliedMoney: Money;
+};
 
 export interface AppliedTax {
   uid: string;

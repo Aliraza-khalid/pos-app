@@ -18,9 +18,10 @@ export interface CartTax extends Tax {
   isApplied: boolean;
 }
 
-export type CartModalTypes =
-  | "ProductTax"
-  | "ProductDiscount"
-  | "TotalTax"
-  | "TotalDiscount"
-  | "";
+export enum CartModalTypes {
+  productTax = "ProductTax",
+  productDiscount = "ProductDiscount",
+  totalTax = "TotalTax",
+  totalDiscount = "TotalDiscount",
+  none = "",
+}
