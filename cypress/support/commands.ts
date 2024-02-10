@@ -25,13 +25,11 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+Cypress.Commands.add('login', () => {
+  const data = Cypress.env('LOGIN_DATA');
+  localStorage.setItem("accessToken", JSON.stringify(data.token));
+  localStorage.setItem("merchant", JSON.stringify(data.merchant));
+  localStorage.setItem("locations", JSON.stringify(data.locations));
+  cy.visit("/products");
+})
