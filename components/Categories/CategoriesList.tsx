@@ -3,7 +3,7 @@
 import React from "react";
 import { Button, Skeleton, Space } from "antd";
 import useProductsContext from "@/hooks/useProductsContext";
-import { capitalizeText } from "@/utils/capitalizeText";
+import capitalizeText from "@/utils/capitalizeText";
 import useCategoriesQuery from "@/hooks/useCategoriesQuery";
 import ErrorMessage from "../composite/ErrorMessage";
 import Iterate from "../wrapper/Iterate";

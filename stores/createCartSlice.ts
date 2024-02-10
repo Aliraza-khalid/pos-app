@@ -3,7 +3,7 @@ import { StateCreator } from "zustand";
 import { ProductsSlice } from "./createProductsSlice";
 import { CatalogProduct, Variation } from "@/types/Product";
 import { CalculateOrderDTO } from "@/types/Order";
-import { convertCartToOrder } from "@/utils/convertCartToOrder";
+import convertCartToOrder from "@/utils/convertCartToOrder";
 
 export interface CartSlice {
   cart: Cart;
@@ -102,9 +102,11 @@ const createCartSlice: StateCreator<
   cartOpen: false,
   toggleCart: () => set((state) => ({ cartOpen: !state.cartOpen })),
 
-  cartModal: "",
+  cartModal: CartModalTypes.none,
   toggleCartModal: (value) => {
-    set((state) => ({ cartModal: state.cartModal === value ? "" : value }));
+    set((state) => ({
+      cartModal: state.cartModal === value ? CartModalTypes.none : value,
+    }));
   },
 
   _activeVartiationId: "",

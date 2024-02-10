@@ -10,6 +10,7 @@ import appliedDiscounts from "@/utils/appliedDiscounts";
 import formatDiscount from "@/utils/formatDiscount";
 import formatTax from "@/utils/formatTax";
 import globalTaxes from "@/utils/globalTaxes";
+import { CartModalTypes } from "@/types/Cart";
 
 export default function CartModals() {
   const cart = useStore((state) => state.cart);
@@ -33,7 +34,7 @@ export default function CartModals() {
       <Modal
         title={`Discounts - ${activeProduct?.name}`}
         open={cartModal === "ProductDiscount"}
-        onClose={() => toggleCartModal("ProductDiscount")}
+        onClose={() => toggleCartModal(CartModalTypes.productDiscount)}
       >
         <Select
           mode="multiple"
@@ -51,7 +52,7 @@ export default function CartModals() {
       <Modal
         title={`Taxes - ${activeProduct?.name}`}
         open={cartModal === "ProductTax"}
-        onClose={() => toggleCartModal("ProductTax")}
+        onClose={() => toggleCartModal(CartModalTypes.productTax)}
       >
         {taxes?.map((tax) => (
           <Flex key={tax.id} justify="space-between">
@@ -67,7 +68,7 @@ export default function CartModals() {
       <Modal
         title="All Discounts"
         open={cartModal === "TotalDiscount"}
-        onClose={() => toggleCartModal("TotalDiscount")}
+        onClose={() => toggleCartModal(CartModalTypes.totalDiscount)}
       >
         <Select
           mode="multiple"
@@ -84,7 +85,7 @@ export default function CartModals() {
       <Modal
         title="Taxes - Applied Globally"
         open={cartModal === "TotalTax"}
-        onClose={() => toggleCartModal("TotalTax")}
+        onClose={() => toggleCartModal(CartModalTypes.totalTax)}
       >
         {taxes?.map((tax) => (
           <Flex key={tax.id} justify="space-between">

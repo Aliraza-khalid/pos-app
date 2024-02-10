@@ -9,6 +9,7 @@ import useOrderQuery from "@/hooks/useCalculateOrder";
 import useStore from "@/stores";
 import formatPrice from "@/utils/formatPrice";
 import useGenerateOrder from "@/hooks/useGenerateOrder";
+import { CartModalTypes } from "@/types/Cart";
 
 export default function CartFooter() {
   const toggleCartModal = useStore((state) => state.toggleCartModal);
@@ -29,7 +30,7 @@ export default function CartFooter() {
         type="link"
         block
         className={styles.editButton}
-        onClick={() => toggleCartModal("TotalDiscount")}
+        onClick={() => toggleCartModal(CartModalTypes.totalDiscount)}
       >
         <CardItem
           title="Discount"
@@ -50,7 +51,7 @@ export default function CartFooter() {
         type="link"
         block
         className={styles.editButton}
-        onClick={() => toggleCartModal("TotalTax")}
+        onClick={() => toggleCartModal(CartModalTypes.totalTax)}
       >
         <CardItem
           title="Tax"

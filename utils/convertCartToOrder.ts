@@ -3,7 +3,7 @@ import appliedDiscounts from "./appliedDiscounts";
 import { Cart } from "@/types/Cart";
 import { CalculateOrderDTO } from "@/types/Order";
 
-export function convertCartToOrder(cart: Cart): CalculateOrderDTO {
+export default function convertCartToOrder(cart: Cart): CalculateOrderDTO {
   return {
     lineItems: Object.values(cart).map((item) => ({
       catalogObjectId: item.variationId,
