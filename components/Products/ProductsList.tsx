@@ -29,7 +29,7 @@ export default function ProductsList() {
 
   if (isLoading)
     return (
-      <Space direction="vertical" size={"large"}>
+      <Space direction="vertical" size={"large"} data-test={'loading-container'}>
         {Iterate({ Component: ProductCardLoading })}
       </Space>
     );
@@ -44,6 +44,7 @@ export default function ProductsList() {
           <List
             key={page.cursor}
             dataSource={page.items}
+            data-test={'products-list'}
             itemLayout="vertical"
             renderItem={(item: CatalogProduct) => (
               <ProductCard key={item.catalogObjectId} item={item} />

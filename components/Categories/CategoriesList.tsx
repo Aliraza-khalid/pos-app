@@ -5,8 +5,8 @@ import { Button, Skeleton, Space } from "antd";
 import useProductsContext from "@/hooks/useProductsContext";
 import capitalizeText from "@/utils/capitalizeText";
 import useCategoriesQuery from "@/hooks/useCategoriesQuery";
-import ErrorMessage from "../composite/ErrorMessage";
-import Iterate from "../wrapper/Iterate";
+import ErrorMessage from "@/components/composite/ErrorMessage";
+import Iterate from "@/components/wrapper/Iterate";
 
 export default function CategoriesList() {
   const { categoryId, searchByCategory } = useProductsContext();

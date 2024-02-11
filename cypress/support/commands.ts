@@ -31,5 +31,8 @@ Cypress.Commands.add('login', () => {
   localStorage.setItem("accessToken", JSON.stringify(data.token));
   localStorage.setItem("merchant", JSON.stringify(data.merchant));
   localStorage.setItem("locations", JSON.stringify(data.locations));
-  cy.visit("/products");
+})
+
+Cypress.Commands.add('getByTest', (selector) => {
+  return cy.get(`[data-test=${selector}]`)
 })

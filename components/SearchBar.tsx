@@ -1,21 +1,27 @@
 import useProductsContext from "@/hooks/useProductsContext";
 import { createStyles } from "antd-style";
 import Search from "antd/es/input/Search";
-import React from "react";
+import React, { useState } from "react";
 
 export default function SearchBar() {
-  const { searchQuery, setSearchQuery, search } = useProductsContext();
+  const { searchQuery, searchByQuery } = useProductsContext();
+  const [query, setQuery] = useState(searchQuery);
   const { styles } = useStyles();
+
+  const onSearch = () => {
+    searchByQuery(query);
+  };
 
   return (
     <Search
       name="search"
-      value={searchQuery}
+      value={query}
       placeholder="Search products"
       className={styles.searchBar}
-      onChange={(v) => setSearchQuery(v.target.value)}
-      onSearch={search}
+      onChange={(v) => setQuery(v.target.value)}
+      onSearch={onSearch}
       enterButton
+      data-test={"search-field"}
     />
   );
 }

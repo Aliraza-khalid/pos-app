@@ -13,9 +13,9 @@ import { SearchProductsData } from "@/types/Search";
 type ContextTypes = {
   categoryId: string;
   searchQuery: string;
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   search: () => void;
   searchByCategory: (categoryId: string) => void;
+  searchByQuery: (value: string) => void;
   productPages: SearchProductsData[] | undefined;
   isLoading: boolean;
   isError: boolean;
@@ -45,18 +45,14 @@ function ProductsContainer({ children }: PropsWithChildren) {
       searchProducts(searchQuery, categoryId, pageParam),
     getNextPageParam: (page) => (page.cursor === "" ? undefined : page.cursor),
     initialPageParam: "",
-    enabled: false,
   });
-
-  useEffect(() => {
-    refetch();
-  }, []);
 
   const searchByCategory = (id: string) => {
     setCategoryId((v) => (v === id ? "" : id));
-    setTimeout(() => {
-      refetch();
-    }, 0);
+  };
+
+  const searchByQuery = (value: string) => {
+    setSearchQuery(value);
   };
 
   const nextPage = () => {
@@ -68,8 +64,8 @@ function ProductsContainer({ children }: PropsWithChildren) {
       value={{
         categoryId,
         searchQuery,
-        setSearchQuery,
         searchByCategory,
+        searchByQuery,
         search: refetch,
         isLoading,
         isError,
