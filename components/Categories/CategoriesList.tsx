@@ -24,7 +24,11 @@ export default function CategoriesList() {
 
   if (isLoading)
     return (
-      <Space direction="vertical" style={{ width: "100%" }}>
+      <Space
+        direction="vertical"
+        style={{ width: "100%" }}
+        data-test={"categories-loading"}
+      >
         {Iterate({ Component: () => <Skeleton.Button block active /> })}
       </Space>
     );
@@ -35,6 +39,7 @@ export default function CategoriesList() {
       <Button
         key={i}
         type={buttonType(item.id)}
+        data-test={`category-button-${i}`}
         block
         onClick={() => searchByCategory(item.id)}
       >

@@ -29,7 +29,7 @@ export default function ProductsList() {
 
   if (isLoading)
     return (
-      <Space direction="vertical" size={"large"} data-test={'loading-container'}>
+      <Space direction="vertical" size={"large"} data-test={'products-loading'}>
         {Iterate({ Component: ProductCardLoading })}
       </Space>
     );
