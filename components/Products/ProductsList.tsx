@@ -44,7 +44,7 @@ export default function ProductsList() {
           <List
             key={page.cursor}
             dataSource={page.items}
-            data-test={'products-list'}
+            data-test={`products-page-${pIndex}`}
             itemLayout="vertical"
             renderItem={(item: CatalogProduct) => (
               <ProductCard key={item.catalogObjectId} item={item} />

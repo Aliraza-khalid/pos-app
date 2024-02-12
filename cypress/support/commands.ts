@@ -26,13 +26,25 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
 
-Cypress.Commands.add('login', () => {
-  const data = Cypress.env('LOGIN_DATA');
+Cypress.Commands.add("login", () => {
+  const data = Cypress.env("LOGIN_DATA");
   localStorage.setItem("accessToken", JSON.stringify(data.token));
   localStorage.setItem("merchant", JSON.stringify(data.merchant));
   localStorage.setItem("locations", JSON.stringify(data.locations));
-})
+});
 
-Cypress.Commands.add('getByTest', (selector) => {
-  return cy.get(`[data-test=${selector}]`)
-})
+Cypress.Commands.add("getByTest", (selector) => {
+  return cy.get(`[data-test=${selector}]`);
+});
+
+Cypress.Commands.add("selectDropdown", (optionIndex) => {
+  return cy
+    .get(".ant-select-dropdown :not(.ant-select-dropdown-hidden)")
+    .find(".ant-select-item-option")
+    .each((el, i) => {
+      console.log(el);
+      if (i === optionIndex) {
+        cy.wrap(el).click();
+      }
+    });
+});

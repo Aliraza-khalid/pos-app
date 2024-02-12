@@ -35,7 +35,7 @@ export default function ProductCard({ item }: PropTypes) {
   };
 
   return (
-    <Card title={item.name} className={styles.card}>
+    <Card title={item.name} className={styles.card} data-test={`product-card`}>
       <Flex justify="space-between" align="center" className={styles.priceRow}>
         <Text
           title={`$ ${formatPrice(variation.price.amount)}`}
@@ -54,12 +54,14 @@ export default function ProductCard({ item }: PropTypes) {
         <Select
           defaultValue={variation?.variationId}
           options={options}
+          data-test={'vartiant-selector'}
           style={{ minWidth: 100 }}
           onChange={onChangeVariation}
         />
         {quantity === 0 && (
           <Button
             color="primary"
+            data-test={"add-to-cart-btn"}
             onClick={() => addItemToCart(item, variation)}
           >
             Add to cart

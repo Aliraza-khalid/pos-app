@@ -14,7 +14,7 @@ describe("Products Search", () => {
     cy.wait("@getProducts");
     cy.getByTest("products-loading").should("not.exist");
 
-    cy.getByTest("products-list")
+    cy.getByTest("products-page-0")
       .children()
       .should((children) => {
         children.map((child) => expect(child).to.contain(/pizza/i));
