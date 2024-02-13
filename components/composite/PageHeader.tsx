@@ -1,7 +1,7 @@
 "use client";
 
 import { Flex } from "antd";
-import { createStyles, useTheme } from "antd-style";
+import { useTheme } from "antd-style";
 import React from "react";
 import Title from "@/components/base/Title";
 
