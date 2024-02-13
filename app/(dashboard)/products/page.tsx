@@ -1,12 +1,12 @@
 "use client";
 
-import { Col, Flex, Row, Space } from "antd";
+import { Col, Flex, Row } from "antd";
 import { createStyles } from "antd-style";
 import PageHeader from "@/components/composite/PageHeader";
 import Categories from "@/components/categories";
 import SearchBar from "@/components/SearchBar";
-import CartDrawer from "@/components/cart/CartDrawer";
 import ProductsList from "@/components/products/ProductsList";
+import CartContainer from "@/containers/CartContainer";
 
 export default function ProductsPage() {
   const { styles, theme } = useStyles();
@@ -36,7 +36,7 @@ export default function ProductsPage() {
         </Col>
       </Row>
 
-      <CartDrawer />
+      <CartContainer />
     </Flex>
   );
 }

@@ -1,52 +1,56 @@
 import { Drawer, Flex, Spin } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
-import CartModals from "./CartModals";
-import useStore from "@/stores";
-import useOrderQuery from "@/hooks/useCalculateOrder";
-import ErrorMessage from "../composite/ErrorMessage";
+import ErrorMessage from "@/components/composite/ErrorMessage";
+import { CalculateOrderResponse } from "@/types/Order";
 
-export default function CartDrawer() {
-  const cartOpen = useStore((state) => state.cartOpen);
-  const toggleCart = useStore((state) => state.toggleCart);
-  const { data, isLoading, isError, error, refetch } = useOrderQuery();
-  
-  const [order, setOrder] = useState(data);
+type PropTypes = {
+  open: boolean;
+  toggle: () => void;
+  content?: CalculateOrderResponse;
+  loading: boolean;
+  error: Error | null;
+  retry?: () => void;
+  children?: React.ReactNode;
+  footer?: React.ReactNode;
+};
 
-  useEffect(() => {
-    data && setOrder(data);
-  }, [data])
-
+export default function CartDrawer({
+  open,
+  toggle,
+  content,
+  loading,
+  error,
+  retry,
+  children,
+  footer
+}: PropTypes) {
   return (
     <Drawer
       title="Cart"
-      open={cartOpen}
-      onClose={toggleCart}
-      data-test={'cart-drawer'}
-      footer={order?.lineItems?.length && <CartFooter />}
+      open={open}
+      onClose={toggle}
+      data-test={"cart-drawer"}
+      footer={footer}
     >
-      {order?.lineItems?.map((item) => (
-        <CartCard
-          key={item.catalogObjectId}
-          item={item}
-          loading={isLoading}
-        />
+      {content?.lineItems?.map((item) => (
+        <CartCard key={item.catalogObjectId} item={item} loading={loading} />
       ))}
 
-      {isLoading && (
+      {loading && (
         <Flex justify="center">
           <Spin size="large" style={{ marginBottom: 20 }} />
         </Flex>
       )}
 
-      {isError && (
+      {error && (
         <Flex justify="center">
-          <ErrorMessage message={error.message} onRetry={() => refetch()}/>
+          <ErrorMessage message={error.message} onRetry={() => retry?.()} />
         </Flex>
       )}
 
-      <CartModals />
+      {children}
     </Drawer>
   );
 }

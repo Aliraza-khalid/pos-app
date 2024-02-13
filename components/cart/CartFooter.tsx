@@ -6,23 +6,29 @@ import Text from "@/components/base/Text";
 import CardItem from "../composite/CardItem";
 import Loading from "../wrapper/Loading";
 import useOrderQuery from "@/hooks/useCalculateOrder";
-import useStore from "@/stores";
 import formatPrice from "@/utils/formatPrice";
 import useGenerateOrder from "@/hooks/useGenerateOrder";
 import { CartModalTypes } from "@/types/Cart";
 
-export default function CartFooter() {
-  const toggleCartModal = useStore((state) => state.toggleCartModal);
+type PropTypes = {
+  loading: boolean;
+  toggleModal: (value: CartModalTypes) => void;
+  discount: number;
+  tax: number;
+  total: number;
+};
 
-  const { data: calculation, isLoading: orderLoading } = useOrderQuery();
+export default function CartFooter({
+  toggleModal,
+  loading,
+  discount,
+  tax,
+  total,
+}: PropTypes) {
   const { onClick: onClickCheckout, isPending: checkoutLoading } =
     useGenerateOrder();
 
   const { styles } = useStyles();
-
-  const totalDiscount = calculation?.totalDiscountMoney.amount ?? 0;
-  const totalTax = calculation?.totalTaxMoney.amount ?? 0;
-  const totalAmount = calculation?.totalMoney.amount ?? 0;
 
   return (
     <>
@@ -30,16 +36,16 @@ export default function CartFooter() {
         type="link"
         block
         className={styles.editButton}
-        onClick={() => toggleCartModal(CartModalTypes.totalDiscount)}
+        onClick={() => toggleModal(CartModalTypes.totalDiscount)}
       >
         <CardItem
           title="Discount"
           titleClass={styles.label}
           icon={<EditOutlined className={styles.editIcon} />}
           right={
-            <Loading loading={orderLoading}>
+            <Loading loading={loading}>
               <Text
-                title={`- $ ${formatPrice(totalDiscount)}`}
+                title={`- $ ${formatPrice(discount)}`}
                 className={styles.label}
               />
             </Loading>
@@ -51,18 +57,15 @@ export default function CartFooter() {
         type="link"
         block
         className={styles.editButton}
-        onClick={() => toggleCartModal(CartModalTypes.totalTax)}
+        onClick={() => toggleModal(CartModalTypes.totalTax)}
       >
         <CardItem
           title="Tax"
           titleClass={styles.label}
           icon={<EditOutlined className={styles.editIcon} />}
           right={
-            <Loading loading={orderLoading}>
-              <Text
-                title={`$ ${formatPrice(totalTax)}`}
-                className={styles.label}
-              />
+            <Loading loading={loading}>
+              <Text title={`$ ${formatPrice(tax)}`} className={styles.label} />
             </Loading>
           }
         />
@@ -73,11 +76,8 @@ export default function CartFooter() {
         titleClass={styles.label}
         containerClass={styles.totalRow}
         right={
-          <Loading loading={orderLoading}>
-            <Text
-              title={`$ ${formatPrice(totalAmount)}`}
-              className={styles.label}
-            />
+          <Loading loading={loading}>
+            <Text title={`$ ${formatPrice(total)}`} className={styles.label} />
           </Loading>
         }
       />
@@ -86,8 +86,8 @@ export default function CartFooter() {
         <Button
           type="primary"
           size="large"
-          data-test={'checkout-button'}
-          disabled={orderLoading}
+          data-test={"checkout-button"}
+          disabled={loading}
           className={styles.button}
           loading={checkoutLoading}
           onClick={onClickCheckout}

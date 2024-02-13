@@ -12,7 +12,7 @@ import formatTax from "@/utils/formatTax";
 import globalTaxes from "@/utils/globalTaxes";
 import { CartModalTypes } from "@/types/Cart";
 
-export default function CartModals() {
+export default function CartModalsContainer() {
   const cart = useStore((state) => state.cart);
   const cartModal = useStore((state) => state.cartModal);
   const activeProduct = useStore((state) => state.getActiveProduct)();
@@ -20,11 +20,11 @@ export default function CartModals() {
 
   const { data: taxes } = useTaxesQuery();
   const { data: discounts } = useDiscountsQuery();
-  const nonAmountDiscounts = discounts?.filter(d => d.discountType !== 'FIXED_AMOUNT');
-
+  
   const { updateDiscounts, toggleTax, updateGlobalDiscounts, toggleGlobalTax } =
-    useCart();
-
+  useCart();
+  
+  const nonAmountDiscounts = discounts?.filter(d => d.discountType !== 'FIXED_AMOUNT');
   const productDiscounts = nonAmountDiscounts?.reduce((acc, curr) => activeProduct?.discounts.includes(curr.id) ? [...acc, curr.id] : acc, [] as string[]);
   const allTaxes = globalTaxes(cart);
   const allAppliedDiscounts = appliedDiscounts(cart);
