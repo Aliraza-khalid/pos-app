@@ -26,7 +26,7 @@ export default function HeaderMenu() {
       onClick: toggleCart,
       icon: (
         <Tooltip title="Cart">
-          <Badge count={cartSize(cart)} size="small">
+          <Badge count={cartSize(cart)} size="small" data-test={'cart-badge'}>
             <Space>
               <ShoppingCartOutlined style={{ fontSize: "22px" }} />
             </Space>

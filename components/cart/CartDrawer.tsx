@@ -23,6 +23,7 @@ export default function CartDrawer() {
       title="Cart"
       open={cartOpen}
       onClose={toggleCart}
+      data-test={'cart-drawer'}
       footer={order?.lineItems?.length && <CartFooter />}
     >
       {order?.lineItems?.map((item) => (

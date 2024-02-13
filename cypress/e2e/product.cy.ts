@@ -1,12 +1,12 @@
 describe("Product", () => {
   beforeEach(() => {
     cy.login();
-    cy.visit("/products");
     cy.intercept("api/search-catalog-items*").as("getProducts");
+    cy.visit("/products");
     cy.wait("@getProducts");
   });
 
-  it("add to cart", () => {
+  it("add to cart and purchase", () => {
     cy.getByTest("product-card")
       .first()
       .as("first-product-card")
@@ -25,5 +25,16 @@ describe("Product", () => {
       cy.wrap(card).should("not.contain.text", "2");
       cy.getByTest("add-to-cart-btn").should("exist");
     });
+
+    cy.getByTest("cart-badge").should("contain.text", "2").click();
+    cy.getByTest("cart-card").should("have.length", 1);
+    
+    cy.intercept("api/generate-order").as("generateOrder");
+    cy.getByTest('checkout-button').click();
+    cy.wait("@generateOrder");
+    
+    cy.getByTest("cart-card").should("have.length", 0);
+    cy.getByTest('cart-drawer').should('not.be.visible');
+    cy.contains('Success');
   });
 });

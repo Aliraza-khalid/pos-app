@@ -86,6 +86,7 @@ export default function CartFooter() {
         <Button
           type="primary"
           size="large"
+          data-test={'checkout-button'}
           disabled={orderLoading}
           className={styles.button}
           loading={checkoutLoading}

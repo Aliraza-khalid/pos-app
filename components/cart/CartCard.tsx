@@ -41,6 +41,7 @@ export default function CartCard({ item, loading }: PropTypes) {
       title={`${item.name} - ${item.variationName}`}
       className={styles.card}
       size="small"
+      data-test={'cart-card'}
     >
       <Flex justify="space-between" align="center" className={styles.priceRow}>
         <Text
