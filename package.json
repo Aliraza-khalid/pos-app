@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/babel/backup.js",
+    "prebuild": "node scripts/babel/backup.js",
     "dev": "next dev -p 4000",
     "dev:https": "local-ssl-proxy --key pos-app-key.pem --cert pos-app.pem --source 3000 --target 4000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "precypress-open-e2e": "node scripts/babel/restore.js",
+    "precypress-run-e2e": "node scripts/babel/restore.js",
+    "cypress-open-e2e": "cypress open --e2e"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
@@ -26,6 +31,7 @@
     "zustand": "^4.5.0"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.12.21",
     "@tanstack/eslint-plugin-query": "^5.17.7",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
@@ -33,6 +39,8 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "babel-plugin-istanbul": "^6.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",

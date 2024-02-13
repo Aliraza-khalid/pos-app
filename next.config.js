@@ -1,23 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    SERVER_URL: 'http://localhost:5000',
+    SERVER_URL: "http://localhost:5000",
   },
-  redirects: () => [{
-    source: '/',
-    destination: '/products',
-    permanent: true,
-  }],
+  redirects: () => [
+    {
+      source: "/",
+      destination: "/products",
+      permanent: true,
+    },
+  ],
   experimental: {
     typedRoutes: true,
   },
   compiler: {
     styledComponents: true,
-  }
-}
+  },
+};
 
-module.exports = nextConfig
-
+module.exports = nextConfig;
 
 // Injected content via Sentry wizard below
 
