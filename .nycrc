@@ -1,5 +1,5 @@
 {
-  "extends": "@istanbuljs/nyc-config-typescript",
+  "extends": "@istanbuljs/nyc-config-babel",
   "all": true,
   "extension": [".ts", ".tsx", ".css"],
   "exclude": [
@@ -11,5 +11,6 @@
   ],
   "reporter": ["text-summary", "json", "html"],
   "instrumenter": "nyc",
+  "excludeAfterRemap": false,
   "sourceMap": false
 }
