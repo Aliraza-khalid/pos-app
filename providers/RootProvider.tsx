@@ -14,7 +14,7 @@ const queryClient = new QueryClient({
   },
 });
 
-export default function RootContainer({ children }: PropsWithChildren) {
+export default function RootProvider({ children }: PropsWithChildren) {
   return (
     <QueryClientProvider client={queryClient}>
       <ConfigProvider theme={AntdConfig}>

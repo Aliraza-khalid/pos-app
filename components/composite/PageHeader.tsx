@@ -1,33 +1,31 @@
 "use client";
 
 import { Flex } from "antd";
-import { createStyles } from "antd-style";
+import { createStyles, useTheme } from "antd-style";
 import React from "react";
 import Title from "@/components/base/Title";
 
 type PropTypes = {
   title: string;
-  right1?: React.ReactNode;
-  right2?: React.ReactNode;
+  contentSecondFromRight?: React.ReactNode;
+  contentRightMost?: React.ReactNode;
 };
 
-export default function PageHeader({ title, right1, right2 }: PropTypes) {
-  const { styles, theme } = useStyles();
+export default function PageHeader({
+  title,
+  contentSecondFromRight,
+  contentRightMost,
+}: PropTypes) {
+  const theme = useTheme();
 
   return (
-    <Flex justify="space-between" gap={theme.margin} className={styles.row}>
+    <Flex justify="space-between" gap={theme.margin}>
       <Title title={title} level={2} ellipsis />
 
       <Flex justify="flex-end" gap={theme.marginXS} style={{ flex: 1 }}>
-        {right1}
-        {right2}
+        {contentSecondFromRight}
+        {contentRightMost}
       </Flex>
     </Flex>
   );
 }
-
-const useStyles = createStyles(({ token, css }) => ({
-  row: css`
-    margin-bottom: ${token.marginXL}px;
-  `,
-}));

@@ -1,26 +1,30 @@
 "use client";
 
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Layout, { Content, Header } from "antd/es/layout/layout";
 import { createStyles } from "antd-style";
 import HeaderMenu from "@/components/HeaderMenu";
 import Title from "@/components/base/Title";
-import DashboardContainer from "@/containers/DashboardContainer";
+import isAuthenticated from "@/utils/isAuthenticated";
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
   const { styles } = useStyles();
+  const router = useRouter();
+
+  useEffect(() => {
+    !isAuthenticated() && router.replace("/login");
+  }, [router]);
 
   return (
-    <DashboardContainer>
-      <Layout className={styles.layout}>
-        <Header className={styles.header}>
-          <Title title="POS app" ellipsis />
-          <HeaderMenu />
-        </Header>
+    <Layout className={styles.layout}>
+      <Header className={styles.header}>
+        <Title title="POS app" ellipsis />
+        <HeaderMenu />
+      </Header>
 
-        <Content className={styles.content}>{children}</Content>
-      </Layout>
-    </DashboardContainer>
+      <Content className={styles.content}>{children}</Content>
+    </Layout>
   );
 }
 

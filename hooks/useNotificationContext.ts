@@ -1,4 +1,4 @@
-import { NotificationContext } from "@/containers/NotificationContainer";
+import { NotificationContext } from "@/providers/NotificationProvider";
 import React, { useContext } from "react";
 
 export default function useNotificationContext() {
@@ -6,7 +6,7 @@ export default function useNotificationContext() {
 
   if (!context) {
     throw new Error(
-      "useNotificationContext has to be used within <NotificationContainer>"
+      "useNotificationContext has to be used within <NotificationProvider>"
     );
   }
 

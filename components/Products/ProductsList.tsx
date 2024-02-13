@@ -4,12 +4,12 @@ import React, { useEffect } from "react";
 import { List, Space, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "./ProductCard";
-import useProductsContext from "@/hooks/useProductsContext";
 import { CatalogProduct } from "@/types/Product";
 import ProductCardLoading from "./ProductCardLoading";
 import ErrorMessage from "../composite/ErrorMessage";
 import Iterate from "../wrapper/Iterate";
-import * as Sentry from '@sentry/nextjs';
+import * as Sentry from "@sentry/nextjs";
+import useProductsQuery from "@/hooks/useProductsQuery";
 
 export default function ProductsList() {
   const {
@@ -20,7 +20,7 @@ export default function ProductsList() {
     error,
     nextPage,
     search,
-  } = useProductsContext();
+  } = useProductsQuery();
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function ProductsList() {
 
   if (isLoading)
     return (
-      <Space direction="vertical" size={"large"} data-test={'products-loading'}>
+      <Space direction="vertical" size={"large"} data-test={"products-loading"}>
         {Iterate({ Component: ProductCardLoading })}
       </Space>
     );

@@ -1,46 +1,43 @@
 "use client";
 
-import { Col, Flex, Row } from "antd";
+import { Col, Flex, Row, Space } from "antd";
 import { createStyles } from "antd-style";
 import PageHeader from "@/components/composite/PageHeader";
 import Categories from "@/components/categories";
 import SearchBar from "@/components/SearchBar";
 import CartDrawer from "@/components/cart/CartDrawer";
 import ProductsList from "@/components/products/ProductsList";
-import ProductsContainer from "@/containers/ProductsContainer";
 
 export default function ProductsPage() {
-  const { styles } = useStyles();
+  const { styles, theme } = useStyles();
 
   return (
-    <main className={styles.main}>
-      <ProductsContainer>
-        <PageHeader
-          title="Products"
-          right1={<SearchBar />}
-          right2={
-            <Categories.Modal>
-              <Categories.List />
-            </Categories.Modal>
-          }
-        />
+    <Flex vertical gap={theme.marginXL} className={styles.main}>
+      <PageHeader
+        title="Products"
+        contentSecondFromRight={<SearchBar />}
+        contentRightMost={
+          <Categories.Modal>
+            <Categories.List />
+          </Categories.Modal>
+        }
+      />
 
-        <Row wrap={false}>
-          <Col flex="250px" className={styles.categoriesCol}>
-            <Categories.Card>
-              <Categories.List />
-            </Categories.Card>
-          </Col>
-          <Col flex="auto">
-            <Flex vertical>
-              <ProductsList />
-            </Flex>
-          </Col>
-        </Row>
-      </ProductsContainer>
+      <Row wrap={false}>
+        <Col flex="250px" className={styles.categoriesCol}>
+          <Categories.Card>
+            <Categories.List />
+          </Categories.Card>
+        </Col>
+        <Col flex="auto">
+          <Flex vertical>
+            <ProductsList />
+          </Flex>
+        </Col>
+      </Row>
 
       <CartDrawer />
-    </main>
+    </Flex>
   );
 }
 

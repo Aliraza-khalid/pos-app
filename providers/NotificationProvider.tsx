@@ -13,7 +13,7 @@ type NotificationProps = Partial<ArgsProps>;
 
 export const NotificationContext = React.createContext<ContextTypes | null>(null);
 
-export default function NotificationContainer({ children }: PropsWithChildren) {
+export default function NotificationProvider({ children }: PropsWithChildren) {
   const [api, contextHolder] = notification.useNotification();
 
   const showSuccessNotification = (props: NotificationProps) => {

@@ -2,14 +2,14 @@
 
 import React from "react";
 import { Button, Skeleton, Space } from "antd";
-import useProductsContext from "@/hooks/useProductsContext";
 import capitalizeText from "@/utils/capitalizeText";
 import useCategoriesQuery from "@/hooks/useCategoriesQuery";
 import ErrorMessage from "@/components/composite/ErrorMessage";
 import Iterate from "@/components/wrapper/Iterate";
+import useProductsQuery from "@/hooks/useProductsQuery";
 
 export default function CategoriesList() {
-  const { categoryId, searchByCategory } = useProductsContext();
+  const { categoryId, searchByCategory } = useProductsQuery();
   const {
     data: categories,
     isError,

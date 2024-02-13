@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import RootContainer from "@/containers/RootContainer";
+import RootProvider from "@/providers/RootProvider";
 import AntdConfig from "@/constants/AntdConfig";
 import { CSSProperties } from "react";
-import NotificationContainer from "@/containers/NotificationContainer";
+import NotificationProvider from "@/providers/NotificationProvider";
 
 export const metadata: Metadata = {
   title: "POS app",
@@ -15,13 +15,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <RootContainer>
-      <NotificationContainer>
+    <RootProvider>
+      <NotificationProvider>
         <html lang="en" style={styles.html}>
           <body style={styles.body}>{children}</body>
         </html>
-      </NotificationContainer>
-    </RootContainer>
+      </NotificationProvider>
+    </RootProvider>
   );
 }
 

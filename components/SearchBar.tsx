@@ -1,10 +1,10 @@
-import useProductsContext from "@/hooks/useProductsContext";
+import useProductsQuery from "@/hooks/useProductsQuery";
 import { createStyles } from "antd-style";
 import Search from "antd/es/input/Search";
 import React, { useState } from "react";
 
 export default function SearchBar() {
-  const { searchQuery, searchByQuery } = useProductsContext();
+  const { searchQuery, searchByQuery } = useProductsQuery();
   const [query, setQuery] = useState(searchQuery);
   const { styles } = useStyles();
 
