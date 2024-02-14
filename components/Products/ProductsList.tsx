@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect } from "react";
 import { Flex, List, Space, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
@@ -9,25 +7,32 @@ import ProductCardLoading from "./ProductCardLoading";
 import ErrorMessage from "../composite/ErrorMessage";
 import Iterate from "../wrapper/Iterate";
 import * as Sentry from "@sentry/nextjs";
-import useProductsQuery from "@/hooks/useProductsQuery";
+import { SearchProductsData } from "@/types/Search";
 
-export default function ProductsList() {
-  const {
-    productPages,
-    isLoading,
-    isLoadingPage,
-    isError,
-    error,
-    nextPage,
-    search,
-  } = useProductsQuery();
+type PropTypes = {
+  productPages: SearchProductsData[] | undefined;
+  loading: boolean;
+  pageLoading: boolean;
+  error: Error | null;
+  nextPage: () => void;
+  retry: () => void;
+};
+
+export default function ProductsList({
+  productPages,
+  loading,
+  pageLoading,
+  error,
+  nextPage,
+  retry,
+}: PropTypes) {
   const { ref, inView } = useInView();
 
   useEffect(() => {
     inView && nextPage();
   }, [inView, nextPage]);
 
-  if (isLoading)
+  if (loading)
     return (
       <Flex vertical>
         <Space
@@ -40,12 +45,11 @@ export default function ProductsList() {
       </Flex>
     );
 
-  if (isError)
-    return <ErrorMessage message={error?.message} onRetry={search} />;
+  if (error) return <ErrorMessage message={error?.message} onRetry={retry} />;
 
   if (productPages)
     return (
-      <Sentry.ErrorBoundary fallback={<ErrorMessage onRetry={search} />}>
+      <Sentry.ErrorBoundary fallback={<ErrorMessage onRetry={retry} />}>
         <Flex vertical>
           {productPages.map((page, pIndex) => (
             <List
@@ -61,7 +65,7 @@ export default function ProductsList() {
               }
             />
           ))}
-          {isLoadingPage && <Spin style={{ marginBottom: 20 }} />}
+          {pageLoading && <Spin style={{ marginBottom: 20 }} />}
         </Flex>
       </Sentry.ErrorBoundary>
     );

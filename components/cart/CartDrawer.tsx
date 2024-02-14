@@ -1,6 +1,5 @@
 import { Drawer, Flex, Spin } from "antd";
 import React from "react";
-import CartFooter from "./CartFooter";
 import CartCard from "./CartCard";
 import ErrorMessage from "@/components/composite/ErrorMessage";
 import { CalculateOrderResponse } from "@/types/Order";
@@ -24,7 +23,7 @@ export default function CartDrawer({
   error,
   retry,
   children,
-  footer
+  footer,
 }: PropTypes) {
   return (
     <Drawer

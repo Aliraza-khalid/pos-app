@@ -5,7 +5,6 @@ import { EditOutlined } from "@ant-design/icons";
 import Text from "@/components/base/Text";
 import CardItem from "../composite/CardItem";
 import Loading from "../wrapper/Loading";
-import useOrderQuery from "@/hooks/useCalculateOrder";
 import formatPrice from "@/utils/formatPrice";
 import useGenerateOrder from "@/hooks/useGenerateOrder";
 import { CartModalTypes } from "@/types/Cart";
