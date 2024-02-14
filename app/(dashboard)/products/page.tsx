@@ -12,9 +12,7 @@ const CategoriesModalButton = dynamic(
   () => import("@/components/categories/CategoriesModalButton"),
   { ssr: false }
 );
-const CartContainer = dynamic(() => import("@/containers/CartContainer"), {
-  ssr: false,
-});
+const CartContainer = dynamic(() => import("@/containers/CartContainer"));
 
 export default function ProductsPage() {
   const { styles, theme } = useStyles();
@@ -49,9 +47,9 @@ const useStyles = createStyles(({ token, css }) => ({
     }
   `,
   categoriesCol: css`
-    display: block;
-    @media screen and (max-width: ${token.screenSM}px) {
-      display: none;
+    display: none;
+    @media screen and (min-width: ${token.screenSM}px) {
+      display: block;
     }
   `,
 }));

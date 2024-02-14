@@ -41,7 +41,7 @@ export default function CartCard({ item, loading }: PropTypes) {
       title={`${item.name} - ${item.variationName}`}
       className={styles.card}
       size="small"
-      data-test={'cart-card'}
+      data-test={"cart-card"}
     >
       <Flex justify="space-between" align="center" className={styles.priceRow}>
         <Text
@@ -120,7 +120,7 @@ export default function CartCard({ item, loading }: PropTypes) {
           <Loading loading={loading}>
             <Text
               title={`$ ${formatPrice(totalAmount)}`}
-              className={styles.amount}
+              className={styles.total}
             />
           </Loading>
         }
@@ -133,7 +133,6 @@ const useStyles = createStyles(({ token, css }) => ({
   card: css`
     width: 100%;
     margin-bottom: ${token.marginMD}px;
-    // background-color: ${token.colorFillSecondary};
     border-width: 0px;
   `,
   title: {
@@ -156,11 +155,11 @@ const useStyles = createStyles(({ token, css }) => ({
   editIcon: css`
     color: ${token.colorTextTertiary};
   `,
-  amount: css`
-    font-size: ${token.fontSizeLG}px;
-  `,
   totalRow: css`
     padding-top: ${token.marginXS}px;
     border-top: 1px solid ${token.colorBorderSecondary};
+  `,
+  total: css`
+    font-size: ${token.fontSizeLG}px;
   `,
 }));

@@ -13,8 +13,8 @@ export default function SearchBar() {
   };
 
   useEffect(() => {
-    const timeout = setTimeout(() => searchByQuery(query), 2000);
-
+    if (query === "") searchByQuery(query);
+    const timeout = setTimeout(() => searchByQuery(query), 1500);
     return () => clearTimeout(timeout);
   }, [query, searchByQuery]);
 

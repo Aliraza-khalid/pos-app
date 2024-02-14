@@ -1,14 +1,9 @@
-import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import CartDrawer from "@/components/cart/CartDrawer";
 import useOrderQuery from "@/hooks/useCalculateOrder";
 import useStore from "@/stores";
+import CartModalsContainer from "@/containers/CartModalsContainer";
 import CartFooter from "@/components/cart/CartFooter";
-
-const CartModalsContainer = dynamic(
-  () => import("@/containers/CartModalsContainer"),
-  { ssr: false }
-);
 
 export default function CartContainer() {
   const open = useStore((state) => state.cartOpen);
