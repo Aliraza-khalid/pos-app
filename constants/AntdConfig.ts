@@ -6,6 +6,8 @@ const AntdConfig: ThemeConfig = {
     colorBgContainer: "#00172b",
     colorBorder: "#004683",
 
+    colorBorderBg: 'transparent',
+
     colorPrimary: "#0d5ca5",
     colorInfo: "#0d5ca5",
     colorTextBase: "#fff",

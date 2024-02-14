@@ -16,7 +16,7 @@ export interface CartSlice {
   setCart: (data: Cart) => void;
 
   cartOpen: boolean;
-  toggleCart: () => void;
+  setCartOpen: (value: boolean) => void;
 
   cartModal: CartModalTypes;
   toggleCartModal: (value: CartModalTypes) => void;
@@ -100,7 +100,7 @@ const createCartSlice: StateCreator<
   setCart: (data) => set(() => ({ cart: data })),
 
   cartOpen: false,
-  toggleCart: () => set((state) => ({ cartOpen: !state.cartOpen })),
+  setCartOpen: (value) => set(() => ({ cartOpen: value })),
 
   cartModal: CartModalTypes.none,
   toggleCartModal: (value) => {

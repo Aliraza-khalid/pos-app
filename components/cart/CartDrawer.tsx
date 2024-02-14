@@ -7,7 +7,7 @@ import { CalculateOrderResponse } from "@/types/Order";
 
 type PropTypes = {
   open: boolean;
-  toggle: () => void;
+  close: () => void;
   content?: CalculateOrderResponse;
   loading: boolean;
   error: Error | null;
@@ -18,7 +18,7 @@ type PropTypes = {
 
 export default function CartDrawer({
   open,
-  toggle,
+  close,
   content,
   loading,
   error,
@@ -30,7 +30,7 @@ export default function CartDrawer({
     <Drawer
       title="Cart"
       open={open}
-      onClose={toggle}
+      onClose={close}
       data-test={"cart-drawer"}
       footer={footer}
     >

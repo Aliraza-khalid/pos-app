@@ -5,15 +5,17 @@ import useStore from "@/stores";
 import cartSize from "@/utils/cartSize";
 import { LogoutOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Badge, Menu, MenuProps, Space, Tooltip } from "antd";
-import { createStyles } from "antd-style";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function HeaderMenu() {
   const router = useRouter();
   const path = usePathname();
   const cart = useStore((state) => state.cart);
-  const toggleCart = useStore((state) => state.toggleCart);
-  const { styles } = useStyles();
+  const setCartOpen = useStore((state) => state.setCartOpen);
+
+  const onClickCart = () => {
+    setCartOpen(true);
+  };
 
   const onClickLogout = () => {
     localStorage.clear();
@@ -23,10 +25,10 @@ export default function HeaderMenu() {
   const items: MenuProps["items"] = [
     {
       key: "cart",
-      onClick: toggleCart,
+      onClick: onClickCart,
       icon: (
         <Tooltip title="Cart">
-          <Badge count={cartSize(cart)} size="small" data-test={'cart-badge'}>
+          <Badge count={cartSize(cart)} size="small" data-test={"cart-badge"}>
             <Space>
               <ShoppingCartOutlined style={{ fontSize: "22px" }} />
             </Space>
@@ -50,14 +52,8 @@ export default function HeaderMenu() {
       mode="horizontal"
       items={items}
       selectedKeys={[path]}
-      className={styles.menu}
+      style={{ backgroundColor: "transparent" }}
       theme="dark"
     />
   );
 }
-
-const useStyles = createStyles(({ token, css }) => ({
-  menu: css`
-    background-color: transparent;
-  `,
-}));

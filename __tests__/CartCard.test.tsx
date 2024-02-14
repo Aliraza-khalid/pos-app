@@ -1,7 +1,7 @@
 import "../matchMedia.mock";
 import "@testing-library/jest-dom";
 import { fireEvent, render, renderHook, screen } from "@testing-library/react";
-import { mockProduct, mockLineItem } from "@/constants/mockData";
+import { mockProduct, mockLineItem } from "@/__mocks__/mockData";
 import formatPrice from "@/utils/formatPrice";
 import CartCard from "@/components/cart/CartCard";
 import useStore from "@/stores";

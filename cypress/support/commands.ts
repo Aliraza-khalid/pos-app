@@ -42,7 +42,6 @@ Cypress.Commands.add("selectDropdown", (optionIndex) => {
     .get(".ant-select-dropdown :not(.ant-select-dropdown-hidden)")
     .find(".ant-select-item-option")
     .each((el, i) => {
-      console.log(el);
       if (i === optionIndex) {
         cy.wrap(el).click();
       }

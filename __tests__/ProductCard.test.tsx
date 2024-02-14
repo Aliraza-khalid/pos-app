@@ -2,7 +2,7 @@ import "../matchMedia.mock";
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import ProductCard from "@/components/products/ProductCard";
-import { mockProduct } from "@/constants/mockData";
+import { mockProduct } from "@/__mocks__/mockData";
 import formatPrice from "@/utils/formatPrice";
 
 const componentsProps = {

@@ -7,7 +7,7 @@ import CartFooter from "@/components/cart/CartFooter";
 
 export default function CartContainer() {
   const open = useStore((state) => state.cartOpen);
-  const toggle = useStore((state) => state.toggleCart);
+  const setCartOpen = useStore((state) => state.setCartOpen);
   const toggleCartModal = useStore((state) => state.toggleCartModal);
 
   const { data, isLoading, error, refetch } = useOrderQuery();
@@ -25,7 +25,7 @@ export default function CartContainer() {
   return (
     <CartDrawer
       open={open}
-      toggle={toggle}
+      close={() => setCartOpen(false)}
       content={order}
       loading={isLoading}
       error={error}

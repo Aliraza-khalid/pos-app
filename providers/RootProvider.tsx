@@ -10,6 +10,9 @@ import React, { PropsWithChildren, useRef } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
     mutations: {
       retry: false,
     },

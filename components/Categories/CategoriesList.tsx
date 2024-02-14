@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { Button, Skeleton, Space } from "antd";
+import { Button, Flex, Skeleton, Space } from "antd";
 import capitalizeText from "@/utils/capitalizeText";
 import useCategoriesQuery from "@/hooks/useCategoriesQuery";
 import ErrorMessage from "@/components/composite/ErrorMessage";
 import Iterate from "@/components/wrapper/Iterate";
 import useProductsQuery from "@/hooks/useProductsQuery";
+import { CheckOutlined } from "@ant-design/icons";
 
 export default function CategoriesList() {
   const { categoryId, searchByCategory } = useProductsQuery();
@@ -17,10 +18,6 @@ export default function CategoriesList() {
     error,
     refetch,
   } = useCategoriesQuery();
-
-  const buttonType = (id: string) => {
-    return categoryId === id ? undefined : "text";
-  };
 
   if (isLoading)
     return (
@@ -38,12 +35,15 @@ export default function CategoriesList() {
     return categories?.map((item, i) => (
       <Button
         key={i}
-        type={buttonType(item.id)}
-        data-test={`category-button-${i}`}
+        type="text"
         block
+        data-test={`category-button-${i}`}
         onClick={() => searchByCategory(item.id)}
       >
-        {capitalizeText(item.name)}
+        <Flex justify="space-between" align="center">
+          {capitalizeText(item.name)}
+          {categoryId === item.id && <CheckOutlined />}
+        </Flex>
       </Button>
     ));
 }

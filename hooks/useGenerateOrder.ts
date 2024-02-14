@@ -9,7 +9,7 @@ import * as Sentry from "@sentry/nextjs";
 export default function useOrderMutation() {
   const getOrderDTO = useStore((state) => state.getOrderDTO);
   const setCart = useStore((state) => state.setCart);
-  const toggleCart = useStore((state) => state.toggleCart);
+  const setCartOpen = useStore((state) => state.setCartOpen);
 
   const { showSuccessNotification, showErrorNotification } =
     useNotificationContext();
@@ -24,7 +24,7 @@ export default function useOrderMutation() {
 
   const onSuccess = () => {
     setCart({});
-    toggleCart();
+    setCartOpen(false);
     showSuccessNotification({
       description: "Order Generated",
     });

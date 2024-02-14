@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import RootProvider from "@/providers/RootProvider";
 import AntdConfig from "@/constants/AntdConfig";
-import { CSSProperties } from "react";
 import NotificationProvider from "@/providers/NotificationProvider";
+import { StylesObject } from "@/types/General";
 
 export const metadata: Metadata = {
   title: "POS app",
@@ -25,7 +25,7 @@ export default function RootLayout({
   );
 }
 
-const styles: { [key: string]: CSSProperties } = {
+const styles: StylesObject = {
   html: {
     colorScheme: "dark",
   },
