@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { List, Space, Spin } from "antd";
+import { Flex, List, Space, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "./ProductCard";
 import { CatalogProduct } from "@/types/Product";
@@ -29,9 +29,15 @@ export default function ProductsList() {
 
   if (isLoading)
     return (
-      <Space direction="vertical" size={"large"} data-test={"products-loading"}>
-        {Iterate({ Component: ProductCardLoading })}
-      </Space>
+      <Flex vertical>
+        <Space
+          direction="vertical"
+          size={"large"}
+          data-test={"products-loading"}
+        >
+          {Iterate({ Component: ProductCardLoading })}
+        </Space>
+      </Flex>
     );
 
   if (isError)
@@ -40,19 +46,23 @@ export default function ProductsList() {
   if (productPages)
     return (
       <Sentry.ErrorBoundary fallback={<ErrorMessage onRetry={search} />}>
-        {productPages.map((page, pIndex) => (
-          <List
-            key={page.cursor}
-            dataSource={page.items}
-            data-test={`products-page-${pIndex}`}
-            itemLayout="vertical"
-            renderItem={(item: CatalogProduct) => (
-              <ProductCard key={item.catalogObjectId} item={item} />
-            )}
-            footer={productPages.length === pIndex + 1 && <div ref={ref}></div>}
-          />
-        ))}
-        {isLoadingPage && <Spin style={{ marginBottom: 20 }} />}
+        <Flex vertical>
+          {productPages.map((page, pIndex) => (
+            <List
+              key={page.cursor}
+              dataSource={page.items}
+              data-test={`products-page-${pIndex}`}
+              itemLayout="vertical"
+              renderItem={(item: CatalogProduct) => (
+                <ProductCard key={item.catalogObjectId} item={item} />
+              )}
+              footer={
+                productPages.length === pIndex + 1 && <div ref={ref}></div>
+              }
+            />
+          ))}
+          {isLoadingPage && <Spin style={{ marginBottom: 20 }} />}
+        </Flex>
       </Sentry.ErrorBoundary>
     );
 }

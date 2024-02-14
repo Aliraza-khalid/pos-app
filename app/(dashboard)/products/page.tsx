@@ -32,9 +32,7 @@ export default function ProductsPage() {
           <CategoriesContainer />
         </Col>
         <Col flex="auto">
-          <Flex vertical>
-            <ProductsList />
-          </Flex>
+          <ProductsList />
         </Col>
       </Row>
 
