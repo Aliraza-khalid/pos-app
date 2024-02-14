@@ -1,12 +1,20 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Col, Flex, Row } from "antd";
 import { createStyles } from "antd-style";
 import PageHeader from "@/components/composite/PageHeader";
-import Categories from "@/components/categories";
 import SearchBar from "@/components/SearchBar";
 import ProductsList from "@/components/products/ProductsList";
-import CartContainer from "@/containers/CartContainer";
+import CategoriesContainer from "@/containers/CategoriesContainer";
+
+const CategoriesModalButton = dynamic(
+  () => import("@/components/categories/CategoriesModalButton"),
+  { ssr: false }
+);
+const CartContainer = dynamic(() => import("@/containers/CartContainer"), {
+  ssr: false,
+});
 
 export default function ProductsPage() {
   const { styles, theme } = useStyles();
@@ -16,18 +24,12 @@ export default function ProductsPage() {
       <PageHeader
         title="Products"
         contentSecondFromRight={<SearchBar />}
-        contentRightMost={
-          <Categories.Modal>
-            <Categories.List />
-          </Categories.Modal>
-        }
+        contentRightMost={<CategoriesModalButton />}
       />
 
       <Row wrap={false}>
         <Col flex="250px" className={styles.categoriesCol}>
-          <Categories.Card>
-            <Categories.List />
-          </Categories.Card>
+          <CategoriesContainer />
         </Col>
         <Col flex="auto">
           <Flex vertical>
@@ -49,9 +51,9 @@ const useStyles = createStyles(({ token, css }) => ({
     }
   `,
   categoriesCol: css`
-    display: none;
-    @media screen and (min-width: ${token.screenSM}px) {
-      display: block;
+    display: block;
+    @media screen and (max-width: ${token.screenSM}px) {
+      display: none;
     }
   `,
 }));

@@ -1,25 +1,29 @@
-"use client";
-
 import React from "react";
 import { Button, Flex, Skeleton, Space } from "antd";
 import capitalizeText from "@/utils/capitalizeText";
-import useCategoriesQuery from "@/hooks/useCategoriesQuery";
 import ErrorMessage from "@/components/composite/ErrorMessage";
 import Iterate from "@/components/wrapper/Iterate";
-import useProductsQuery from "@/hooks/useProductsQuery";
 import { CheckOutlined } from "@ant-design/icons";
+import { Category } from "@/types/Category";
 
-export default function CategoriesList() {
-  const { categoryId, searchByCategory } = useProductsQuery();
-  const {
-    data: categories,
-    isError,
-    isLoading,
-    error,
-    refetch,
-  } = useCategoriesQuery();
+type PropTypes = {
+  categories: Category[] | undefined;
+  loading: boolean;
+  error: Error | null;
+  categoryId: string;
+  retry: () => void;
+  onClick: (id: string) => void;
+};
 
-  if (isLoading)
+export default function CategoriesList({
+  categories,
+  loading,
+  error,
+  categoryId,
+  retry,
+  onClick,
+}: PropTypes) {
+  if (loading)
     return (
       <Space
         direction="vertical"
@@ -29,8 +33,7 @@ export default function CategoriesList() {
         {Iterate({ Component: () => <Skeleton.Button block active /> })}
       </Space>
     );
-  if (isError)
-    return <ErrorMessage message={error.message} onRetry={() => refetch} />;
+  if (error) return <ErrorMessage message={error.message} onRetry={retry} />;
   if (categories)
     return categories?.map((item, i) => (
       <Button
@@ -38,7 +41,7 @@ export default function CategoriesList() {
         type="text"
         block
         data-test={`category-button-${i}`}
-        onClick={() => searchByCategory(item.id)}
+        onClick={() => onClick(item.id)}
       >
         <Flex justify="space-between" align="center">
           {capitalizeText(item.name)}

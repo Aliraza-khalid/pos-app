@@ -6,6 +6,9 @@ export interface ProductsSlice {
 
   setSearchQuery: (value: string) => void;
   setCategoryId: (value: string) => void;
+
+  categoriesModalOpen: boolean;
+  setCategoriesModalOpen: (value: boolean) => void;
 }
 
 const createProductsSlice: StateCreator<
@@ -20,6 +23,10 @@ const createProductsSlice: StateCreator<
   setSearchQuery: (value) => set(() => ({ searchQuery: value })),
   setCategoryId: (value) =>
     set((state) => ({ categoryId: state.categoryId === value ? "" : value })),
+
+  categoriesModalOpen: false,
+  setCategoriesModalOpen: (value) =>
+    set(() => ({ categoriesModalOpen: value })),
 });
 
 export default createProductsSlice;
