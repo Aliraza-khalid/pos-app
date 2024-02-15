@@ -20,8 +20,11 @@ describe("Products Search", () => {
         children.map((child) => expect(child).to.contain(/pizza/i));
       });
 
-    cy.getByTest("category-button-0").should("have.class", "ant-btn-text").click();
-    cy.getByTest("category-button-0").should("have.class", "ant-btn-default");
+    cy.getByTest("category-button-0").within((elm) => {
+      cy.wrap(elm).getByTest("check-icon").should("not.exist");
+      cy.wrap(elm).click();
+      cy.wrap(elm).getByTest("check-icon").should("exist")
+    });
 
     cy.getByTest("products-loading").should("exist");
     cy.wait("@getProducts");
@@ -32,8 +35,11 @@ describe("Products Search", () => {
     cy.wait("@getProducts");
     cy.getByTest("products-loading").should("not.exist");
 
-    cy.getByTest("category-button-0").should("have.class", "ant-btn-default").click();
-    cy.getByTest("category-button-0").should("have.class", "ant-btn-text");
+    cy.getByTest("category-button-0").click();
+    cy.getByTest("category-button-0")
+      .children()
+      .getByTest("check-icon")
+      .should("not.exist");
     cy.getByTest("products-loading").should("not.exist");
   });
 });

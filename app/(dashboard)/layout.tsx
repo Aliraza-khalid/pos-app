@@ -35,7 +35,7 @@ const useStyles = createStyles(({ token, css }) => ({
   header: css`
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 5;
     width: 100%;
     display: flex;
     align-items: center;

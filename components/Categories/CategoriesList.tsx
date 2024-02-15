@@ -48,7 +48,7 @@ export default function CategoriesList({
       >
         <Flex justify="space-between" align="center">
           {capitalizeText(item.name)}
-          {categoryId === item.id && <CheckOutlined />}
+          {categoryId === item.id && <CheckOutlined data-test={'check-icon'}/>}
         </Flex>
       </Button>
     ));
