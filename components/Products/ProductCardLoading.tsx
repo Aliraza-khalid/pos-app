@@ -1,7 +1,6 @@
 import { Card, Flex, Space } from "antd";
 import SkeletonButton from "antd/es/skeleton/Button";
 import SkeletonInput from "antd/es/skeleton/Input";
-import React from "react";
 
 export default function ProductCardLoading() {
   return (

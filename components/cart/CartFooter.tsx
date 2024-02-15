@@ -1,13 +1,13 @@
 import React from "react";
 import { Button, Flex } from "antd";
-import { createStyles } from "antd-style";
-import { EditOutlined } from "@ant-design/icons";
+import EditOutlined from "@ant-design/icons/EditOutlined";
 import Text from "@/components/base/Text";
 import CardItem from "../composite/CardItem";
 import Loading from "../wrapper/Loading";
 import formatPrice from "@/utils/formatPrice";
 import useGenerateOrder from "@/hooks/useGenerateOrder";
 import { CartModalTypes } from "@/types/Cart";
+import { createStyles } from "antd-style";
 
 type PropTypes = {
   loading: boolean;

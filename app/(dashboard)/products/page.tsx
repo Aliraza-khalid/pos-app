@@ -11,7 +11,9 @@ const CategoriesModalButton = dynamic(
   () => import("@/components/categories/CategoriesModalButton"),
   { ssr: false }
 );
-const CartContainer = dynamic(() => import("@/containers/CartContainer"));
+const CartContainer = dynamic(() => import("@/containers/CartContainer"), {
+  ssr: false,
+});
 
 export default function ProductsPage() {
   const { styles, theme } = useStyles();

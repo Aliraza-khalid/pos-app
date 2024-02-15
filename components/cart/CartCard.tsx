@@ -1,7 +1,6 @@
-import React from "react";
-import { Button, Card, Flex } from "antd";
 import { createStyles } from "antd-style";
-import { EditOutlined } from "@ant-design/icons";
+import { Button, Card, Flex } from "antd";
+import EditOutlined from "@ant-design/icons/EditOutlined";
 import Text from "@/components/base/Text";
 import useStore from "@/stores";
 import formatPrice from "@/utils/formatPrice";

@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { Badge, Menu, MenuProps, Space, Tooltip } from "antd";
+import { LogoutOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import useStore from "@/stores";
 import cartSize from "@/utils/cartSize";
-import { LogoutOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Badge, Menu, MenuProps, Space, Tooltip } from "antd";
-import { usePathname, useRouter } from "next/navigation";
 
 export default function HeaderMenu() {
   const router = useRouter();

@@ -1,13 +1,20 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
+import * as Sentry from "@sentry/nextjs";
 import { Flex, List, Space, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "./ProductCard";
-import { CatalogProduct } from "@/types/Product";
 import ProductCardLoading from "./ProductCardLoading";
-import ErrorMessage from "../composite/ErrorMessage";
 import Iterate from "../wrapper/Iterate";
-import * as Sentry from "@sentry/nextjs";
+import { CatalogProduct } from "@/types/Product";
 import { SearchProductsData } from "@/types/Search";
+
+const ErrorMessage = dynamic(
+  () => import("@/components/composite/ErrorMessage"),
+  {
+    ssr: false,
+  }
+);
 
 type PropTypes = {
   productPages: SearchProductsData[] | undefined;

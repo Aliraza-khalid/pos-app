@@ -1,8 +1,7 @@
-import useStore from "@/stores";
-import { MenuOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { createStyles } from "antd-style";
-import React from "react";
+import useStore from "@/stores";
+import MenuOutlined from "@ant-design/icons/ManOutlined";
 
 export default function CategoriesModalButton() {
   const setCategoriesModalOpen = useStore(

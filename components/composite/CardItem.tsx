@@ -1,11 +1,11 @@
+import { ReactNode } from "react";
 import { Flex, Space } from "antd";
 import Text from "@/components/base/Text";
-import React from "react";
 
 type PropTypes = {
   title: string;
-  icon?: React.ReactNode;
-  right?: React.ReactNode;
+  icon?: ReactNode;
+  right?: ReactNode;
   containerClass?: string;
   titleClass?: string;
 };

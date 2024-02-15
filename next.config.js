@@ -12,9 +12,11 @@ const nextConfig = {
   ],
   experimental: {
     typedRoutes: true,
+    optimizePackageImports: ['react', 'antd', 'antd-style', 'react-intersection-observer', 'zustand'],
   },
   compiler: {
     styledComponents: true,
+    removeConsole: true,
   },
 };
 

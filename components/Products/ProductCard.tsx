@@ -1,13 +1,13 @@
 "use client";
 
+import { useState } from "react";
+import { Button, Card, Flex, Select } from "antd";
+import { createStyles } from "antd-style";
+import Text from "@/components/base/Text";
+import QuantityControls from "../composite/QuantityControls";
 import useStore from "@/stores";
 import { CatalogProduct, Variation } from "@/types/Product";
 import formatPrice from "@/utils/formatPrice";
-import { Button, Card, Flex, Select } from "antd";
-import { createStyles } from "antd-style";
-import React, { useState } from "react";
-import Text from "@/components/base/Text";
-import QuantityControls from "../composite/QuantityControls";
 
 type PropTypes = {
   item: CatalogProduct;

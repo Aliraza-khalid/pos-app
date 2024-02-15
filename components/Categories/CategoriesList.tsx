@@ -1,10 +1,13 @@
-import React from "react";
+import dynamic from "next/dynamic";
 import { Button, Flex, Skeleton, Space } from "antd";
+import CheckOutlined from "@ant-design/icons/CheckOutlined";
 import capitalizeText from "@/utils/capitalizeText";
-import ErrorMessage from "@/components/composite/ErrorMessage";
 import Iterate from "@/components/wrapper/Iterate";
-import { CheckOutlined } from "@ant-design/icons";
 import { Category } from "@/types/Category";
+
+const ErrorMessage = dynamic(() => import("@/components/composite/ErrorMessage"), {
+  ssr: false,
+});
 
 type PropTypes = {
   categories: Category[] | undefined;
