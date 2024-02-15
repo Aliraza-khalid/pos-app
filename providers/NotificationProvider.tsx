@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
+import { createContext, PropsWithChildren } from "react";
 import { notification } from "antd";
 import { ArgsProps } from "antd/es/notification";
-import React, { PropsWithChildren } from "react";
 
 type ContextTypes = {
   showSuccessNotification: (props: NotificationProps) => void;
@@ -11,7 +11,7 @@ type ContextTypes = {
 
 type NotificationProps = Partial<ArgsProps>;
 
-export const NotificationContext = React.createContext<ContextTypes | null>(null);
+export const NotificationContext = createContext<ContextTypes | null>(null);
 
 export default function NotificationProvider({ children }: PropsWithChildren) {
   const [api, contextHolder] = notification.useNotification();

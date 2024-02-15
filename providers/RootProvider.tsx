@@ -1,12 +1,12 @@
 "use client";
 
-import AntdConfig from "@/constants/AntdConfig";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PropsWithChildren, useRef } from "react";
+import { useServerInsertedHTML } from "next/navigation";
 import { ConfigProvider } from "antd";
 import { StyleProvider, extractStaticStyle } from "antd-style";
-import { useServerInsertedHTML } from "next/navigation";
-import React, { PropsWithChildren, useRef } from "react";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AntdConfig from "@/constants/AntdConfig";
 
 const queryClient = new QueryClient({
   defaultOptions: {

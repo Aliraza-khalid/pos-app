@@ -1,13 +1,12 @@
 import searchProducts from "@/services/searchProducts";
 import useStore from "@/stores";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React from "react";
 
 export default function useProductsQuery() {
   const searchQuery = useStore((state) => state.searchQuery);
   const categoryId = useStore((state) => state.categoryId);
   const setSearchQuery = useStore((state) => state.setSearchQuery);
-  const setCategoryId = useStore((state) => state.setCategoryId);
+  const updateCategoryId = useStore((state) => state.updateCategoryId);
 
   const {
     data,
@@ -27,7 +26,7 @@ export default function useProductsQuery() {
   });
 
   const searchByCategory = (id: string) => {
-    setCategoryId(id);
+    updateCategoryId(id);
   };
 
   const searchByQuery = (value: string) => {
@@ -50,5 +49,5 @@ export default function useProductsQuery() {
     productPages: data?.pages,
     isLoadingPage: isFetchingNextPage,
     nextPage,
-  }
+  };
 }
