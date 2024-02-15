@@ -1,16 +1,21 @@
 {
-  "extends": "@istanbuljs/nyc-config-babel",
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "require": ["@babel/register"],
   "all": true,
-  "extension": [".ts", ".tsx", ".css"],
+  "check-coverage": true,
+  "report-dir": "cypress-coverage",
+  "extension": [".ts", ".tsx"],
   "exclude": [
     "cypress/**",
     "**/__fixtures__/**",
     "**/__mocks__/**",
     "**/__tests__/**",
-    "coverage/**"
+    "coverage/**",
+    "cypress-coverage/**"
   ],
   "reporter": ["text-summary", "json", "html"],
   "instrumenter": "nyc",
   "excludeAfterRemap": false,
-  "sourceMap": false
+  "sourceMap": false,
+  "instrument": false
 }

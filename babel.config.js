@@ -1,4 +1,4 @@
 module.exports = {
   presets: ["next/babel"],
-  plugins: ["transform-class-properties", "istanbul"],
+  plugins: ["transform-class-properties", "istanbul",],
 };
