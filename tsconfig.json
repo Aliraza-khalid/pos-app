@@ -21,8 +21,15 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "matchMedia.mock"],
-  "exclude": ["node_modules", "cypress/**/*"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "matchMedia.mock"
+  ],
+  "exclude": ["node_modules", "cypress"]
 }
