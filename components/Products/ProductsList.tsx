@@ -60,7 +60,7 @@ export default function ProductsList({
         <Flex vertical>
           {productPages.map((page, pIndex) => (
             <List
-              key={page.cursor}
+              key={pIndex}
               dataSource={page.items}
               data-test={`products-page-${pIndex}`}
               itemLayout="vertical"
