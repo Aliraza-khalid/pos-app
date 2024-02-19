@@ -23,7 +23,7 @@ export default function ProductCardLoading() {
         <SkeletonButton active style={{ height: 20 }} />
 
         <Flex justify="space-between">
-          <SkeletonButton active />
+          <SkeletonInput active />
           <SkeletonButton active shape="round" />
         </Flex>
       </Space>

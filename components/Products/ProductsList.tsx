@@ -43,23 +43,13 @@ export default function ProductsList({
 
   if (loading)
     return (
-      <List
-        dataSource={[1, 2, 3, 4, 5, 6]}
-        grid={{
-          gutter: [theme.marginLG, theme.margin],
-          xs: 1,
-          sm: 2,
-          md: 2,
-          lg: 2,
-          xl: 3,
-          xxl: 3,
-        }}
-        renderItem={(item) => (
-          <List.Item key={item}>
-            <ProductCardLoading />
-          </List.Item>
-        )}
-      />
+      <Flex
+        wrap="wrap"
+        gap={theme.marginLG}
+        style={{ marginBottom: theme.marginLG }}
+      >
+        {Iterate({ Component: ProductCardLoading })}
+      </Flex>
     );
 
   if (error) return <ErrorMessage message={error?.message} onRetry={retry} />;
