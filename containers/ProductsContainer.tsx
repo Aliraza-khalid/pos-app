@@ -50,7 +50,7 @@ export default function ProductsContainer() {
 
   return (
     <Row wrap={false} gutter={theme.marginXL}>
-      <Col sm={{ span: 0 }} lg={{ span: 5 }} className={"gutter-row"}>
+      <Col span={0} lg={{ span: 5 }} className={"gutter-row"}>
         <CategoriesCard>
           <Categories />
         </CategoriesCard>

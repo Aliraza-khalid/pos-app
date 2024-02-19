@@ -8,6 +8,8 @@ import QuantityControls from "../composite/QuantityControls";
 import useStore from "@/stores";
 import { CatalogProduct, Variation } from "@/types/Product";
 import formatPrice from "@/utils/formatPrice";
+import Image from "next/image";
+import Title from "../base/Title";
 
 type PropTypes = {
   item: CatalogProduct;
@@ -35,7 +37,23 @@ export default function ProductCard({ item }: PropTypes) {
   };
 
   return (
-    <Card title={item.name} className={styles.card} data-test={`product-card`}>
+    <Card
+      className={styles.card}
+      data-test={`product-card`}
+      cover={
+        <Image
+          alt="product image"
+          src={item.imageUrl}
+          width={500}
+          height={240}
+          style={{
+            objectFit: "cover",
+          }}
+        />
+      }
+    >
+      <Title title={item.name} level={4} />
+
       <Flex justify="space-between" align="center" className={styles.priceRow}>
         <Text
           title={`$ ${formatPrice(variation.price.amount)}`}
@@ -80,6 +98,6 @@ const useStyles = createStyles(({ token, css }) => ({
     font-size: ${token.fontSizeLG}px;
   `,
   priceRow: css`
-    margin-bottom: ${token.marginMD}px;
+    margin: ${token.margin}px 0px ${token.marginMD}px;
   `,
 }));

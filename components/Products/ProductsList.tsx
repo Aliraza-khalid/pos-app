@@ -43,22 +43,34 @@ export default function ProductsList({
 
   if (loading)
     return (
-      <Flex vertical>
-        <Space
-          direction="vertical"
-          size={"large"}
-          data-test={"products-loading"}
-        >
-          {Iterate({ Component: ProductCardLoading })}
-        </Space>
-      </Flex>
+      <List
+        dataSource={[1, 2, 3, 4, 5, 6]}
+        grid={{
+          gutter: [theme.marginLG, theme.margin],
+          xs: 1,
+          sm: 2,
+          md: 2,
+          lg: 2,
+          xl: 3,
+          xxl: 3,
+        }}
+        renderItem={(item) => (
+          <List.Item key={item}>
+            <ProductCardLoading />
+          </List.Item>
+        )}
+      />
     );
 
   if (error) return <ErrorMessage message={error?.message} onRetry={retry} />;
 
   if (products)
     return (
-      <Sentry.ErrorBoundary fallback={<ErrorMessage onRetry={retry} />}>
+      <Sentry.ErrorBoundary
+        fallback={
+          <ErrorMessage message="Cannot Render Products" onRetry={retry} />
+        }
+      >
         <List
           dataSource={products}
           data-test={`products-list`}
@@ -71,7 +83,7 @@ export default function ProductsList({
             xl: 3,
             xxl: 3,
           }}
-          renderItem={(item: CatalogProduct) => (
+          renderItem={(item) => (
             <List.Item key={item.catalogObjectId}>
               <ProductCard item={item} />
             </List.Item>
