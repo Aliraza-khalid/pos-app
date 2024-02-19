@@ -1,13 +1,16 @@
 import dynamic from "next/dynamic";
-import { Button, Flex, Skeleton, Space } from "antd";
-import CheckOutlined from "@ant-design/icons/CheckOutlined";
+import { Menu, MenuProps, Skeleton, Space } from "antd";
 import capitalizeText from "@/utils/capitalizeText";
 import Iterate from "@/components/wrapper/Iterate";
 import { Category } from "@/types/Category";
+import { createStyles } from "antd-style";
 
-const ErrorMessage = dynamic(() => import("@/components/composite/ErrorMessage"), {
-  ssr: false,
-});
+const ErrorMessage = dynamic(
+  () => import("@/components/composite/ErrorMessage"),
+  {
+    ssr: false,
+  }
+);
 
 type PropTypes = {
   categories: Category[] | undefined;
@@ -18,6 +21,8 @@ type PropTypes = {
   onClick: (id: string) => void;
 };
 
+type MenuItem = Required<MenuProps>["items"][number];
+
 export default function CategoriesList({
   categories,
   loading,
@@ -26,6 +31,8 @@ export default function CategoriesList({
   retry,
   onClick,
 }: PropTypes) {
+  const { styles } = useStyles();
+
   if (loading)
     return (
       <Space
@@ -38,18 +45,27 @@ export default function CategoriesList({
     );
   if (error) return <ErrorMessage message={error.message} onRetry={retry} />;
   if (categories)
-    return categories?.map((item, i) => (
-      <Button
-        key={i}
-        type="text"
-        block
-        data-test={`category-button-${i}`}
-        onClick={() => onClick(item.id)}
-      >
-        <Flex justify="space-between" align="center">
-          {capitalizeText(item.name)}
-          {categoryId === item.id && <CheckOutlined data-test={'check-icon'}/>}
-        </Flex>
-      </Button>
-    ));
+    return (
+      <Menu
+        mode="inline"
+        theme="dark"
+        selectedKeys={[categoryId]}
+        className={styles.menu}
+        onClick={(e) => onClick(e.key)}
+        items={categories?.map(
+          (item) =>
+            ({
+              key: item.id,
+              label: capitalizeText(item.name),
+            } as MenuItem)
+        )}
+      />
+    );
 }
+
+const useStyles = createStyles(({ token, css }) => ({
+  menu: css`
+    background-color: ${token.colorBgContainer};
+    font-size: ${token.fontSize}px;
+  `,
+}));

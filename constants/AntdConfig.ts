@@ -15,7 +15,6 @@ const AntdConfig: ThemeConfig = {
     colorSuccess: "#349e00",
     sizeStep: 4,
     borderRadius: 8,
-    fontSize: 12,
     padding: 12,
     margin: 12,
     screenXS: 420,
