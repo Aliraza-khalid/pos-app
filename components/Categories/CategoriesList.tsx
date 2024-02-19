@@ -65,7 +65,7 @@ export default function CategoriesList({
 
 const useStyles = createStyles(({ token, css }) => ({
   menu: css`
-    background-color: ${token.colorBgContainer};
+    width: 100%;
     font-size: ${token.fontSize}px;
   `,
 }));

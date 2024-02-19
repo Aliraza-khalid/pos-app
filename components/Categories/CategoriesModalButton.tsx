@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { createStyles } from "antd-style";
 import useStore from "@/stores";
-import MenuOutlined from "@ant-design/icons/ManOutlined";
+import { MenuOutlined } from "@ant-design/icons";
 
 export default function CategoriesModalButton() {
   const setCategoriesModalOpen = useStore(
@@ -20,7 +20,7 @@ export default function CategoriesModalButton() {
 
 const useStyles = createStyles(({ token, css }) => ({
   button: css`
-    @media screen and (min-width: ${token.screenSM}px) {
+    @media screen and (min-width: ${token.screenLG}px) {
       display: none;
     }
   `,

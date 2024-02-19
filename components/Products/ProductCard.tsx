@@ -54,7 +54,7 @@ export default function ProductCard({ item }: PropTypes) {
         <Select
           defaultValue={variation?.variationId}
           options={options}
-          data-test={'vartiant-selector'}
+          data-test={"vartiant-selector"}
           style={{ minWidth: 100 }}
           onChange={onChangeVariation}
         />
@@ -75,11 +75,7 @@ export default function ProductCard({ item }: PropTypes) {
 const useStyles = createStyles(({ token, css }) => ({
   card: css`
     width: 100%;
-    margin-bottom: ${token.marginMD}px;
   `,
-  title: {
-    fontSize: `${token.fontSizeSM}px;`,
-  },
   price: css`
     font-size: ${token.fontSizeLG}px;
   `,

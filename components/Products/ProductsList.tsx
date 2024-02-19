@@ -7,7 +7,8 @@ import ProductCard from "./ProductCard";
 import ProductCardLoading from "./ProductCardLoading";
 import Iterate from "../wrapper/Iterate";
 import { CatalogProduct } from "@/types/Product";
-import { SearchProductsData } from "@/types/Search";
+import { createStyles } from "antd-style";
+import Text from "../base/Text";
 
 const ErrorMessage = dynamic(
   () => import("@/components/composite/ErrorMessage"),
@@ -17,7 +18,7 @@ const ErrorMessage = dynamic(
 );
 
 type PropTypes = {
-  productPages: SearchProductsData[] | undefined;
+  products: CatalogProduct[] | undefined;
   loading: boolean;
   pageLoading: boolean;
   error: Error | null;
@@ -26,13 +27,14 @@ type PropTypes = {
 };
 
 export default function ProductsList({
-  productPages,
+  products,
   loading,
   pageLoading,
   error,
   nextPage,
   retry,
 }: PropTypes) {
+  const { styles, theme } = useStyles();
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -54,26 +56,42 @@ export default function ProductsList({
 
   if (error) return <ErrorMessage message={error?.message} onRetry={retry} />;
 
-  if (productPages)
+  if (products)
     return (
       <Sentry.ErrorBoundary fallback={<ErrorMessage onRetry={retry} />}>
-        <Flex vertical>
-          {productPages.map((page, pIndex) => (
-            <List
-              key={pIndex}
-              dataSource={page.items}
-              data-test={`products-page-${pIndex}`}
-              itemLayout="vertical"
-              renderItem={(item: CatalogProduct) => (
-                <ProductCard key={item.catalogObjectId} item={item} />
-              )}
-              footer={
-                productPages.length === pIndex + 1 && <div ref={ref}></div>
-              }
-            />
-          ))}
-          {pageLoading && <Spin style={{ marginBottom: 20 }} />}
+        <List
+          dataSource={products}
+          data-test={`products-list`}
+          grid={{
+            gutter: [theme.marginLG, theme.margin],
+            xs: 1,
+            sm: 2,
+            md: 2,
+            lg: 2,
+            xl: 3,
+            xxl: 3,
+          }}
+          renderItem={(item: CatalogProduct) => (
+            <List.Item key={item.catalogObjectId}>
+              <ProductCard item={item} />
+            </List.Item>
+          )}
+          footer={<div ref={ref}></div>}
+        />
+
+        <Flex justify="center" style={{ marginBottom: theme.marginXXL }}>
+          {pageLoading ? (
+            <Spin />
+          ) : (
+            <Text title="No More Data" className={styles.end} />
+          )}
         </Flex>
       </Sentry.ErrorBoundary>
     );
 }
+
+const useStyles = createStyles(({ css, token }) => ({
+  end: css`
+    color: ${token.colorTextTertiary};
+  `,
+}));

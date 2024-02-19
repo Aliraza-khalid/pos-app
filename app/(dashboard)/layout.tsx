@@ -51,29 +51,14 @@ const useStyles = createStyles(({ token, css }) => ({
     padding: 5%;
     min-height: 100vh;
 
-    @media screen and (min-width: ${token.screenMD}px) {
-      padding-left: 6%;
-      padding-right: 6%;
+    @media screen and (min-width: ${token.screenXXL}px) {
+      padding-left: 9%;
+      padding-right: 9%;
     }
 
-    @media screen and (min-width: ${token.screenLG}px) {
-      padding-left: 10%;
-      padding-right: 10%;
-    }
-
-    @media screen and (min-width: ${token.screenXL}px) {
+    @media screen and (min-width: 2160px) {
       padding-left: 12%;
       padding-right: 12%;
-    }
-
-    @media screen and (min-width: ${token.screenXXL}px) {
-      padding-left: 14%;
-      padding-right: 14%;
-    }
-
-    @media screen and (min-width: 1920px) {
-      padding-left: 18%;
-      padding-right: 18%;
     }
   `,
 }));

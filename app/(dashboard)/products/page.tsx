@@ -36,8 +36,5 @@ export default function ProductsPage() {
 const useStyles = createStyles(({ css }) => ({
   main: css`
     width: 100%;
-    @media screen and (min-width: 1920px) {
-      width: 1280px;
-    }
   `,
 }));

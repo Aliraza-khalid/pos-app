@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Col, Row } from "antd";
-import { createStyles } from "antd-style";
+import { useTheme } from "antd-style";
 import ProductsList from "@/components/products/ProductsList";
 import CategoriesCard from "@/components/categories/CategoriesCard";
 import CategoriesList from "@/components/categories/CategoriesList";
@@ -33,7 +33,9 @@ export default function ProductsContainer() {
   const modalOpen = useStore((state) => state.categoriesModalOpen);
   const setModalOpen = useStore((state) => state.setCategoriesModalOpen);
 
-  const { styles } = useStyles();
+  const theme = useTheme();
+
+  const products = productPages?.flatMap((e) => e.items);
 
   const Categories = () => (
     <CategoriesList
@@ -47,8 +49,8 @@ export default function ProductsContainer() {
   );
 
   return (
-    <Row wrap={false}>
-      <Col flex="250px" className={styles.categoriesCol}>
+    <Row wrap={false} gutter={theme.marginXL}>
+      <Col sm={{ span: 0 }} lg={{ span: 5 }} className={"gutter-row"}>
         <CategoriesCard>
           <Categories />
         </CategoriesCard>
@@ -62,9 +64,9 @@ export default function ProductsContainer() {
         </Modal>
       </Col>
 
-      <Col flex="auto">
-        <ProductsList 
-          productPages={productPages}
+      <Col flex="auto" className="gutter-row">
+        <ProductsList
+          products={products}
           loading={productsLoading}
           pageLoading={productsPageLoading}
           error={productsError}
@@ -75,12 +77,3 @@ export default function ProductsContainer() {
     </Row>
   );
 }
-
-const useStyles = createStyles(({ token, css }) => ({
-  categoriesCol: css`
-    display: none;
-    @media screen and (min-width: ${token.screenSM}px) {
-      display: block;
-    }
-  `,
-}));

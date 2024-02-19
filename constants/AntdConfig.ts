@@ -27,6 +27,9 @@ const AntdConfig: ThemeConfig = {
     Typography: {
       titleMarginBottom: 0,
     },
+    Menu: {
+      darkItemBg: '#FFFFFF00'
+    }
   },
   algorithm: theme.darkAlgorithm,
 };
