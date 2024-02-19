@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import CartDrawer from "@/components/cart/CartDrawer";
 import useOrderQuery from "@/hooks/useCalculateOrder";

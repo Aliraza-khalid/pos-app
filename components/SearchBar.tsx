@@ -1,3 +1,5 @@
+"use client";
+
 import useProductsQuery from "@/hooks/useProductsQuery";
 import { createStyles } from "antd-style";
 import Search from "antd/es/input/Search";

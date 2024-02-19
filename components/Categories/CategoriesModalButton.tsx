@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "antd";
 import { createStyles } from "antd-style";
 import useStore from "@/stores";

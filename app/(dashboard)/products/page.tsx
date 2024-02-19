@@ -1,8 +1,5 @@
-"use client";
-
 import dynamic from "next/dynamic";
 import { Flex } from "antd";
-import { createStyles } from "antd-style";
 import PageHeader from "@/components/composite/PageHeader";
 import SearchBar from "@/components/SearchBar";
 import ProductsContainer from "@/containers/ProductsContainer";
@@ -16,10 +13,8 @@ const CartContainer = dynamic(() => import("@/containers/CartContainer"), {
 });
 
 export default function ProductsPage() {
-  const { styles, theme } = useStyles();
-
   return (
-    <Flex vertical gap={theme.marginXL} className={styles.main}>
+    <Flex vertical gap={34}>
       <PageHeader
         title="Products"
         contentSecondFromRight={<SearchBar />}
@@ -32,9 +27,3 @@ export default function ProductsPage() {
     </Flex>
   );
 }
-
-const useStyles = createStyles(({ css }) => ({
-  main: css`
-    width: 100%;
-  `,
-}));
