@@ -23,6 +23,7 @@ export default function useProductsQuery() {
       searchProducts(searchQuery, categoryId, pageParam),
     getNextPageParam: (page) => (page.cursor === "" ? undefined : page.cursor),
     initialPageParam: "",
+    staleTime: 3000,
   });
 
   const searchByCategory = (id: string) => {

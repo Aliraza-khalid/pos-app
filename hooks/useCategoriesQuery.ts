@@ -6,5 +6,6 @@ export default function useCategoriesQuery() {
   return useQuery({
     queryKey: ["categories"],
     queryFn: getCategories,
+    staleTime: Infinity,
   });
 }

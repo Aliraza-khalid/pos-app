@@ -12,6 +12,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
+      staleTime: 5000,
     },
     mutations: {
       retry: false,
@@ -38,7 +39,9 @@ export default function RootProvider({ children }: PropsWithChildren) {
     <QueryClientProvider client={queryClient}>
       <ConfigProvider theme={AntdConfig}>
         <StyleProvider cache={extractStaticStyle.cache}>
-          <AntdRegistry>{children}</AntdRegistry>
+          <AntdRegistry>
+            <>{children}</>
+          </AntdRegistry>
         </StyleProvider>
       </ConfigProvider>
     </QueryClientProvider>
