@@ -1,8 +1,5 @@
 import dynamic from "next/dynamic";
-import {
-  dehydrate,
-  HydrationBoundary,
-} from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Flex } from "antd";
 import PageHeader from "@/components/composite/PageHeader";
 import SearchBar from "@/components/SearchBar";
@@ -21,16 +18,20 @@ const CartContainer = dynamic(() => import("@/containers/CartContainer"), {
 
 export default async function ProductsPage() {
   const queryClient = getQueryClient();
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ["searchProducts", "", ""],
-    queryFn: ({ pageParam }) => searchProducts("", "", pageParam),
-    initialPageParam: "",
-  });
-  await queryClient.prefetchQuery({
-    queryKey: ["categories"],
-    queryFn: getCategories,
-    staleTime: Infinity,
-  });
+  await Promise.all([
+    queryClient.prefetchInfiniteQuery({
+      queryKey: ["searchProducts", "", ""],
+      queryFn: ({ pageParam }) => searchProducts("", "", pageParam),
+      initialPageParam: "",
+      staleTime: Infinity,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["categories"],
+      queryFn: getCategories,
+      staleTime: Infinity,
+    }),
+  ]);
+
   const dehydratedState = dehydrate(queryClient);
 
   return (

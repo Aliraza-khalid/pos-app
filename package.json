@@ -35,6 +35,7 @@
     "@cypress/code-coverage": "^3.12.21",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@tanstack/eslint-plugin-query": "^5.17.7",
+    "@tanstack/react-query-devtools": "^5.24.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
     "@types/jest": "^29.5.12",

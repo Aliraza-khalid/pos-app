@@ -3,6 +3,7 @@ import RootProvider from "@/providers/RootProvider";
 import AntdConfig from "@/constants/AntdConfig";
 import NotificationProvider from "@/providers/NotificationProvider";
 import { StylesObject } from "@/types/General";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const metadata: Metadata = {
   title: "POS app",
@@ -18,7 +19,12 @@ export default function RootLayout({
     <RootProvider>
       <NotificationProvider>
         <html lang="en" style={styles.html}>
-          <body style={styles.body}>{children}</body>
+          <body style={styles.body}>
+            <>
+              {children}
+              <ReactQueryDevtools initialIsOpen={false} />
+            </>
+          </body>
         </html>
       </NotificationProvider>
     </RootProvider>
