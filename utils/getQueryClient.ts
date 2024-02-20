@@ -7,6 +7,7 @@ const getQueryClient = cache(
       defaultOptions: {
         queries: {
           refetchOnWindowFocus: false,
+          refetchOnMount: false,
           staleTime: 5000,
         },
         mutations: {

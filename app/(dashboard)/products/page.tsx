@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import {
   dehydrate,
   HydrationBoundary,
-  QueryClient,
 } from "@tanstack/react-query";
 import { Flex } from "antd";
 import PageHeader from "@/components/composite/PageHeader";

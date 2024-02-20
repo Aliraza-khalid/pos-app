@@ -44,7 +44,7 @@ export default function ProductCard({ item }: PropTypes) {
         <Image
           alt="product image"
           src={item.imageUrl}
-          width={500}
+          width={480}
           height={240}
           style={{
             objectFit: "cover",
