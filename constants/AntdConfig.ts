@@ -2,13 +2,13 @@ import { ThemeConfig, theme } from "antd";
 
 const AntdConfig: ThemeConfig = {
   token: {
-    colorBgBase: "#00101e",
-    colorBgContainer: "#00172b",
-    colorBorder: "#004683",
+    colorBgBase: "#111d2c",
+    colorBgContainer: "#112a45",
+    colorBorder: "#3c9ae8",
 
     colorBorderBg: 'transparent',
 
-    colorPrimary: "#0d5ca5",
+    colorPrimary: "#177ddc",
     colorInfo: "#0d5ca5",
     colorTextBase: "#fff",
     colorLink: "#FFD717",
