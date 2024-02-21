@@ -6,6 +6,7 @@ export const QueryClientOptions: QueryClientConfig = {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       staleTime: 10000,
+      retryDelay: 10000,
     },
     mutations: {
       retry: false,

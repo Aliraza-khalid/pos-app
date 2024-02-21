@@ -10,6 +10,7 @@ import { CatalogProduct, Variation } from "@/types/Product";
 import formatPrice from "@/utils/formatPrice";
 import Image from "next/image";
 import Title from "../base/Title";
+import PlaceholderImage from "@/public/placeholder-image.webp";
 
 type PropTypes = {
   item: CatalogProduct;
@@ -17,6 +18,7 @@ type PropTypes = {
 
 export default function ProductCard({ item }: PropTypes) {
   const [variation, setVariation] = useState<Variation>(item.variations[0]);
+  const [imageError, setImageError] = useState(false);
   const quantity = useStore(
     (state) => state.cart[variation.variationId]?.quantity ?? 0
   );
@@ -30,6 +32,8 @@ export default function ProductCard({ item }: PropTypes) {
     value: v.variationId,
     label: v.variant,
   }));
+  const imageSrc =
+    imageError || !item.imageUrl ? PlaceholderImage : item.imageUrl;
 
   const onChangeVariation = (id: string) => {
     const selected = item.variations.find((obj) => obj.variationId === id);
@@ -43,12 +47,13 @@ export default function ProductCard({ item }: PropTypes) {
       cover={
         <Image
           alt="product image"
-          src={item.imageUrl}
+          src={imageSrc}
           width={480}
           height={240}
           style={{
             objectFit: "cover",
           }}
+          onError={() => setImageError(true)}
         />
       }
     >
