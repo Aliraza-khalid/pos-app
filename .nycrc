@@ -1,0 +1,21 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "require": ["@babel/register"],
+  "all": true,
+  "check-coverage": true,
+  "report-dir": "cypress-coverage",
+  "extension": [".ts", ".tsx"],
+  "exclude": [
+    "cypress/**",
+    "**/__fixtures__/**",
+    "**/__mocks__/**",
+    "**/__tests__/**",
+    "coverage/**",
+    "cypress-coverage/**"
+  ],
+  "reporter": ["text-summary", "json", "html"],
+  "instrumenter": "nyc",
+  "excludeAfterRemap": false,
+  "sourceMap": false,
+  "instrument": false
+}
