@@ -12,6 +12,7 @@ export interface CartProduct extends Variation {
   quantity: number;
   taxes: string[];
   discounts: string[];
+  blockedDiscounts?: string[];
 }
 
 export interface CartTax extends Tax {

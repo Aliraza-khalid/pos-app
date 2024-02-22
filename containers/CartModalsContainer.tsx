@@ -11,6 +11,7 @@ import formatDiscount from "@/utils/formatDiscount";
 import formatTax from "@/utils/formatTax";
 import globalTaxes from "@/utils/globalTaxes";
 import { CartModalTypes } from "@/types/Cart";
+import useDiscounts from "@/hooks/useDiscounts";
 
 export default function CartModalsContainer() {
   const cart = useStore((state) => state.cart);
@@ -20,13 +21,18 @@ export default function CartModalsContainer() {
 
   const { data: taxes } = useTaxesQuery();
   const { data: discounts } = useDiscountsQuery();
-  
-  const { updateDiscounts, toggleTax, updateGlobalDiscounts, toggleGlobalTax } =
-  useCart();
-  
-  const nonAmountDiscounts = discounts?.filter(d => d.discountType !== 'FIXED_AMOUNT');
-  const productDiscounts = nonAmountDiscounts?.reduce((acc, curr) => activeProduct?.discounts.includes(curr.id) ? [...acc, curr.id] : acc, [] as string[]);
-  const allTaxes = globalTaxes(cart);
+  const { itemDiscounts, itemDiscountsOptions } = useDiscounts();
+
+  const {
+    addDiscount,
+    removeDiscount,
+    toggleTax,
+    updateGlobalDiscounts,
+    toggleGlobalTax,
+  } = useCart();
+
+  const itemAppliedDiscounts = itemDiscounts();
+  const orderTaxes = globalTaxes(cart);
   const allAppliedDiscounts = appliedDiscounts(cart);
 
   return (
@@ -40,9 +46,10 @@ export default function CartModalsContainer() {
           mode="multiple"
           allowClear
           placeholder="Select Discounts"
-          value={productDiscounts}
-          onChange={updateDiscounts}
-          options={nonAmountDiscounts?.map((discount) => ({
+          value={itemAppliedDiscounts}
+          onDeselect={removeDiscount}
+          onSelect={addDiscount}
+          options={itemDiscountsOptions()?.map((discount) => ({
             label: formatDiscount(discount),
             value: discount.id,
           }))}
@@ -91,7 +98,7 @@ export default function CartModalsContainer() {
           <Flex key={tax.id} justify="space-between">
             <Text title={formatTax(tax)} />
             <Switch
-              value={allTaxes.includes(tax.id)}
+              value={orderTaxes.includes(tax.id)}
               onChange={(v) => toggleGlobalTax(tax.id, v)}
             />
           </Flex>

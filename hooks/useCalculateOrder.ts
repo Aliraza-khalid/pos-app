@@ -1,7 +1,7 @@
 import calculateOrder from "@/services/calculateOrder";
 import useStore from "@/stores";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import useNotificationContext from "./useNotificationContext";
 import * as Sentry from "@sentry/nextjs";
 
@@ -13,6 +13,7 @@ export default function useOrderQuery() {
   const query = useQuery({
     queryKey: ["calculateOrder", orderDTO],
     queryFn: () => calculateOrder(orderDTO),
+    placeholderData: keepPreviousData,
   });
   const { error } = query;
 

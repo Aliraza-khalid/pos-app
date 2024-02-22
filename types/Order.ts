@@ -14,6 +14,11 @@ export interface CalculateOrderLineItem {
   appliedDiscounts: {
     discountUid: string;
   }[];
+  pricingBlocklists?: {
+    blockedDiscounts?: {
+      discountCatalogObjectId: string;
+    }[];
+  };
 }
 
 export interface CalculateOrderTax {
@@ -28,6 +33,7 @@ export type CalculateOrderResponse = {
   locationId: string;
   lineItems?: LineItem[];
   taxes?: CalculateOrderResponseTax[];
+  discounts?: CalculateOrderResponseDiscount[];
   netAmounts: NetAmounts;
   createdAt: Date;
   updatedAt: Date;
@@ -96,6 +102,17 @@ export interface CalculateOrderResponseTax {
   name: string;
   type: string;
   percentage: string;
+  appliedMoney: Money;
+  scope: string;
+}
+
+export interface CalculateOrderResponseDiscount {
+  uid: string;
+  catalogObjectId: string;
+  catalogVersion: number;
+  name: string;
+  type: string;
+  pricingRuleId: string;
   appliedMoney: Money;
   scope: string;
 }

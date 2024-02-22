@@ -13,6 +13,11 @@ export default function convertCartToOrder(cart: Cart): CalculateOrderDTO {
       appliedDiscounts: item.discounts.map((discount) => ({
         discountUid: discount,
       })),
+      pricingBlocklists: {
+        blockedDiscounts: item.blockedDiscounts?.map((id) => ({
+          discountCatalogObjectId: id,
+        })),
+      },
     })),
     taxes: appliedTaxes(cart).map((tax) => ({
       uid: tax,

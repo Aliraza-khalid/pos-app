@@ -1,9 +1,10 @@
 import useStore from "@/stores";
-import { Cart } from "@/types/Cart";
+import { Cart, CartProduct } from "@/types/Cart";
+import useDiscounts from "./useDiscounts";
 
 export default function useCart() {
   const cart = useStore((state) => state.cart);
-  const activeProduct = useStore(state => state.getActiveProduct)();
+  const activeProduct = useStore((state) => state.getActiveProduct)();
   const updateItemInCart = useStore((state) => state.updateItemInCart);
   const setCart = useStore((state) => state.setCart);
 
@@ -13,6 +14,37 @@ export default function useCart() {
       ...activeProduct,
       discounts: value,
     };
+
+    updateItemInCart(updatedData);
+  };
+
+  const addDiscount = (value: string) => {
+    if (!activeProduct) return;
+    const updatedData = {
+      ...activeProduct,
+      discounts: Array.from(new Set(activeProduct.discounts).add(value)),
+    };
+
+    updateItemInCart(updatedData);
+  };
+
+  const removeDiscount = (value: string) => {
+    if (!activeProduct) return;
+    let updatedData: CartProduct;
+
+    if (activeProduct.discounts.includes(value)) {
+      updatedData = {
+        ...activeProduct,
+        discounts: activeProduct.discounts.filter((id) => id !== value),
+      };
+    } else {
+      updatedData = {
+        ...activeProduct,
+        blockedDiscounts: Array.from(
+          new Set(activeProduct.blockedDiscounts).add(value)
+        ),
+      };
+    }
 
     updateItemInCart(updatedData);
   };
@@ -59,6 +91,8 @@ export default function useCart() {
 
   return {
     updateDiscounts,
+    addDiscount,
+    removeDiscount,
     toggleTax,
     updateGlobalDiscounts,
     toggleGlobalTax,
